@@ -17,7 +17,8 @@ KEY_MAPPING = {
     '4': {'type': 'alpine',    'color': (0, 0, 255), 'label': 'Alpine'},      # Red (ECU 5M base cost)
     '5': {'type': 'small_city',  'color': (255, 255, 0), 'label': 'Small City'},   # Cyan
     '6': {'type': 'medium_city', 'color': (255, 165, 0), 'label': 'Medium City'},  # Orange
-    '7': {'type': 'large_city',  'color': (255, 0, 255), 'label': 'Large City'}    # Magenta
+    '7': {'type': 'large_city',  'color': (255, 0, 255), 'label': 'Large City'},   # Magenta
+    '8': {'type': 'ferry',       'color': (255, 200, 0), 'label': 'Ferry'}          # Teal
 }
 
 # Arrow key codes from cv2.waitKeyEx — macOS
