@@ -4,12 +4,10 @@ import os
 
 # --- CALIBRATION CONFIGURATION ---
 # Base structural measurements verified from your map analysis
-START_X = 1106
+START_X = 126
 START_Y = 78
 DELTA_X = 35    # Horizontal pixel column step
 DELTA_Y = 27   # Vertical pixel row step
-
-START_X -= 27 * DELTA_X  # Adjust starting point to align with the leftmost column of the grid
 
 # Keymapping definitions based on your updated prompt specifications
 KEY_MAPPING = {
@@ -18,6 +16,13 @@ KEY_MAPPING = {
     '3': {'type': 'mountain',  'color': (0, 255, 255), 'label': 'Mountain'},  # Yellow (ECU 2M base cost)
     '4': {'type': 'alpine',    'color': (0, 0, 255), 'label': 'Alpine'}       # Red (ECU 5M base cost)
 }
+
+# Arrow key codes from cv2.waitKeyEx — macOS
+ARROW_UP    = 63232
+ARROW_DOWN  = 63233
+ARROW_LEFT  = 63234
+ARROW_RIGHT = 63235
+
 
 def calculate_pixel_coords(row, col):
     """
@@ -88,29 +93,38 @@ def main():
         print("=== Eurorails Keyboard Mapping Engine Active (new session) ===")
 
     print("Commands: [1] Void/Sea | [2] Clear | [3] Mountain | [4] Alpine")
-    print("Controls: [Backspace] Undo Last Node | [Q] Save & Quit | [Esc] Force Quit (no save)")
+    print("Controls: [Arrow Keys] Nudge Reticle | [Backspace] Undo Last Node | [Q] Save & Quit | [Esc] Force Quit (no save)")
     print("----------------------------------------------------------------")
 
+    # Active reticle position — initialized to math baseline, mutated by arrow nudges
+    active_pixel_x, active_pixel_y = calculate_pixel_coords(current_row, current_col)
+
     while True:
-        # Calculate cursor tracking coordinates
-        target_x, target_y = calculate_pixel_coords(current_row, current_col)
-        
         # Redraw display frame and overlay temporary active tracking reticle
         frame = display_layer.copy()
-        cv2.circle(frame, (target_x, target_y), 5, (255, 105, 180), 2) # Hot Pink Reticle
-        cv2.putText(frame, f"Row: {current_row} Col: {current_col}", (20, 40), 
+        cv2.circle(frame, (active_pixel_x, active_pixel_y), 5, (255, 105, 180), 2)
+        cv2.putText(frame, f"Row: {current_row} Col: {current_col}", (20, 40),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 105, 180), 2)
 
         cv2.imshow("Eurorails Strategy Plotter", frame)
-        
+
         # Intercept keystroke input
-        key = cv2.waitKey(0) & 0xFF
+        key = cv2.waitKeyEx(0)
         char_key = chr(key) if 32 <= key < 127 else ""
 
-        if char_key in KEY_MAPPING:
+        if key == ARROW_UP:
+            active_pixel_y -= 1
+        elif key == ARROW_DOWN:
+            active_pixel_y += 1
+        elif key == ARROW_LEFT:
+            active_pixel_x -= 1
+        elif key == ARROW_RIGHT:
+            active_pixel_x += 1
+
+        elif char_key in KEY_MAPPING:
             node_cfg = KEY_MAPPING[char_key]
-            
-            # Commit point to graph database
+
+            # Commit point to graph database using current (possibly nudged) position
             node_key = f"r{current_row}_c{current_col}"
             graph_data[node_key] = {
                 "row": current_row,
@@ -118,29 +132,36 @@ def main():
                 "axial_q": current_col if current_row % 2 == 0 else current_col - 0.5,
                 "axial_r": current_row,
                 "type": node_cfg["type"],
-                "pixel_x": target_x,
-                "pixel_y": target_y
+                "pixel_x": active_pixel_x,
+                "pixel_y": active_pixel_y
             }
-            
+
             # Burn permanent validation dot into display layer
-            cv2.circle(display_layer, (target_x, target_y), 3, node_cfg["color"], -1)
-            
+            cv2.circle(display_layer, (active_pixel_x, active_pixel_y), 3, node_cfg["color"], -1)
+
             # Save history state for undo recovery operations
             history.append((current_row, current_col, node_key))
-            
-            # Increment grid layout position: Move right
+
+            # Advance to next slot, preserving any nudge offset from the committed point
             current_col += 1
-                
-        elif key in (127, 8): # Delete key (macOS) / Backspace
+            active_pixel_x += DELTA_X
+            # active_pixel_y unchanged — same row
+
+        elif key in (127, 8):  # Delete key (macOS) / Backspace
             if history:
-                # Roll back the state machine to previous coordinates
                 last_row, last_col, last_key = history.pop()
+
+                # Restore reticle to the exact pixel coords that were saved for this node
                 if last_key in graph_data:
+                    active_pixel_x = graph_data[last_key]["pixel_x"]
+                    active_pixel_y = graph_data[last_key]["pixel_y"]
                     del graph_data[last_key]
-                
+                else:
+                    active_pixel_x, active_pixel_y = calculate_pixel_coords(last_row, last_col)
+
                 current_row = last_row
                 current_col = last_col
-                
+
                 # Redraw full validation history clear of the removed point
                 display_layer = base_image.copy()
                 for k, node in graph_data.items():
@@ -149,10 +170,11 @@ def main():
                 print(f"Reverted to Node: Row {current_row}, Col {current_col}")
             else:
                 print("History buffer empty. Cannot undo further.")
-                
+
         elif key == 13:  # Enter: advance to next row
             current_row += 1
             current_col = 0
+            active_pixel_x, active_pixel_y = calculate_pixel_coords(current_row, current_col)
 
         elif key == ord('q') or key == ord('Q'):
             save_progress(graph_data, current_row, current_col, history)
@@ -163,15 +185,6 @@ def main():
             print("\nForce quit — progress NOT saved.")
             cv2.destroyAllWindows()
             return
-
-    # All rows complete — write final output and clean up progress file
-    with open(OUTPUT_FILE, "w") as f:
-        json.dump(graph_data, f, indent=4)
-    if os.path.exists(PROGRESS_FILE):
-        os.remove(PROGRESS_FILE)
-
-    cv2.destroyAllWindows()
-    print(f"=== Mapping complete: {len(graph_data)} nodes saved to '{OUTPUT_FILE}' ===")
 
 if __name__ == "__main__":
     main()
