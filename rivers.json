@@ -1,0 +1,652 @@
+{
+    "r21_c36": [
+        {
+            "neighbor": "r22_c35",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c36",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r22_c35": [
+        {
+            "neighbor": "r21_c36",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c35",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c36",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c36",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r22_c36": [
+        {
+            "neighbor": "r21_c36",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r21_c37",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c37",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c36",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c35",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r21_c37": [
+        {
+            "neighbor": "r22_c36",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c37",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r22_c37": [
+        {
+            "neighbor": "r21_c37",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c38",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r21_c38",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c38",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c37",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r23_c38": [
+        {
+            "neighbor": "r22_c37",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c38",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c39",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r21_c38": [
+        {
+            "neighbor": "r22_c37",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r22_c38": [
+        {
+            "neighbor": "r22_c37",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c38",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r23_c37": [
+        {
+            "neighbor": "r22_c36",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c37",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r23_c36": [
+        {
+            "neighbor": "r22_c36",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c35",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c35",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r23_c35": [
+        {
+            "neighbor": "r22_c35",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c36",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r23_c39": [
+        {
+            "neighbor": "r24_c38",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c38",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r24_c38": [
+        {
+            "neighbor": "r23_c39",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r24_c39",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r24_c39": [
+        {
+            "neighbor": "r25_c39",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r24_c38",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r25_c39": [
+        {
+            "neighbor": "r24_c39",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r26_c39": [
+        {
+            "neighbor": "r25_c40",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r25_c40": [
+        {
+            "neighbor": "r26_c39",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c39",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r26_c40": [
+        {
+            "neighbor": "r26_c39",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r27_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r27_c40": [
+        {
+            "neighbor": "r27_c41",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c40",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r28_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r27_c41": [
+        {
+            "neighbor": "r27_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r28_c39": [
+        {
+            "neighbor": "r28_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r28_c40": [
+        {
+            "neighbor": "r28_c39",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r27_c40",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r29_c40",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r29_c41",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r29_c40": [
+        {
+            "neighbor": "r28_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r29_c41": [
+        {
+            "neighbor": "r28_c40",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r28_c41",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r29_c42",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r30_c41",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r28_c41": [
+        {
+            "neighbor": "r29_c41",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r29_c42": [
+        {
+            "neighbor": "r29_c41",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r30_c40": [
+        {
+            "neighbor": "r30_c41",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r30_c41": [
+        {
+            "neighbor": "r30_c40",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r29_c41",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r31_c41",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r31_c41": [
+        {
+            "neighbor": "r30_c41",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r31_c42",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r32_c41",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r32_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r31_c42": [
+        {
+            "neighbor": "r31_c41",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r32_c41": [
+        {
+            "neighbor": "r31_c41",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r32_c40": [
+        {
+            "neighbor": "r31_c41",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r31_c40",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r32_c39",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r31_c40": [
+        {
+            "neighbor": "r32_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r32_c39": [
+        {
+            "neighbor": "r32_c40",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r33_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r33_c40": [
+        {
+            "neighbor": "r32_c39",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r33_c39",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r33_c39": [
+        {
+            "neighbor": "r33_c40",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r34_c39",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r34_c39": [
+        {
+            "neighbor": "r33_c39",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r34_c38",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r34_c38": [
+        {
+            "neighbor": "r34_c39",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r35_c39",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r35_c39": [
+        {
+            "neighbor": "r34_c38",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r35_c38",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r36_c38",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r36_c39",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r35_c38": [
+        {
+            "neighbor": "r35_c39",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r36_c38": [
+        {
+            "neighbor": "r35_c39",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r36_c39": [
+        {
+            "neighbor": "r35_c39",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r35_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r35_c40": [
+        {
+            "neighbor": "r36_c39",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r36_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r36_c40": [
+        {
+            "neighbor": "r35_c40",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r36_c41",
+            "name": "Rhine",
+            "type": "lake"
+        },
+        {
+            "neighbor": "r35_c41",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r36_c41": [
+        {
+            "neighbor": "r36_c40",
+            "name": "Rhine",
+            "type": "lake"
+        },
+        {
+            "neighbor": "r37_c41",
+            "name": "Rhine",
+            "type": "lake"
+        },
+        {
+            "neighbor": "r37_c42",
+            "name": "Rhine",
+            "type": "lake"
+        }
+    ],
+    "r35_c41": [
+        {
+            "neighbor": "r36_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r37_c41": [
+        {
+            "neighbor": "r36_c41",
+            "name": "Rhine",
+            "type": "lake"
+        },
+        {
+            "neighbor": "r38_c41",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r37_c42",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r37_c42": [
+        {
+            "neighbor": "r36_c41",
+            "name": "Rhine",
+            "type": "lake"
+        },
+        {
+            "neighbor": "r37_c41",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r38_c41": [
+        {
+            "neighbor": "r37_c41",
+            "name": "Rhine",
+            "type": "river"
+        },
+        {
+            "neighbor": "r38_c40",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ],
+    "r38_c40": [
+        {
+            "neighbor": "r38_c41",
+            "name": "Rhine",
+            "type": "river"
+        }
+    ]
+}
