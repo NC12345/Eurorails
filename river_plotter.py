@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # ==========================================
 # CONFIGURATION: Set the active river name here
 # ==========================================
-ACTIVE_RIVER_NAME = "Sava"
+ACTIVE_RIVER_NAME = "Ouse"
 ACTIVE_MODE = "river"  # toggled between "river" and "lake" via SPACE BAR
 
 MAP_DATA_PATH = "map_rough_draft.json"
@@ -120,7 +120,7 @@ def update_visualization():
                 px, py = -dy / L, dx / L
                 half_s = (1 / np.sqrt(3)) / 2
                 color = '#002266' if r_type == "lake" else '#0066cc'
-                lw = 6 if r_type == "lake" else 4
+                lw = 3 if r_type == "lake" else 3
                 line, = ax.plot(
                     [xm + px * half_s, xm - px * half_s],
                     [ym + py * half_s, ym - py * half_s],

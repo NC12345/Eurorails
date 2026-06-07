@@ -1719,314 +1719,314 @@
     "r45_c30": [
         {
             "neighbor": "r45_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r45_c31": [
         {
             "neighbor": "r45_c30",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r44_c30",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r44_c30": [
         {
             "neighbor": "r45_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r44_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r43_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r44_c31": [
         {
             "neighbor": "r44_c30",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r43_c30": [
         {
             "neighbor": "r43_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r43_c31": [
         {
             "neighbor": "r43_c30",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r44_c30",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r42_c30",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r42_c30": [
         {
             "neighbor": "r43_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r42_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r42_c31": [
         {
             "neighbor": "r42_c30",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r41_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r41_c31": [
         {
             "neighbor": "r42_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r41_c32",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r41_c32": [
         {
             "neighbor": "r41_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r40_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r40_c31": [
         {
             "neighbor": "r41_c32",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r40_c32",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r40_c32": [
         {
             "neighbor": "r40_c31",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r39_c32",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r39_c33",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r39_c32": [
         {
             "neighbor": "r40_c32",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r39_c33": [
         {
             "neighbor": "r40_c32",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r40_c33",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r40_c33": [
         {
             "neighbor": "r39_c33",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r39_c34",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r39_c34": [
         {
             "neighbor": "r40_c33",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r40_c34",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r39_c35",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r40_c34": [
         {
             "neighbor": "r39_c34",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r39_c35": [
         {
             "neighbor": "r39_c34",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r38_c34",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r38_c35",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "lake"
         }
     ],
     "r38_c34": [
         {
             "neighbor": "r39_c35",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r38_c35": [
         {
             "neighbor": "r39_c35",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "lake"
         },
         {
             "neighbor": "r39_c36",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "lake"
         }
     ],
     "r39_c36": [
         {
             "neighbor": "r38_c35",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "lake"
         },
         {
             "neighbor": "r38_c36",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "lake"
         },
         {
             "neighbor": "r39_c37",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r38_c36": [
         {
             "neighbor": "r39_c36",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "lake"
         }
     ],
     "r39_c37": [
         {
             "neighbor": "r39_c36",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r40_c36",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r40_c37",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r40_c36": [
         {
             "neighbor": "r39_c37",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r40_c37": [
         {
             "neighbor": "r39_c37",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r39_c38",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r39_c38": [
         {
             "neighbor": "r40_c37",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         },
         {
             "neighbor": "r40_c38",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
     "r40_c38": [
         {
             "neighbor": "r39_c38",
-            "name": "Rhône",
+            "name": "Rh\u00f4ne",
             "type": "river"
         }
     ],
@@ -4754,6 +4754,2118 @@
         {
             "neighbor": "r48_c59",
             "name": "Sava",
+            "type": "river"
+        }
+    ],
+    "r18_c44": [
+        {
+            "neighbor": "r19_c44",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r19_c44": [
+        {
+            "neighbor": "r18_c44",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r19_c45",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r19_c45": [
+        {
+            "neighbor": "r19_c44",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r20_c44",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r20_c44": [
+        {
+            "neighbor": "r19_c45",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r20_c45",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r20_c45": [
+        {
+            "neighbor": "r20_c44",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r21_c45",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r21_c46",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r21_c45": [
+        {
+            "neighbor": "r20_c45",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r21_c46": [
+        {
+            "neighbor": "r20_c45",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r20_c46",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r21_c47",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r20_c46": [
+        {
+            "neighbor": "r21_c46",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r21_c47": [
+        {
+            "neighbor": "r21_c46",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c46",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c47",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r22_c46": [
+        {
+            "neighbor": "r21_c47",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r22_c47": [
+        {
+            "neighbor": "r21_c47",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r21_c48",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c48",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r21_c48": [
+        {
+            "neighbor": "r22_c47",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r22_c48": [
+        {
+            "neighbor": "r22_c47",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c48",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r23_c48": [
+        {
+            "neighbor": "r23_c49",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c48",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r24_c48",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r24_c47",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r23_c49": [
+        {
+            "neighbor": "r23_c48",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r24_c48": [
+        {
+            "neighbor": "r23_c48",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r24_c47": [
+        {
+            "neighbor": "r23_c48",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c47",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c47",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r24_c46",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r23_c47": [
+        {
+            "neighbor": "r24_c47",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r25_c47": [
+        {
+            "neighbor": "r24_c47",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c48",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r24_c46": [
+        {
+            "neighbor": "r24_c47",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r25_c48": [
+        {
+            "neighbor": "r25_c47",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c47",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c48",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r26_c47": [
+        {
+            "neighbor": "r25_c48",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r26_c48": [
+        {
+            "neighbor": "r25_c48",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c49",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c49",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r26_c49": [
+        {
+            "neighbor": "r26_c48",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r27_c49",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r27_c49": [
+        {
+            "neighbor": "r26_c49",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r27_c50",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r25_c49": [
+        {
+            "neighbor": "r26_c48",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r27_c50": [
+        {
+            "neighbor": "r27_c49",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r28_c49",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r28_c49": [
+        {
+            "neighbor": "r27_c50",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r28_c50",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r28_c50": [
+        {
+            "neighbor": "r28_c49",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r29_c50",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r29_c50": [
+        {
+            "neighbor": "r28_c50",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r29_c51",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r29_c51": [
+        {
+            "neighbor": "r29_c50",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r30_c50",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r30_c50": [
+        {
+            "neighbor": "r29_c51",
+            "name": "Elbe",
+            "type": "river"
+        },
+        {
+            "neighbor": "r30_c51",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r30_c51": [
+        {
+            "neighbor": "r30_c50",
+            "name": "Elbe",
+            "type": "river"
+        }
+    ],
+    "r20_c52": [
+        {
+            "neighbor": "r21_c52",
+            "name": "Oder",
+            "type": "lake"
+        },
+        {
+            "neighbor": "r21_c53",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r20_c53",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r20_c51",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r21_c52": [
+        {
+            "neighbor": "r20_c52",
+            "name": "Oder",
+            "type": "lake"
+        },
+        {
+            "neighbor": "r20_c51",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r21_c53",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c52",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r21_c53": [
+        {
+            "neighbor": "r20_c52",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r21_c52",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r20_c53": [
+        {
+            "neighbor": "r20_c52",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r20_c51": [
+        {
+            "neighbor": "r21_c51",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r20_c50",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r19_c51",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r21_c52",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r20_c52",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r21_c51": [
+        {
+            "neighbor": "r20_c51",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r20_c50": [
+        {
+            "neighbor": "r20_c51",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r19_c51": [
+        {
+            "neighbor": "r20_c51",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r22_c52": [
+        {
+            "neighbor": "r21_c52",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c51",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r22_c51": [
+        {
+            "neighbor": "r22_c52",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c52",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r23_c52": [
+        {
+            "neighbor": "r22_c51",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c51",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r24_c51",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r23_c51": [
+        {
+            "neighbor": "r23_c52",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r24_c51": [
+        {
+            "neighbor": "r23_c52",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r24_c52",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c52",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r24_c52": [
+        {
+            "neighbor": "r24_c51",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r25_c52": [
+        {
+            "neighbor": "r24_c51",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c51",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c51",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c52",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r25_c51": [
+        {
+            "neighbor": "r25_c52",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r26_c51": [
+        {
+            "neighbor": "r25_c52",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r26_c52": [
+        {
+            "neighbor": "r25_c52",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c53",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r25_c53": [
+        {
+            "neighbor": "r26_c52",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c53",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r26_c53": [
+        {
+            "neighbor": "r25_c53",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c54",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c54",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r27_c54",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r25_c54": [
+        {
+            "neighbor": "r26_c53",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r26_c54": [
+        {
+            "neighbor": "r26_c53",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r27_c54",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r27_c54": [
+        {
+            "neighbor": "r26_c53",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c54",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r27_c55",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r28_c54",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r27_c55": [
+        {
+            "neighbor": "r27_c54",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r28_c54": [
+        {
+            "neighbor": "r27_c54",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r28_c53",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r29_c54",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r29_c55",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r28_c53": [
+        {
+            "neighbor": "r28_c54",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r29_c54": [
+        {
+            "neighbor": "r28_c54",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r28_c55": [
+        {
+            "neighbor": "r29_c55",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r29_c55": [
+        {
+            "neighbor": "r28_c55",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r28_c54",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r29_c56",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r29_c56": [
+        {
+            "neighbor": "r29_c55",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r30_c55",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r30_c55": [
+        {
+            "neighbor": "r29_c56",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r30_c56",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r30_c56": [
+        {
+            "neighbor": "r30_c55",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r31_c56",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r32_c56": [
+        {
+            "neighbor": "r32_c57",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r31_c57",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r32_c57": [
+        {
+            "neighbor": "r32_c56",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r31_c57": [
+        {
+            "neighbor": "r32_c56",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r31_c56",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r31_c56": [
+        {
+            "neighbor": "r31_c57",
+            "name": "Oder",
+            "type": "river"
+        },
+        {
+            "neighbor": "r30_c56",
+            "name": "Oder",
+            "type": "river"
+        }
+    ],
+    "r10_c45": [
+        {
+            "neighbor": "r11_c45",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r11_c46",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r10_c46",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r11_c45": [
+        {
+            "neighbor": "r10_c45",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r11_c46": [
+        {
+            "neighbor": "r10_c45",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r9_c46": [
+        {
+            "neighbor": "r10_c46",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r10_c46": [
+        {
+            "neighbor": "r9_c46",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r9_c47",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r10_c45",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r9_c47": [
+        {
+            "neighbor": "r10_c46",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r10_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r10_c47": [
+        {
+            "neighbor": "r9_c47",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r9_c48",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r9_c48": [
+        {
+            "neighbor": "r10_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r13_c51": [
+        {
+            "neighbor": "r14_c50",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r13_c50",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r14_c50": [
+        {
+            "neighbor": "r13_c51",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r14_c51",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r15_c51",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r14_c51": [
+        {
+            "neighbor": "r14_c50",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r15_c50": [
+        {
+            "neighbor": "r15_c51",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r15_c51": [
+        {
+            "neighbor": "r15_c50",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r14_c50",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r13_c50": [
+        {
+            "neighbor": "r13_c51",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r14_c49",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r14_c49": [
+        {
+            "neighbor": "r13_c50",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r14_c47": [
+        {
+            "neighbor": "r14_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r13_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r13_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r14_c48": [
+        {
+            "neighbor": "r14_c47",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r13_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r15_c48",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r13_c48": [
+        {
+            "neighbor": "r14_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r14_c47",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r12_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r12_c47",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r13_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r15_c48": [
+        {
+            "neighbor": "r14_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r15_c49",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r16_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r15_c49": [
+        {
+            "neighbor": "r15_c48",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r16_c49": [
+        {
+            "neighbor": "r17_c49",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r17_c49": [
+        {
+            "neighbor": "r16_c49",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r17_c48",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r17_c48": [
+        {
+            "neighbor": "r17_c49",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r16_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r16_c47": [
+        {
+            "neighbor": "r17_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r15_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r15_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r15_c47": [
+        {
+            "neighbor": "r16_c47",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r15_c46",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r15_c46": [
+        {
+            "neighbor": "r15_c47",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r14_c46",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r14_c46": [
+        {
+            "neighbor": "r15_c46",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r14_c45",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r13_c46",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r13_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r14_c45": [
+        {
+            "neighbor": "r14_c46",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r13_c46": [
+        {
+            "neighbor": "r14_c46",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r13_c47": [
+        {
+            "neighbor": "r14_c46",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r14_c47",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r13_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r12_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r12_c48": [
+        {
+            "neighbor": "r12_c47",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r13_c48",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r12_c47": [
+        {
+            "neighbor": "r12_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r13_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r13_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r8_c53": [
+        {
+            "neighbor": "r8_c54",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r9_c54",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r8_c54": [
+        {
+            "neighbor": "r8_c53",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r7_c54",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r7_c54": [
+        {
+            "neighbor": "r7_c55",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r8_c54",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r7_c55": [
+        {
+            "neighbor": "r7_c54",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r6_c54",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r6_c55",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r6_c54": [
+        {
+            "neighbor": "r7_c55",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r9_c54": [
+        {
+            "neighbor": "r8_c53",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r6_c55": [
+        {
+            "neighbor": "r7_c55",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r5_c60": [
+        {
+            "neighbor": "r6_c59",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r6_c59": [
+        {
+            "neighbor": "r5_c60",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r4_c58": [
+        {
+            "neighbor": "r5_c58",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r5_c58": [
+        {
+            "neighbor": "r4_c58",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r4_c57",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r6_c57",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r4_c57": [
+        {
+            "neighbor": "r5_c58",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r6_c57": [
+        {
+            "neighbor": "r5_c58",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r5_c57",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r5_c57": [
+        {
+            "neighbor": "r6_c57",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r6_c56",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r6_c56": [
+        {
+            "neighbor": "r5_c57",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r2_c44": [
+        {
+            "neighbor": "r3_c44",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r3_c44": [
+        {
+            "neighbor": "r2_c44",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r6_c50": [
+        {
+            "neighbor": "r7_c51",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r7_c51": [
+        {
+            "neighbor": "r6_c50",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r1_c59": [
+        {
+            "neighbor": "r2_c59",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r2_c59": [
+        {
+            "neighbor": "r1_c59",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r20_c58": [
+        {
+            "neighbor": "r20_c59",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r21_c59",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r20_c59": [
+        {
+            "neighbor": "r20_c58",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r20_c60",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r21_c59": [
+        {
+            "neighbor": "r20_c58",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r21_c58",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c58",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r21_c58": [
+        {
+            "neighbor": "r21_c59",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r22_c58": [
+        {
+            "neighbor": "r21_c59",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c59",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c59",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c58",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r23_c59": [
+        {
+            "neighbor": "r22_c58",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r22_c59": [
+        {
+            "neighbor": "r22_c58",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r22_c57": [
+        {
+            "neighbor": "r23_c58",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r23_c58": [
+        {
+            "neighbor": "r22_c57",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r22_c58",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r23_c57",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r24_c57",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r23_c57": [
+        {
+            "neighbor": "r23_c58",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r24_c57": [
+        {
+            "neighbor": "r23_c58",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r24_c58",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r24_c58": [
+        {
+            "neighbor": "r24_c57",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c58",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c59",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r25_c58": [
+        {
+            "neighbor": "r24_c58",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r25_c59": [
+        {
+            "neighbor": "r24_c58",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r24_c59",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c60",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r24_c59": [
+        {
+            "neighbor": "r25_c59",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r25_c60": [
+        {
+            "neighbor": "r25_c59",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c59",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c60",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r26_c59": [
+        {
+            "neighbor": "r25_c60",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r26_c60": [
+        {
+            "neighbor": "r25_c60",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c61",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r25_c61": [
+        {
+            "neighbor": "r26_c60",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c61",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r26_c61": [
+        {
+            "neighbor": "r25_c61",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c62",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c62",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r25_c62": [
+        {
+            "neighbor": "r26_c61",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c62",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r26_c62": [
+        {
+            "neighbor": "r25_c62",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r25_c63",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c61",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r27_c62",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r25_c63": [
+        {
+            "neighbor": "r26_c62",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r26_c63",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r26_c63": [
+        {
+            "neighbor": "r25_c63",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r27_c62": [
+        {
+            "neighbor": "r26_c62",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r27_c63",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r28_c62",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r27_c63": [
+        {
+            "neighbor": "r27_c62",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r28_c62": [
+        {
+            "neighbor": "r27_c62",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r29_c62",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r28_c61",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r29_c63",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r29_c62": [
+        {
+            "neighbor": "r28_c62",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r28_c61": [
+        {
+            "neighbor": "r28_c62",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r29_c63": [
+        {
+            "neighbor": "r28_c62",
+            "name": "Wista",
+            "type": "river"
+        },
+        {
+            "neighbor": "r28_c63",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r28_c63": [
+        {
+            "neighbor": "r29_c63",
+            "name": "Wista",
+            "type": "river"
+        }
+    ],
+    "r20_c60": [
+        {
+            "neighbor": "r20_c59",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r19_c61",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r19_c61": [
+        {
+            "neighbor": "r20_c60",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r20_c61",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r20_c61": [
+        {
+            "neighbor": "r19_c61",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r44_c44": [
+        {
+            "neighbor": "r44_c45",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r44_c45": [
+        {
+            "neighbor": "r44_c44",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r44_c47": [
+        {
+            "neighbor": "r45_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r45_c47": [
+        {
+            "neighbor": "r44_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r45_c48": [
+        {
+            "neighbor": "r46_c48",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r46_c48": [
+        {
+            "neighbor": "r45_c48",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r46_c49",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r45_c49",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r46_c47",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r46_c49": [
+        {
+            "neighbor": "r46_c48",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r45_c49": [
+        {
+            "neighbor": "r46_c48",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r46_c47": [
+        {
+            "neighbor": "r46_c48",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r48_c49": [
+        {
+            "neighbor": "r49_c50",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r49_c50": [
+        {
+            "neighbor": "r48_c49",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r48_c50",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r48_c50": [
+        {
+            "neighbor": "r49_c50",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r52_c51": [
+        {
+            "neighbor": "r52_c52",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r51_c52",
+            "name": null,
+            "type": "lake"
+        },
+        {
+            "neighbor": "r51_c51",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r52_c52": [
+        {
+            "neighbor": "r52_c51",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r51_c52": [
+        {
+            "neighbor": "r52_c51",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r51_c51": [
+        {
+            "neighbor": "r52_c51",
+            "name": null,
+            "type": "lake"
+        }
+    ],
+    "r14_c29": [
+        {
+            "neighbor": "r15_c30",
+            "name": "Trent",
+            "type": "river"
+        },
+        {
+            "neighbor": "r14_c30",
+            "name": "Trent",
+            "type": "river"
+        }
+    ],
+    "r15_c30": [
+        {
+            "neighbor": "r14_c29",
+            "name": "Trent",
+            "type": "river"
+        },
+        {
+            "neighbor": "r15_c29",
+            "name": "Trent",
+            "type": "river"
+        }
+    ],
+    "r14_c30": [
+        {
+            "neighbor": "r14_c29",
+            "name": "Trent",
+            "type": "river"
+        },
+        {
+            "neighbor": "r13_c30",
+            "name": "Trent",
+            "type": "river"
+        },
+        {
+            "neighbor": "r13_c31",
+            "name": "Trent",
+            "type": "river"
+        },
+        {
+            "neighbor": "r13_c31",
+            "name": "Ouse",
+            "type": "river"
+        }
+    ],
+    "r13_c30": [
+        {
+            "neighbor": "r14_c30",
+            "name": "Trent",
+            "type": "river"
+        },
+        {
+            "neighbor": "r13_c31",
+            "name": "Ouse",
+            "type": "river"
+        },
+        {
+            "neighbor": "r12_c30",
+            "name": "Ouse",
+            "type": "river"
+        }
+    ],
+    "r13_c31": [
+        {
+            "neighbor": "r14_c30",
+            "name": "Trent",
+            "type": "river"
+        },
+        {
+            "neighbor": "r14_c31",
+            "name": "Trent",
+            "type": "river"
+        },
+        {
+            "neighbor": "r14_c31",
+            "name": "Ouse",
+            "type": "river"
+        },
+        {
+            "neighbor": "r14_c30",
+            "name": "Ouse",
+            "type": "river"
+        },
+        {
+            "neighbor": "r13_c30",
+            "name": "Ouse",
+            "type": "river"
+        }
+    ],
+    "r14_c31": [
+        {
+            "neighbor": "r13_c31",
+            "name": "Trent",
+            "type": "river"
+        },
+        {
+            "neighbor": "r13_c31",
+            "name": "Ouse",
+            "type": "river"
+        }
+    ],
+    "r15_c29": [
+        {
+            "neighbor": "r15_c30",
+            "name": "Trent",
+            "type": "river"
+        }
+    ],
+    "r12_c30": [
+        {
+            "neighbor": "r13_c30",
+            "name": "Ouse",
+            "type": "river"
+        },
+        {
+            "neighbor": "r12_c29",
+            "name": "Ouse",
+            "type": "river"
+        }
+    ],
+    "r12_c29": [
+        {
+            "neighbor": "r12_c30",
+            "name": "Ouse",
             "type": "river"
         }
     ]
