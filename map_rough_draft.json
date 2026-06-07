@@ -4079,15 +4079,6 @@
             "pixel_x": 1193,
             "pixel_y": 646
         },
-        "r21_c32": {
-            "row": 21,
-            "col": 32,
-            "axial_q": 31.5,
-            "axial_r": 21,
-            "type": "ferry",
-            "pixel_x": 1226,
-            "pixel_y": 647
-        },
         "r21_c36": {
             "row": 21,
             "col": 36,
@@ -4651,7 +4642,7 @@
             "col": 34,
             "axial_q": 33.5,
             "axial_r": 23,
-            "type": "ferry",
+            "type": "clear",
             "pixel_x": 1297,
             "pixel_y": 701
         },

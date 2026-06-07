@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # ==========================================
 # CONFIGURATION: Set the active river name here
 # ==========================================
-ACTIVE_RIVER_NAME = "Guadalquivir"
+ACTIVE_RIVER_NAME = "Sava"
 ACTIVE_MODE = "river"  # toggled between "river" and "lake" via SPACE BAR
 
 MAP_DATA_PATH = "map_rough_draft.json"
