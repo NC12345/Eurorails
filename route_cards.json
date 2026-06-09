@@ -1,0 +1,19 @@
+[
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Marble",
+      "amount": 31
+    },
+    {
+      "city_name": "Hamburg",
+      "resource_name": "Ham",
+      "amount": 17
+    },
+    {
+      "city_name": "Praha",
+      "resource_name": "Oil",
+      "amount": 17
+    }
+  ]
+]
