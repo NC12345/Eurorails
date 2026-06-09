@@ -197,6 +197,9 @@ for nid, node in node_spatial.items():
     elif ntype == "medium_city": ax.plot(node["x"], node["y"], 's', color='#ff9900', markersize=5, zorder=2)
     elif ntype == "large_city": ax.plot(node["x"], node["y"], 'h', color='#cc00cc', markersize=6, zorder=2)
     elif ntype == "ferry": ax.plot(node["x"], node["y"], 'd', color='#009999', markersize=4, zorder=2)
+    elif ntype == "ferry_small_city":
+        ax.plot(node["x"], node["y"], 'o', color='#00cccc', markersize=5, zorder=2)
+        ax.plot(node["x"], node["y"], 'o', color='black', markersize=2, zorder=3)
 
 if x_coords and y_coords:
     ax.set_xlim(min(x_coords) - 1, max(x_coords) + 1)

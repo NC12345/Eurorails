@@ -105,7 +105,10 @@ for node_id, node_data in master_map.items():
     elif node_type == "large_city":
         ax.plot(x_graph, y_graph, marker='h', color='#cc00cc', markersize=6, linestyle='None', zorder=2)
     elif node_type == "ferry":
-        ax.plot(x_graph, y_graph, marker='d', color='#009999', markersize=4, linestyle='None', zorder=2)
+        ax.plot(x_graph, y_graph, marker='d', color='#009999', markersize=6, linestyle='None', zorder=2)
+    elif node_type == "ferry_small_city":
+        ax.plot(x_graph, y_graph, marker='o', color='#00cccc', markersize=5, linestyle='None', zorder=2)
+        ax.plot(x_graph, y_graph, marker='o', color='black', markersize=2, linestyle='None', zorder=3)
 
     plotted_nodes.append((x_graph, y_graph, q, r, node_type, node_id, node_data))
 
@@ -113,6 +116,31 @@ for node_id, node_data in master_map.items():
 if x_coords and y_coords:
     ax.set_xlim(min(x_coords) - 1.5, max(x_coords) + 1.5)
     ax.set_ylim(min(y_coords) - 1.5, max(y_coords) + 1.5)
+
+# --- LAYER 2.5: FERRY ROUTE LINES ---
+rendered_ferry_pairs = set()
+for node_id, node_data in master_map.items():
+    fl = node_data.get('ferry_link')
+    if not isinstance(fl, dict):
+        continue
+    partner_id = fl.get('to')
+    if not partner_id or partner_id not in master_map:
+        continue
+    pair_key = "__".join(sorted([node_id, partner_id]))
+    if pair_key in rendered_ferry_pairs:
+        continue
+    rendered_ferry_pairs.add(pair_key)
+
+    q1, r1 = node_data["axial_q"], node_data["axial_r"]
+    x1, y1 = q1, -r1 * (np.sqrt(3) / 2)
+    q2, r2 = master_map[partner_id]["axial_q"], master_map[partner_id]["axial_r"]
+    x2, y2 = q2, -r2 * (np.sqrt(3) / 2)
+
+    ax.plot([x1, x2], [y1, y2], color='#00aa44', linewidth=1.5,
+            linestyle='--', alpha=0.8, zorder=1)
+    cost = fl.get('cost_ecu', '?')
+    ax.text((x1 + x2) / 2, (y1 + y2) / 2, f"{cost} ECU",
+            fontsize=7, color='#00aa44', ha='center', va='bottom', zorder=3)
 
 plt.title("Eurorails — Unified Digital Engine Canvas (Master Node & Obstacle Topology)", fontsize=13, fontweight='bold', pad=15)
 ax.axis('off')
@@ -159,7 +187,9 @@ def on_click(event):
                     
             obs_string = "\n".join(obs_details) if obs_details else " No adjacent river/lake blocks"
             
-            label_text = f"ID: {nid} ({ntype})\nq={q}, r={r}\n\nObstacles:\n{obs_string}"
+            city_types = {"small_city", "medium_city", "large_city"}
+            city_line = f"\nCity: {ndata.get('city_name')}" if ntype in city_types else ""
+            label_text = f"ID: {nid} ({ntype}){city_line}\nq={q}, r={r}\n\nObstacles:\n{obs_string}"
             tooltip.set_text(label_text)
             tooltip.xy = (x, y)
             tooltip.set_visible(True)

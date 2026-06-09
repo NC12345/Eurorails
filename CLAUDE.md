@@ -30,7 +30,6 @@ source .venv/bin/activate
 
 # Install dependencies (numpy, matplotlib — opencv-python for archive tools)
 pip install numpy matplotlib
-pip install opencv-python  # only needed for archives/type_plotting.py and aligner2.py
 ```
 
 Python 3.14 is used (`.venv` targets `/Library/Frameworks/Python.framework/Versions/3.14`).
@@ -40,15 +39,6 @@ Python 3.14 is used (`.venv` targets `/Library/Frameworks/Python.framework/Versi
 ```bash
 # Visualize the final master map (interactive — click nodes for details)
 python master_map_visualization.py
-
-# Regenerate master_map.json from source data (run from json archives/ or adjust paths)
-python archives/master_map_maker.py
-
-# Interactive river/lake edge tagger (sets ACTIVE_RIVER_NAME in script, then run)
-python archives/river_plotter.py
-
-# Node-type keyboard plotter (requires map image + opencv)
-python archives/type_plotting.py
 ```
 
 ## master_map.json schema
@@ -60,9 +50,10 @@ Each key is a node ID with the form `r{row}_c{col}`. Node fields:
 | `id` | Node ID string (`r21_c36`) |
 | `row`, `col` | Grid row/column integers |
 | `axial_q`, `axial_r` | Axial hex coordinates (odd rows offset by −0.5 in q) |
-| `type` | Terrain: `clear`, `mountain`, `alpine`, `small_city`, `medium_city`, `large_city`, `ferry`, `space_sea` |
+| `type` | Terrain: `clear`, `mountain`, `alpine`, `small_city`, `medium_city`, `large_city`, `ferry`, `ferry_small_city`, `space_sea` |
 | `city_name` | String or null |
 | `neighbors` | Map of neighbor node IDs → `{river, river_name, lake, lake_name}` |
+| `ferry_link` | `{"to": node_id, "cost_ecu": int}` or `null`; present only on `ferry` / `ferry_small_city` nodes |
 
 `space_sea` nodes exist in the data but are skipped during rendering and pathfinding.
 
@@ -72,15 +63,3 @@ Each key is a node ID with the form `r{row}_c{col}`. Node fields:
 - **Screen projection**: `x = axial_q`, `y = −axial_r × (√3 / 2)`.
 - **Neighbor directions** (6 hex directions): `(±1, 0)`, `(±0.5, ±1)`.
 - Water obstacles (rivers/lakes) live on **edges** between node pairs, stored bidirectionally.
-
-## Archives
-
-Scripts in `archives/` were used to build the map data and are kept for reference/re-editing:
-
-- `aligner2.py` — perspective-corrects the physical map photo (requires opencv)
-- `type_plotting.py` — keyboard-driven tool to classify each node by terrain type
-- `river_plotter.py` — click-to-tag river/lake edges; `Q` saves, `Space` toggles river↔lake mode, `Esc` quits without saving
-- `master_map_maker.py` — merges `map_rough_draft.json` + `rivers.json` → `master_map.json`
-- `map_visualization.py` — earlier visualizer using `map_rough_draft.json` + `map_borders.json`
-
-JSON snapshots in `json archives/` are historical checkpoints of the map at various stages.

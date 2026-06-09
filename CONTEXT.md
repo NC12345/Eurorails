@@ -12,13 +12,25 @@ Fundamental unit. Each node maps to one hex cell on the physical board. Stored i
 
 Key fields: `type` (terrain), `city_name` (string or null), `neighbors` (map of node IDs → edge obstacle data).
 
-**Terrain types:** `clear`, `mountain`, `alpine`, `small_city`, `medium_city`, `large_city`, `ferry`, `space_sea`.
+**Terrain types:** `clear`, `mountain`, `alpine`, `small_city`, `medium_city`, `large_city`, `ferry`, `ferry_small_city`, `space_sea`.
 
 `space_sea` nodes exist in the data but are skipped during rendering and pathfinding.
 
 ### City node
 
-A hex node whose `type` is `small_city`, `medium_city`, or `large_city`. Has an associated `city_name` string. The city name editor (`city_adder.py`) assigns these names interactively.
+A hex node whose `type` is `small_city`, `medium_city`, `large_city`, or `ferry_small_city`. Has an associated `city_name` string. The city name editor (`city_adder.py`) assigns these names interactively.
+
+### Ferry node
+
+A hex node that is a ferry terminal but not a city. Type value `ferry`. Has a `ferry_link` field (see below).
+
+### Ferry-city node
+
+A hex node that is both a small city and a ferry terminal. Type value `ferry_small_city`. Has a `city_name` and a `ferry_link` field (see below). Currently two exist: Dublin (`r10_c22`) and Belfast (`r7_c25`). Rendered as a cyan circle with a black center dot to distinguish from plain `small_city` nodes.
+
+### Ferry link
+
+Ferry terminals come in pairs connected by a traversable sea crossing. Each ferry node stores `ferry_link: {"to": node_id, "cost_ecu": int}` pointing to its partner, or `null` if unlinked. The link is stored bidirectionally (both nodes reference each other). Crossing costs ECU and differs per pair. The `ferry_linker.py` editor assigns and saves these links interactively.
 
 ### Water obstacle (river / lake edge)
 
@@ -29,15 +41,6 @@ An obstacle that lives on the **edge** between two adjacent nodes, stored bidire
 Each node has `axial_q` (column) and `axial_r` (row) in an axial hex coordinate system. Odd rows are offset by −0.5 in q. Screen projection: `x = axial_q`, `y = −axial_r × (√3 / 2)`.
 
 ## Tool taxonomy
-
-### Pipeline tools (`archives/`)
-
-Build and transform map data. Run once (or re-run to edit). Not intended for ongoing use.
-
-- `aligner2.py` — perspective-correct the map photo
-- `type_plotting.py` — keyboard-driven terrain classification
-- `river_plotter.py` — click-to-tag river/lake edges
-- `master_map_maker.py` — merge rough draft + rivers → `master_map.json`
 
 ### Interactive editors (project root)
 

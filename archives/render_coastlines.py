@@ -87,6 +87,9 @@ for node_id, node in graph_nodes.items():
         ax.plot(x, y, marker='h', color='#cc00cc', markersize=5, linestyle='None')
     elif node_type == 'ferry':
         ax.plot(x, y, marker='d', color='#009999', markersize=2, linestyle='None')
+    elif node_type == 'ferry_small_city':
+        ax.plot(x, y, marker='o', color='#00cccc', markersize=5, linestyle='None')
+        ax.plot(x, y, marker='o', color='black', markersize=2, linestyle='None')
 
     for (dq, dr), vi, vj in DIRECTIONS:
         key = neighbor_key(r, c, dq, dr)

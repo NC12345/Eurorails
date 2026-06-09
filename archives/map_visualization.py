@@ -75,6 +75,9 @@ for node_id, node in graph_nodes.items():
         ax.plot(x_graph, y_graph, marker='h', color='#cc00cc', markersize=5, linestyle='None', zorder=2)
     elif node_type == "ferry":
         ax.plot(x_graph, y_graph, marker='d', color='#009999', markersize=2, linestyle='None', zorder=2)
+    elif node_type == "ferry_small_city":
+        ax.plot(x_graph, y_graph, marker='o', color='#00cccc', markersize=5, linestyle='None', zorder=2)
+        ax.plot(x_graph, y_graph, marker='o', color='black', markersize=2, linestyle='None', zorder=3)
 
     plotted_nodes.append((x_graph, y_graph, q, r, node_type, node_id))
 

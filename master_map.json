@@ -1773,7 +1773,7 @@
     "axial_q": 32,
     "axial_r": 2,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Aberdeen",
     "neighbors": {
       "r2_c31": {
         "river": false,
@@ -2060,7 +2060,7 @@
     "axial_q": 50,
     "axial_r": 2,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Oslo",
     "neighbors": {
       "r2_c51": {
         "river": false,
@@ -4443,7 +4443,7 @@
     "axial_q": 27.5,
     "axial_r": 5,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Glasgow",
     "neighbors": {
       "r5_c29": {
         "river": false,
@@ -4656,6 +4656,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r8_c47",
+      "cost_ecu": 8
     }
   },
   "r5_c51": {
@@ -4911,7 +4915,7 @@
     "axial_q": 59.5,
     "axial_r": 5,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Stockholm",
     "neighbors": {
       "r6_c59": {
         "river": false,
@@ -5958,8 +5962,8 @@
     "col": 25,
     "axial_q": 24.5,
     "axial_r": 7,
-    "type": "ferry",
-    "city_name": null,
+    "type": "ferry_small_city",
+    "city_name": "Belfast",
     "neighbors": {
       "r7_c26": {
         "river": false,
@@ -5985,6 +5989,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r7_c26",
+      "cost_ecu": 4
     }
   },
   "r7_c26": {
@@ -6014,6 +6022,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r7_c25",
+      "cost_ecu": 4
     }
   },
   "r7_c27": {
@@ -7074,6 +7086,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r5_c47",
+      "cost_ecu": 8
     }
   },
   "r8_c48": {
@@ -7763,7 +7779,7 @@
     "axial_q": 30.5,
     "axial_r": 9,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Newcastle",
     "neighbors": {
       "r9_c30": {
         "river": false,
@@ -7903,7 +7919,7 @@
     "axial_q": 50.5,
     "axial_r": 9,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "G\u00f6teborg",
     "neighbors": {
       "r9_c52": {
         "river": false,
@@ -8453,8 +8469,8 @@
     "col": 22,
     "axial_q": 22,
     "axial_r": 10,
-    "type": "ferry",
-    "city_name": null,
+    "type": "ferry_small_city",
+    "city_name": "Dublin",
     "neighbors": {
       "r10_c21": {
         "river": false,
@@ -8486,6 +8502,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r13_c28",
+      "cost_ecu": 8
     }
   },
   "r10_c28": {
@@ -8644,6 +8664,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r12_c44",
+      "cost_ecu": 16
     }
   },
   "r10_c45": {
@@ -10047,7 +10071,7 @@
     "axial_q": 18,
     "axial_r": 12,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Cork",
     "neighbors": {
       "r12_c19": {
         "river": false,
@@ -10494,6 +10518,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r10_c31",
+      "cost_ecu": 16
     }
   },
   "r12_c45": {
@@ -10597,7 +10625,7 @@
     "axial_q": 47,
     "axial_r": 12,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Arhus",
     "neighbors": {
       "r12_c48": {
         "river": false,
@@ -11243,6 +11271,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r10_c22",
+      "cost_ecu": 8
     }
   },
   "r13_c29": {
@@ -11252,7 +11284,7 @@
     "axial_q": 28.5,
     "axial_r": 13,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Manchester",
     "neighbors": {
       "r13_c30": {
         "river": false,
@@ -12401,7 +12433,7 @@
     "axial_q": 50,
     "axial_r": 14,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "K\u00f8benhavn",
     "neighbors": {
       "r14_c51": {
         "river": false,
@@ -13241,6 +13273,10 @@
         "lake": true,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r18_c51",
+      "cost_ecu": 8
     }
   },
   "r15_c52": {
@@ -13537,7 +13573,7 @@
     "axial_q": 28,
     "axial_r": 16,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Birmingham",
     "neighbors": {
       "r16_c29": {
         "river": false,
@@ -13841,7 +13877,7 @@
     "axial_q": 24.5,
     "axial_r": 17,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Cardiff",
     "neighbors": {
       "r17_c26": {
         "river": false,
@@ -15113,6 +15149,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r15_c51",
+      "cost_ecu": 8
     }
   },
   "r19_c21": {
@@ -15450,7 +15490,7 @@
     "axial_q": 28.5,
     "axial_r": 19,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "London",
     "neighbors": {
       "r19_c30": {
         "river": false,
@@ -15497,7 +15537,7 @@
     "axial_q": 29.5,
     "axial_r": 19,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "London",
     "neighbors": {
       "r19_c31": {
         "river": false,
@@ -15652,6 +15692,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r19_c37",
+      "cost_ecu": 4
     }
   },
   "r19_c37": {
@@ -15675,6 +15719,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r19_c33",
+      "cost_ecu": 4
     }
   },
   "r19_c39": {
@@ -16339,7 +16387,7 @@
     "axial_q": 61.5,
     "axial_r": 19,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Kaliningrad",
     "neighbors": {
       "r19_c63": {
         "river": false,
@@ -16440,6 +16488,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r24_c25",
+      "cost_ecu": 4
     }
   },
   "r20_c23": {
@@ -16654,7 +16706,7 @@
     "axial_q": 28,
     "axial_r": 20,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "London",
     "neighbors": {
       "r20_c29": {
         "river": true,
@@ -16701,7 +16753,7 @@
     "axial_q": 29,
     "axial_r": 20,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "London",
     "neighbors": {
       "r20_c30": {
         "river": false,
@@ -16748,7 +16800,7 @@
     "axial_q": 30,
     "axial_r": 20,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "London",
     "neighbors": {
       "r20_c31": {
         "river": false,
@@ -16830,7 +16882,7 @@
     "axial_q": 36,
     "axial_r": 20,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Holland",
     "neighbors": {
       "r20_c37": {
         "river": false,
@@ -16865,7 +16917,7 @@
     "axial_q": 37,
     "axial_r": 20,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Holland",
     "neighbors": {
       "r20_c38": {
         "river": false,
@@ -17135,7 +17187,7 @@
     "axial_q": 43,
     "axial_r": 20,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Bremen",
     "neighbors": {
       "r20_c44": {
         "river": false,
@@ -17229,7 +17281,7 @@
     "axial_q": 45,
     "axial_r": 20,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Hamburg",
     "neighbors": {
       "r20_c46": {
         "river": false,
@@ -18087,6 +18139,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r25_c28",
+      "cost_ecu": 4
     }
   },
   "r21_c28": {
@@ -18131,7 +18187,7 @@
     "axial_q": 28.5,
     "axial_r": 21,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "London",
     "neighbors": {
       "r21_c30": {
         "river": false,
@@ -18172,7 +18228,7 @@
     "axial_q": 29.5,
     "axial_r": 21,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "London",
     "neighbors": {
       "r21_c31": {
         "river": false,
@@ -18260,7 +18316,7 @@
     "axial_q": 35.5,
     "axial_r": 21,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Holland",
     "neighbors": {
       "r21_c37": {
         "river": false,
@@ -18295,7 +18351,7 @@
     "axial_q": 36.5,
     "axial_r": 21,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Holland",
     "neighbors": {
       "r21_c38": {
         "river": false,
@@ -18342,7 +18398,7 @@
     "axial_q": 37.5,
     "axial_r": 21,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Holland",
     "neighbors": {
       "r21_c39": {
         "river": false,
@@ -19000,7 +19056,7 @@
     "axial_q": 51.5,
     "axial_r": 21,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Szczecin",
     "neighbors": {
       "r21_c53": {
         "river": true,
@@ -19642,6 +19698,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r23_c32",
+      "cost_ecu": 4
     }
   },
   "r22_c35": {
@@ -19686,7 +19746,7 @@
     "axial_q": 36,
     "axial_r": 22,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Holland",
     "neighbors": {
       "r22_c37": {
         "river": false,
@@ -19733,7 +19793,7 @@
     "axial_q": 37,
     "axial_r": 22,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Holland",
     "neighbors": {
       "r22_c38": {
         "river": true,
@@ -21010,6 +21070,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r22_c31",
+      "cost_ecu": 4
     }
   },
   "r23_c33": {
@@ -21788,7 +21852,7 @@
     "axial_q": 49.5,
     "axial_r": 23,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Berlin",
     "neighbors": {
       "r23_c51": {
         "river": false,
@@ -21835,7 +21899,7 @@
     "axial_q": 50.5,
     "axial_r": 23,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Berlin",
     "neighbors": {
       "r23_c52": {
         "river": true,
@@ -22454,6 +22518,10 @@
         "lake": false,
         "lake_name": null
       }
+    },
+    "ferry_link": {
+      "to": "r20_c22",
+      "cost_ecu": 4
     }
   },
   "r24_c31": {
@@ -22639,7 +22707,7 @@
     "axial_q": 35,
     "axial_r": 24,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Antwerpen",
     "neighbors": {
       "r24_c36": {
         "river": false,
@@ -22827,7 +22895,7 @@
     "axial_q": 39,
     "axial_r": 24,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Ruhr",
     "neighbors": {
       "r24_c40": {
         "river": false,
@@ -22874,7 +22942,7 @@
     "axial_q": 40,
     "axial_r": 24,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Ruhr",
     "neighbors": {
       "r24_c41": {
         "river": false,
@@ -23297,7 +23365,7 @@
     "axial_q": 49,
     "axial_r": 24,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Berlin",
     "neighbors": {
       "r24_c50": {
         "river": false,
@@ -23344,7 +23412,7 @@
     "axial_q": 50,
     "axial_r": 24,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Berlin",
     "neighbors": {
       "r24_c51": {
         "river": false,
@@ -23391,7 +23459,7 @@
     "axial_q": 51,
     "axial_r": 24,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Berlin",
     "neighbors": {
       "r24_c52": {
         "river": true,
@@ -24161,6 +24229,10 @@
         "lake": true,
         "lake_name": "Seine"
       }
+    },
+    "ferry_link": {
+      "to": "r21_c27",
+      "cost_ecu": 4
     }
   },
   "r25_c29": {
@@ -24422,7 +24494,7 @@
     "axial_q": 34.5,
     "axial_r": 25,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Bruxelles",
     "neighbors": {
       "r25_c36": {
         "river": false,
@@ -24610,7 +24682,7 @@
     "axial_q": 38.5,
     "axial_r": 25,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Ruhr",
     "neighbors": {
       "r25_c40": {
         "river": true,
@@ -24657,7 +24729,7 @@
     "axial_q": 39.5,
     "axial_r": 25,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Ruhr",
     "neighbors": {
       "r25_c41": {
         "river": false,
@@ -24704,7 +24776,7 @@
     "axial_q": 40.5,
     "axial_r": 25,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Ruhr",
     "neighbors": {
       "r25_c42": {
         "river": false,
@@ -25127,7 +25199,7 @@
     "axial_q": 49.5,
     "axial_r": 25,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Berlin",
     "neighbors": {
       "r25_c51": {
         "river": false,
@@ -25174,7 +25246,7 @@
     "axial_q": 50.5,
     "axial_r": 25,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Berlin",
     "neighbors": {
       "r25_c52": {
         "river": true,
@@ -26577,7 +26649,7 @@
     "axial_q": 39,
     "axial_r": 26,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Ruhr",
     "neighbors": {
       "r26_c40": {
         "river": true,
@@ -26624,7 +26696,7 @@
     "axial_q": 40,
     "axial_r": 26,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Ruhr",
     "neighbors": {
       "r26_c41": {
         "river": false,
@@ -27611,7 +27683,7 @@
     "axial_q": 61,
     "axial_r": 26,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Warszawa",
     "neighbors": {
       "r26_c62": {
         "river": true,
@@ -29002,7 +29074,7 @@
     "axial_q": 47.5,
     "axial_r": 27,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Leipzig",
     "neighbors": {
       "r27_c49": {
         "river": false,
@@ -29519,7 +29591,7 @@
     "axial_q": 58.5,
     "axial_r": 27,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Lodz",
     "neighbors": {
       "r27_c60": {
         "river": false,
@@ -30159,7 +30231,7 @@
     "axial_q": 30,
     "axial_r": 28,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Paris",
     "neighbors": {
       "r28_c31": {
         "river": false,
@@ -30206,7 +30278,7 @@
     "axial_q": 31,
     "axial_r": 28,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Paris",
     "neighbors": {
       "r28_c32": {
         "river": false,
@@ -32103,7 +32175,7 @@
     "axial_q": 29.5,
     "axial_r": 29,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Paris",
     "neighbors": {
       "r29_c31": {
         "river": true,
@@ -32150,7 +32222,7 @@
     "axial_q": 30.5,
     "axial_r": 29,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Paris",
     "neighbors": {
       "r29_c32": {
         "river": false,
@@ -32197,7 +32269,7 @@
     "axial_q": 31.5,
     "axial_r": 29,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Paris",
     "neighbors": {
       "r29_c33": {
         "river": false,
@@ -32479,7 +32551,7 @@
     "axial_q": 37.5,
     "axial_r": 29,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Luxembourg",
     "neighbors": {
       "r29_c39": {
         "river": false,
@@ -32667,7 +32739,7 @@
     "axial_q": 41.5,
     "axial_r": 29,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Frankfurt",
     "neighbors": {
       "r29_c43": {
         "river": false,
@@ -33278,7 +33350,7 @@
     "axial_q": 54.5,
     "axial_r": 29,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Wroclaw",
     "neighbors": {
       "r29_c56": {
         "river": true,
@@ -34059,7 +34131,7 @@
     "axial_q": 30,
     "axial_r": 30,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Paris",
     "neighbors": {
       "r30_c31": {
         "river": true,
@@ -34106,7 +34178,7 @@
     "axial_q": 31,
     "axial_r": 30,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Paris",
     "neighbors": {
       "r30_c32": {
         "river": false,
@@ -35639,7 +35711,7 @@
     "axial_q": 22.5,
     "axial_r": 31,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Nantes",
     "neighbors": {
       "r31_c24": {
         "river": false,
@@ -36948,8 +37020,8 @@
     "col": 51,
     "axial_q": 50.5,
     "axial_r": 31,
-    "type": "small_city",
-    "city_name": null,
+    "type": "medium_city",
+    "city_name": "Praha",
     "neighbors": {
       "r31_c52": {
         "river": false,
@@ -38476,7 +38548,7 @@
     "axial_q": 42,
     "axial_r": 32,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Stuttgart",
     "neighbors": {
       "r32_c43": {
         "river": false,
@@ -41219,7 +41291,7 @@
     "axial_q": 59.5,
     "axial_r": 33,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Krakow",
     "neighbors": {
       "r33_c61": {
         "river": false,
@@ -46445,7 +46517,7 @@
     "axial_q": 45,
     "axial_r": 36,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "M\u00fcnchen",
     "neighbors": {
       "r36_c46": {
         "river": false,
@@ -46774,7 +46846,7 @@
     "axial_q": 52,
     "axial_r": 36,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Wien",
     "neighbors": {
       "r36_c53": {
         "river": false,
@@ -46821,7 +46893,7 @@
     "axial_q": 53,
     "axial_r": 36,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Wien",
     "neighbors": {
       "r36_c54": {
         "river": false,
@@ -49581,7 +49653,7 @@
     "axial_q": 57,
     "axial_r": 40,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Budapest",
     "neighbors": {
       "r40_c58": {
         "river": false,
@@ -50444,7 +50516,7 @@
     "axial_q": 16.5,
     "axial_r": 41,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Bilbao",
     "neighbors": {
       "r41_c18": {
         "river": false,
@@ -51395,7 +51467,7 @@
     "axial_q": 38.5,
     "axial_r": 41,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Milano",
     "neighbors": {
       "r41_c40": {
         "river": false,
@@ -51442,7 +51514,7 @@
     "axial_q": 39.5,
     "axial_r": 41,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Milano",
     "neighbors": {
       "r41_c41": {
         "river": false,
@@ -54067,7 +54139,7 @@
     "axial_q": 36,
     "axial_r": 42,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Torino",
     "neighbors": {
       "r42_c37": {
         "river": false,
@@ -54161,7 +54233,7 @@
     "axial_q": 38,
     "axial_r": 42,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Milano",
     "neighbors": {
       "r42_c39": {
         "river": false,
@@ -54208,7 +54280,7 @@
     "axial_q": 39,
     "axial_r": 42,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Milano",
     "neighbors": {
       "r42_c40": {
         "river": false,
@@ -54255,7 +54327,7 @@
     "axial_q": 40,
     "axial_r": 42,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Milano",
     "neighbors": {
       "r42_c41": {
         "river": false,
@@ -56328,7 +56400,7 @@
     "axial_q": 24.5,
     "axial_r": 43,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Toulouse",
     "neighbors": {
       "r43_c26": {
         "river": false,
@@ -56986,7 +57058,7 @@
     "axial_q": 38.5,
     "axial_r": 43,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Milano",
     "neighbors": {
       "r43_c40": {
         "river": false,
@@ -57033,7 +57105,7 @@
     "axial_q": 39.5,
     "axial_r": 43,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Milano",
     "neighbors": {
       "r43_c41": {
         "river": false,
@@ -60093,7 +60165,7 @@
     "axial_q": 44,
     "axial_r": 44,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Venezia",
     "neighbors": {
       "r44_c45": {
         "river": false,
@@ -60345,7 +60417,7 @@
     "axial_q": 51,
     "axial_r": 44,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Zagreb",
     "neighbors": {
       "r44_c52": {
         "river": false,
@@ -64918,7 +64990,7 @@
     "axial_q": 31,
     "axial_r": 46,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Marseille",
     "neighbors": {
       "r46_c32": {
         "river": false,
@@ -66654,7 +66726,7 @@
     "axial_q": 11.5,
     "axial_r": 47,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Madrid",
     "neighbors": {
       "r47_c13": {
         "river": false,
@@ -66701,7 +66773,7 @@
     "axial_q": 12.5,
     "axial_r": 47,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Madrid",
     "neighbors": {
       "r47_c14": {
         "river": false,
@@ -68773,7 +68845,7 @@
     "axial_q": 11,
     "axial_r": 48,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Madrid",
     "neighbors": {
       "r48_c12": {
         "river": false,
@@ -68820,7 +68892,7 @@
     "axial_q": 12,
     "axial_r": 48,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Madrid",
     "neighbors": {
       "r48_c13": {
         "river": false,
@@ -68867,7 +68939,7 @@
     "axial_q": 13,
     "axial_r": 48,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Madrid",
     "neighbors": {
       "r48_c14": {
         "river": false,
@@ -69589,7 +69661,7 @@
     "axial_q": 42,
     "axial_r": 48,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Firenze",
     "neighbors": {
       "r48_c43": {
         "river": false,
@@ -70217,7 +70289,7 @@
     "axial_q": 60,
     "axial_r": 48,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Beograd",
     "neighbors": {
       "r48_c61": {
         "river": true,
@@ -70892,7 +70964,7 @@
     "axial_q": 11.5,
     "axial_r": 49,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Madrid",
     "neighbors": {
       "r49_c13": {
         "river": false,
@@ -70939,7 +71011,7 @@
     "axial_q": 12.5,
     "axial_r": 49,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Madrid",
     "neighbors": {
       "r49_c14": {
         "river": false,
@@ -71438,7 +71510,7 @@
     "axial_q": 23.5,
     "axial_r": 49,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Barcelona",
     "neighbors": {
       "r49_c25": {
         "river": false,
@@ -75679,7 +75751,7 @@
     "axial_q": 54.5,
     "axial_r": 51,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Sarajevo",
     "neighbors": {
       "r51_c56": {
         "river": false,
@@ -76906,7 +76978,7 @@
     "axial_q": 18,
     "axial_r": 52,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Valencia",
     "neighbors": {
       "r52_c17": {
         "river": false,
@@ -79944,7 +80016,7 @@
     "axial_q": 43,
     "axial_r": 54,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Roma",
     "neighbors": {
       "r54_c44": {
         "river": true,
@@ -83713,7 +83785,7 @@
     "axial_q": 46,
     "axial_r": 58,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Napoli",
     "neighbors": {
       "r58_c47": {
         "river": false,
@@ -85907,7 +85979,7 @@
     "axial_q": 37.5,
     "axial_r": 37,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Bern",
     "neighbors": {
       "r37_c39": {
         "river": false,
@@ -86001,7 +86073,7 @@
     "axial_q": 39.5,
     "axial_r": 37,
     "type": "medium_city",
-    "city_name": null,
+    "city_name": "Z\u00fcrich",
     "neighbors": {
       "r37_c41": {
         "river": false,
@@ -86565,7 +86637,7 @@
     "axial_q": 51.5,
     "axial_r": 37,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Wien",
     "neighbors": {
       "r37_c53": {
         "river": true,
@@ -86612,7 +86684,7 @@
     "axial_q": 52.5,
     "axial_r": 37,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Wien",
     "neighbors": {
       "r37_c54": {
         "river": false,
@@ -86659,7 +86731,7 @@
     "axial_q": 53.5,
     "axial_r": 37,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Wien",
     "neighbors": {
       "r37_c55": {
         "river": false,
@@ -87510,7 +87582,7 @@
     "axial_q": 22,
     "axial_r": 38,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Bordeaux",
     "neighbors": {
       "r38_c23": {
         "river": true,
@@ -88920,7 +88992,7 @@
     "axial_q": 52,
     "axial_r": 38,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Wien",
     "neighbors": {
       "r38_c53": {
         "river": false,
@@ -88967,7 +89039,7 @@
     "axial_q": 53,
     "axial_r": 38,
     "type": "large_city",
-    "city_name": null,
+    "city_name": "Wien",
     "neighbors": {
       "r38_c54": {
         "river": true,
@@ -90434,7 +90506,7 @@
     "axial_q": 31.5,
     "axial_r": 39,
     "type": "small_city",
-    "city_name": null,
+    "city_name": "Lyon",
     "neighbors": {
       "r39_c33": {
         "river": false,
