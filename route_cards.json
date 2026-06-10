@@ -1,6 +1,567 @@
 [
   [
     {
+      "city_name": "Berlin",
+      "resource_name": "Cattle",
+      "amount": 17
+    },
+    {
+      "city_name": "Lyon",
+      "resource_name": "Copper",
+      "amount": 26
+    },
+    {
+      "city_name": "Budapest",
+      "resource_name": "Machinery",
+      "amount": 22
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Imports",
+      "amount": 6
+    },
+    {
+      "city_name": "Hamburg",
+      "resource_name": "Bauxite",
+      "amount": 21
+    },
+    {
+      "city_name": "Kaliningrad",
+      "resource_name": "Machinery",
+      "amount": 21
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Marble",
+      "amount": 24
+    },
+    {
+      "city_name": "Luxembourg",
+      "resource_name": "Wheat",
+      "amount": 10
+    },
+    {
+      "city_name": "Bilbao",
+      "resource_name": "Wine",
+      "amount": 8
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Oranges",
+      "amount": 42
+    },
+    {
+      "city_name": "Luxembourg",
+      "resource_name": "Chocolate",
+      "amount": 7
+    },
+    {
+      "city_name": "Lodz",
+      "resource_name": "Labor",
+      "amount": 16
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Fish",
+      "amount": 27
+    },
+    {
+      "city_name": "Antwerpen",
+      "resource_name": "Oil",
+      "amount": 20
+    },
+    {
+      "city_name": "Leipzig",
+      "resource_name": "Labor",
+      "amount": 16
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Tobacco",
+      "amount": 32
+    },
+    {
+      "city_name": "Bruxelles",
+      "resource_name": "Copper",
+      "amount": 19
+    },
+    {
+      "city_name": "Marseille",
+      "resource_name": "Chocolate",
+      "amount": 16
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Labor",
+      "amount": 16
+    },
+    {
+      "city_name": "Bern",
+      "resource_name": "Potatoes",
+      "amount": 21
+    },
+    {
+      "city_name": "Zurich",
+      "resource_name": "Cork",
+      "amount": 42
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Cheese",
+      "amount": 10
+    },
+    {
+      "city_name": "Birmingham",
+      "resource_name": "Tobacco",
+      "amount": 44
+    },
+    {
+      "city_name": "Bremen",
+      "resource_name": "Ham",
+      "amount": 19
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Wood",
+      "amount": 22
+    },
+    {
+      "city_name": "Frankfurt",
+      "resource_name": "Cattle",
+      "amount": 10
+    },
+    {
+      "city_name": "Dublin",
+      "resource_name": "Marble",
+      "amount": 44
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Sheep",
+      "amount": 27
+    },
+    {
+      "city_name": "Manchester",
+      "resource_name": "Beer",
+      "amount": 9
+    },
+    {
+      "city_name": "Arhus",
+      "resource_name": "Wheat",
+      "amount": 27
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Steel",
+      "amount": 8
+    },
+    {
+      "city_name": "Glasgow",
+      "resource_name": "Bauxite",
+      "amount": 39
+    },
+    {
+      "city_name": "Antwerpen",
+      "resource_name": "Wine",
+      "amount": 10
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Oil",
+      "amount": 23
+    },
+    {
+      "city_name": "Stuttgart",
+      "resource_name": "China",
+      "amount": 8
+    },
+    {
+      "city_name": "Newcastle",
+      "resource_name": "Labor",
+      "amount": 40
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Machinery",
+      "amount": 7
+    },
+    {
+      "city_name": "Porto",
+      "resource_name": "Oil",
+      "amount": 50
+    },
+    {
+      "city_name": "Kobenhavn",
+      "resource_name": "Coal",
+      "amount": 21
+    }
+  ],
+  [
+    {
+      "city_name": "Berlin",
+      "resource_name": "Chocolate",
+      "amount": 13
+    },
+    {
+      "city_name": "Cork",
+      "resource_name": "Wood",
+      "amount": 45
+    },
+    {
+      "city_name": "Bordeaux",
+      "resource_name": "Copper",
+      "amount": 36
+    }
+  ],
+  [
+    {
+      "city_name": "Holland",
+      "resource_name": "Cork",
+      "amount": 43
+    },
+    {
+      "city_name": "Firenze",
+      "resource_name": "Fish",
+      "amount": 44
+    },
+    {
+      "city_name": "Manchester",
+      "resource_name": "Labor",
+      "amount": 36
+    }
+  ],
+  [
+    {
+      "city_name": "Holland",
+      "resource_name": "Wine",
+      "amount": 7
+    },
+    {
+      "city_name": "Marseille",
+      "resource_name": "Fish",
+      "amount": 29
+    },
+    {
+      "city_name": "Goteborg",
+      "resource_name": "Steel",
+      "amount": 24
+    }
+  ],
+  [
+    {
+      "city_name": "Holland",
+      "resource_name": "Wheat",
+      "amount": 15
+    },
+    {
+      "city_name": "Zurich",
+      "resource_name": "Hops",
+      "amount": 24
+    },
+    {
+      "city_name": "Glasgow",
+      "resource_name": "Cattle",
+      "amount": 30
+    }
+  ],
+  [
+    {
+      "city_name": "Holland",
+      "resource_name": "Bauxite",
+      "amount": 22
+    },
+    {
+      "city_name": "Venizia",
+      "resource_name": "Tourists",
+      "amount": 19
+    },
+    {
+      "city_name": "Lisboa",
+      "resource_name": "Oranges",
+      "amount": 9
+    }
+  ],
+  [
+    {
+      "city_name": "Holland",
+      "resource_name": "Copper",
+      "amount": 17
+    },
+    {
+      "city_name": "Torino",
+      "resource_name": "Imports",
+      "amount": 20
+    },
+    {
+      "city_name": "Kaliningrad",
+      "resource_name": "Sheep",
+      "amount": 40
+    }
+  ],
+  [
+    {
+      "city_name": "Holland",
+      "resource_name": "Potatoes",
+      "amount": 12
+    },
+    {
+      "city_name": "Sarajevo",
+      "resource_name": "Imports",
+      "amount": 30
+    },
+    {
+      "city_name": "Toulouse",
+      "resource_name": "Flowers",
+      "amount": 21
+    }
+  ],
+  [
+    {
+      "city_name": "Holland",
+      "resource_name": "Ham",
+      "amount": 21
+    },
+    {
+      "city_name": "Munchen",
+      "resource_name": "Iron",
+      "amount": 26
+    },
+    {
+      "city_name": "Cardiff",
+      "resource_name": "Cheese",
+      "amount": 15
+    }
+  ],
+  [
+    {
+      "city_name": "Holland",
+      "resource_name": "Oranges",
+      "amount": 33
+    },
+    {
+      "city_name": "Roma",
+      "resource_name": "Cheese",
+      "amount": 19
+    },
+    {
+      "city_name": "Newcastle",
+      "resource_name": "Beer",
+      "amount": 14
+    }
+  ],
+  [
+    {
+      "city_name": "Holland",
+      "resource_name": "Cars",
+      "amount": 10
+    },
+    {
+      "city_name": "Zagreb",
+      "resource_name": "Beer",
+      "amount": 11
+    },
+    {
+      "city_name": "Zurich",
+      "resource_name": "Tourists",
+      "amount": 12
+    }
+  ],
+  [
+    {
+      "city_name": "Holland",
+      "resource_name": "Coal",
+      "amount": 16
+    },
+    {
+      "city_name": "Napoli",
+      "resource_name": "Oranges",
+      "amount": 39
+    },
+    {
+      "city_name": "Oslo",
+      "resource_name": "Bauxite",
+      "amount": 42
+    }
+  ],
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Wood",
+      "amount": 37
+    },
+    {
+      "city_name": "Beograd",
+      "resource_name": "Beer",
+      "amount": 17
+    },
+    {
+      "city_name": "Marseille",
+      "resource_name": "Coal",
+      "amount": 29
+    }
+  ],
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Flowers",
+      "amount": 8
+    },
+    {
+      "city_name": "Krakow",
+      "resource_name": "Chocolate",
+      "amount": 22
+    },
+    {
+      "city_name": "Munchen",
+      "resource_name": "Hops",
+      "amount": 29
+    }
+  ],
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Beer",
+      "amount": 12
+    },
+    {
+      "city_name": "Budapest",
+      "resource_name": "Imports",
+      "amount": 25
+    },
+    {
+      "city_name": "Aberdeen",
+      "resource_name": "Machinery",
+      "amount": 25
+    }
+  ],
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Labor",
+      "amount": 31
+    },
+    {
+      "city_name": "Birmingham",
+      "resource_name": "Coal",
+      "amount": 5
+    },
+    {
+      "city_name": "Roma",
+      "resource_name": "Wheat",
+      "amount": 20
+    }
+  ],
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Copper",
+      "amount": 25
+    },
+    {
+      "city_name": "Wroclaw",
+      "resource_name": "Cars",
+      "amount": 14
+    },
+    {
+      "city_name": "Napoli",
+      "resource_name": "Flowers",
+      "amount": 35
+    }
+  ],
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Bauxite",
+      "amount": 25
+    },
+    {
+      "city_name": "Leipzig",
+      "resource_name": "Potatoes",
+      "amount": 7
+    },
+    {
+      "city_name": "Belfast",
+      "resource_name": "Tobacco",
+      "amount": 59
+    }
+  ],
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Tobacco",
+      "amount": 40
+    },
+    {
+      "city_name": "Szczesin",
+      "resource_name": "Cheese",
+      "amount": 12
+    },
+    {
+      "city_name": "Beograd",
+      "resource_name": "Cars",
+      "amount": 19
+    }
+  ],
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Fish",
+      "amount": 16
+    },
+    {
+      "city_name": "Stuttgart",
+      "resource_name": "Oil",
+      "amount": 27
+    },
+    {
+      "city_name": "Dublin",
+      "resource_name": "Copper",
+      "amount": 36
+    }
+  ],
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Ham",
+      "amount": 30
+    },
+    {
+      "city_name": "Zurich",
+      "resource_name": "Bauxite",
+      "amount": 16
+    },
+    {
+      "city_name": "Budapest",
+      "resource_name": "Steel",
+      "amount": 22
+    }
+  ],
+  [
+    {
       "city_name": "London",
       "resource_name": "Marble",
       "amount": 31
@@ -14,6 +575,1468 @@
       "city_name": "Praha",
       "resource_name": "Oil",
       "amount": 17
+    }
+  ],
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Cattle",
+      "amount": 16
+    },
+    {
+      "city_name": "Stockholm",
+      "resource_name": "Wheat",
+      "amount": 46
+    },
+    {
+      "city_name": "Cork",
+      "resource_name": "Cork",
+      "amount": 62
+    }
+  ],
+  [
+    {
+      "city_name": "London",
+      "resource_name": "Wine",
+      "amount": 16
+    },
+    {
+      "city_name": "Lyon",
+      "resource_name": "Machinery",
+      "amount": 12
+    },
+    {
+      "city_name": "Lodz",
+      "resource_name": "Flowers",
+      "amount": 21
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Tourists",
+      "amount": 35
+    },
+    {
+      "city_name": "Leipzig",
+      "resource_name": "Oil",
+      "amount": 22
+    },
+    {
+      "city_name": "Warszawa",
+      "resource_name": "Hops",
+      "amount": 36
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Iron",
+      "amount": 39
+    },
+    {
+      "city_name": "Bruxelles",
+      "resource_name": "Beer",
+      "amount": 10
+    },
+    {
+      "city_name": "Porto",
+      "resource_name": "Cars",
+      "amount": 35
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "China",
+      "amount": 39
+    },
+    {
+      "city_name": "Birmingham",
+      "resource_name": "Cheese",
+      "amount": 12
+    },
+    {
+      "city_name": "Hamburg",
+      "resource_name": "Labor",
+      "amount": 22
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Oil",
+      "amount": 46
+    },
+    {
+      "city_name": "Bremen",
+      "resource_name": "Bauxite",
+      "amount": 22
+    },
+    {
+      "city_name": "Stockholm",
+      "resource_name": "Tourists",
+      "amount": 33
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Cheese",
+      "amount": 30
+    },
+    {
+      "city_name": "Manchester",
+      "resource_name": "Chocolate",
+      "amount": 16
+    },
+    {
+      "city_name": "Sevilla",
+      "resource_name": "Iron",
+      "amount": 51
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Wheat",
+      "amount": 15
+    },
+    {
+      "city_name": "Arhus",
+      "resource_name": "Coal",
+      "amount": 17
+    },
+    {
+      "city_name": "Antwerpen",
+      "resource_name": "Tobacco",
+      "amount": 34
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Wine",
+      "amount": 10
+    },
+    {
+      "city_name": "Glasgow",
+      "resource_name": "Oranges",
+      "amount": 50
+    },
+    {
+      "city_name": "Valencia",
+      "resource_name": "Steel",
+      "amount": 31
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Machinery",
+      "amount": 11
+    },
+    {
+      "city_name": "Aberdeen",
+      "resource_name": "Labor",
+      "amount": 48
+    },
+    {
+      "city_name": "Bruxelles",
+      "resource_name": "Potatoes",
+      "amount": 17
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Cars",
+      "amount": 28
+    },
+    {
+      "city_name": "Kobenhavn",
+      "resource_name": "Tourists",
+      "amount": 18
+    },
+    {
+      "city_name": "Birmingham",
+      "resource_name": "Bauxite",
+      "amount": 29
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Coal",
+      "amount": 37
+    },
+    {
+      "city_name": "Barcelona",
+      "resource_name": "Imports",
+      "amount": 24
+    },
+    {
+      "city_name": "Manchester",
+      "resource_name": "Wine",
+      "amount": 20
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Tobacco",
+      "amount": 41
+    },
+    {
+      "city_name": "Marseille",
+      "resource_name": "Flowers",
+      "amount": 23
+    },
+    {
+      "city_name": "Bilbao",
+      "resource_name": "Cheese",
+      "amount": 24
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Sheep",
+      "amount": 8
+    },
+    {
+      "city_name": "Goteborg",
+      "resource_name": "Cattle",
+      "amount": 35
+    },
+    {
+      "city_name": "Munchen",
+      "resource_name": "Tobacco",
+      "amount": 22
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Marble",
+      "amount": 34
+    },
+    {
+      "city_name": "Zurich",
+      "resource_name": "Tobacco",
+      "amount": 22
+    },
+    {
+      "city_name": "Toulouse",
+      "resource_name": "Imports",
+      "amount": 18
+    }
+  ],
+  [
+    {
+      "city_name": "Madrid",
+      "resource_name": "Cattle",
+      "amount": 21
+    },
+    {
+      "city_name": "Torino",
+      "resource_name": "Bauxite",
+      "amount": 11
+    },
+    {
+      "city_name": "Lisboa",
+      "resource_name": "Steel",
+      "amount": 42
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Beer",
+      "amount": 9
+    },
+    {
+      "city_name": "Oslo",
+      "resource_name": "Sheep",
+      "amount": 35
+    },
+    {
+      "city_name": "Barcelona",
+      "resource_name": "Iron",
+      "amount": 31
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "China",
+      "amount": 17
+    },
+    {
+      "city_name": "Munchen",
+      "resource_name": "Wood",
+      "amount": 18
+    },
+    {
+      "city_name": "Bordeaux",
+      "resource_name": "Potatoes",
+      "amount": 34
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Cork",
+      "amount": 41
+    },
+    {
+      "city_name": "Cardiff",
+      "resource_name": "Fish",
+      "amount": 20
+    },
+    {
+      "city_name": "Marseille",
+      "resource_name": "Steel",
+      "amount": 16
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Flowers",
+      "amount": 19
+    },
+    {
+      "city_name": "Bremen",
+      "resource_name": "Iron",
+      "amount": 17
+    },
+    {
+      "city_name": "Nantes",
+      "resource_name": "Wood",
+      "amount": 39
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Hops",
+      "amount": 29
+    },
+    {
+      "city_name": "Napoli",
+      "resource_name": "China",
+      "amount": 30
+    },
+    {
+      "city_name": "Zurich",
+      "resource_name": "Oil",
+      "amount": 25
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Iron",
+      "amount": 28
+    },
+    {
+      "city_name": "Newcastle",
+      "resource_name": "Cattle",
+      "amount": 26
+    },
+    {
+      "city_name": "Torino",
+      "resource_name": "Beer",
+      "amount": 12
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Steel",
+      "amount": 13
+    },
+    {
+      "city_name": "Zagreb",
+      "resource_name": "Oranges",
+      "amount": 38
+    },
+    {
+      "city_name": "Lyon",
+      "resource_name": "Cars",
+      "amount": 9
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Tourists",
+      "amount": 16
+    },
+    {
+      "city_name": "Budapest",
+      "resource_name": "Sheep",
+      "amount": 44
+    },
+    {
+      "city_name": "Glasgow",
+      "resource_name": "Marble",
+      "amount": 46
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Machinery",
+      "amount": 20
+    },
+    {
+      "city_name": "Aberdeen",
+      "resource_name": "Steel",
+      "amount": 17
+    },
+    {
+      "city_name": "Roma",
+      "resource_name": "Tourists",
+      "amount": 28
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Oil",
+      "amount": 20
+    },
+    {
+      "city_name": "Birmingham",
+      "resource_name": "Flowers",
+      "amount": 12
+    },
+    {
+      "city_name": "Luxembourg",
+      "resource_name": "Wood",
+      "amount": 29
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Wood",
+      "amount": 17
+    },
+    {
+      "city_name": "Lodz",
+      "resource_name": "Wine",
+      "amount": 10
+    },
+    {
+      "city_name": "Beograd",
+      "resource_name": "Wheat",
+      "amount": 32
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Imports",
+      "amount": 17
+    },
+    {
+      "city_name": "Belfast",
+      "resource_name": "Machinery",
+      "amount": 30
+    },
+    {
+      "city_name": "Budapest",
+      "resource_name": "Wood",
+      "amount": 12
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Potatoes",
+      "amount": 24
+    },
+    {
+      "city_name": "Warszawa",
+      "resource_name": "Marble",
+      "amount": 31
+    },
+    {
+      "city_name": "Bern",
+      "resource_name": "Oil",
+      "amount": 28
+    }
+  ],
+  [
+    {
+      "city_name": "Milano",
+      "resource_name": "Chocolate",
+      "amount": 5
+    },
+    {
+      "city_name": "Dublin",
+      "resource_name": "Coal",
+      "amount": 12
+    },
+    {
+      "city_name": "Praha",
+      "resource_name": "Flowers",
+      "amount": 15
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Iron",
+      "amount": 13
+    },
+    {
+      "city_name": "Hamburg",
+      "resource_name": "Cars",
+      "amount": 10
+    },
+    {
+      "city_name": "Frankfurt",
+      "resource_name": "Cork",
+      "amount": 46
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Hops",
+      "amount": 13
+    },
+    {
+      "city_name": "Stockholm",
+      "resource_name": "Copper",
+      "amount": 36
+    },
+    {
+      "city_name": "Napoli",
+      "resource_name": "Chocolate",
+      "amount": 21
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Ham",
+      "amount": 27
+    },
+    {
+      "city_name": "Cork",
+      "resource_name": "Cheese",
+      "amount": 24
+    },
+    {
+      "city_name": "Lodz",
+      "resource_name": "Oranges",
+      "amount": 52
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Chocolate",
+      "amount": 4
+    },
+    {
+      "city_name": "Antwerpen",
+      "resource_name": "China",
+      "amount": 14
+    },
+    {
+      "city_name": "Stuttgart",
+      "resource_name": "Flowers",
+      "amount": 11
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Potatoes",
+      "amount": 20
+    },
+    {
+      "city_name": "Bruxelles",
+      "resource_name": "Fish",
+      "amount": 28
+    },
+    {
+      "city_name": "Warszawa",
+      "resource_name": "Imports",
+      "amount": 17
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Marble",
+      "amount": 21
+    },
+    {
+      "city_name": "Porto",
+      "resource_name": "Wood",
+      "amount": 54
+    },
+    {
+      "city_name": "Hamburg",
+      "resource_name": "Beer",
+      "amount": 9
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Cheese",
+      "amount": 8
+    },
+    {
+      "city_name": "Birmingham",
+      "resource_name": "Coal",
+      "amount": 5
+    },
+    {
+      "city_name": "Firenze",
+      "resource_name": "Potatoes",
+      "amount": 27
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Sheep",
+      "amount": 19
+    },
+    {
+      "city_name": "Manchester",
+      "resource_name": "Bauxite",
+      "amount": 31
+    },
+    {
+      "city_name": "Stockholm",
+      "resource_name": "Cheese",
+      "amount": 15
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Tourists",
+      "amount": 10
+    },
+    {
+      "city_name": "Stockholm",
+      "resource_name": "Marble",
+      "amount": 55
+    },
+    {
+      "city_name": "Antwerpen",
+      "resource_name": "Cattle",
+      "amount": 11
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Fish",
+      "amount": 28
+    },
+    {
+      "city_name": "Glasgow",
+      "resource_name": "Imports",
+      "amount": 24
+    },
+    {
+      "city_name": "Venizia",
+      "resource_name": "Wheat",
+      "amount": 16
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Wheat",
+      "amount": 7
+    },
+    {
+      "city_name": "Valencia",
+      "resource_name": "China",
+      "amount": 38
+    },
+    {
+      "city_name": "Bruxelles",
+      "resource_name": "Marble",
+      "amount": 24
+    }
+  ],
+  [
+    {
+      "city_name": "Paris",
+      "resource_name": "Labor",
+      "amount": 25
+    },
+    {
+      "city_name": "Lisboa",
+      "resource_name": "Machinery",
+      "amount": 23
+    },
+    {
+      "city_name": "Sarajevo",
+      "resource_name": "Sheep",
+      "amount": 44
+    }
+  ],
+  [
+    {
+      "city_name": "Ruhr",
+      "resource_name": "Cork",
+      "amount": 44
+    },
+    {
+      "city_name": "Barcelona",
+      "resource_name": "Fish",
+      "amount": 22
+    },
+    {
+      "city_name": "Birmingham",
+      "resource_name": "Machinery",
+      "amount": 17
+    }
+  ],
+  [
+    {
+      "city_name": "Ruhr",
+      "resource_name": "Coal",
+      "amount": 14
+    },
+    {
+      "city_name": "Bilbao",
+      "resource_name": "Oil",
+      "amount": 39
+    },
+    {
+      "city_name": "Arhus",
+      "resource_name": "Flowers",
+      "amount": 15
+    }
+  ],
+  [
+    {
+      "city_name": "Ruhr",
+      "resource_name": "Copper",
+      "amount": 14
+    },
+    {
+      "city_name": "Marseille",
+      "resource_name": "Beer",
+      "amount": 20
+    },
+    {
+      "city_name": "Zagreb",
+      "resource_name": "Steel",
+      "amount": 21
+    }
+  ],
+  [
+    {
+      "city_name": "Ruhr",
+      "resource_name": "Iron",
+      "amount": 13
+    },
+    {
+      "city_name": "Sevilla",
+      "resource_name": "Ham",
+      "amount": 66
+    },
+    {
+      "city_name": "Glasgow",
+      "resource_name": "Hops",
+      "amount": 17
+    }
+  ],
+  [
+    {
+      "city_name": "Ruhr",
+      "resource_name": "Labor",
+      "amount": 20
+    },
+    {
+      "city_name": "Toulouse",
+      "resource_name": "Hops",
+      "amount": 26
+    },
+    {
+      "city_name": "Lisboa",
+      "resource_name": "Cattle",
+      "amount": 30
+    }
+  ],
+  [
+    {
+      "city_name": "Ruhr",
+      "resource_name": "Oranges",
+      "amount": 33
+    },
+    {
+      "city_name": "Torino",
+      "resource_name": "Wine",
+      "amount": 17
+    },
+    {
+      "city_name": "Krakow",
+      "resource_name": "Copper",
+      "amount": 7
+    }
+  ],
+  [
+    {
+      "city_name": "Ruhr",
+      "resource_name": "China",
+      "amount": 7
+    },
+    {
+      "city_name": "Goteborg",
+      "resource_name": "Iron",
+      "amount": 11
+    },
+    {
+      "city_name": "Barcelona",
+      "resource_name": "Copper",
+      "amount": 41
+    }
+  ],
+  [
+    {
+      "city_name": "Ruhr",
+      "resource_name": "Bauxite",
+      "amount": 19
+    },
+    {
+      "city_name": "Bordeaux",
+      "resource_name": "Cork",
+      "amount": 24
+    },
+    {
+      "city_name": "Marseille",
+      "resource_name": "Ham",
+      "amount": 37
+    }
+  ],
+  [
+    {
+      "city_name": "Ruhr",
+      "resource_name": "Cars",
+      "amount": 9
+    },
+    {
+      "city_name": "Roma",
+      "resource_name": "Iron",
+      "amount": 40
+    },
+    {
+      "city_name": "Wroclaw",
+      "resource_name": "Chocolate",
+      "amount": 20
+    }
+  ],
+  [
+    {
+      "city_name": "Ruhr",
+      "resource_name": "Wood",
+      "amount": 27
+    },
+    {
+      "city_name": "Nantes",
+      "resource_name": "Coal",
+      "amount": 17
+    },
+    {
+      "city_name": "Luxembourg",
+      "resource_name": "Copper",
+      "amount": 19
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Cork",
+      "amount": 53
+    },
+    {
+      "city_name": "Napoli",
+      "resource_name": "Wine",
+      "amount": 25
+    },
+    {
+      "city_name": "Szczesin",
+      "resource_name": "Oil",
+      "amount": 26
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Sheep",
+      "amount": 38
+    },
+    {
+      "city_name": "Beograd",
+      "resource_name": "Potatoes",
+      "amount": 20
+    },
+    {
+      "city_name": "Torino",
+      "resource_name": "Iron",
+      "amount": 28
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Oranges",
+      "amount": 42
+    },
+    {
+      "city_name": "Lyon",
+      "resource_name": "Labor",
+      "amount": 23
+    },
+    {
+      "city_name": "Munchen",
+      "resource_name": "Cattle",
+      "amount": 10
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Hops",
+      "amount": 34
+    },
+    {
+      "city_name": "Budapest",
+      "resource_name": "China",
+      "amount": 16
+    },
+    {
+      "city_name": "Kaliningrad",
+      "resource_name": "Chocolate",
+      "amount": 27
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Imports",
+      "amount": 19
+    },
+    {
+      "city_name": "Cork",
+      "resource_name": "Tourists",
+      "amount": 17
+    },
+    {
+      "city_name": "Roma",
+      "resource_name": "Coal",
+      "amount": 29
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Wheat",
+      "amount": 21
+    },
+    {
+      "city_name": "Sevilla",
+      "resource_name": "Tourists",
+      "amount": 48
+    },
+    {
+      "city_name": "Napoli",
+      "resource_name": "Sheep",
+      "amount": 39
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Flowers",
+      "amount": 18
+    },
+    {
+      "city_name": "Lodz",
+      "resource_name": "Cattle",
+      "amount": 24
+    },
+    {
+      "city_name": "Leipzig",
+      "resource_name": "Cheese",
+      "amount": 11
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Steel",
+      "amount": 15
+    },
+    {
+      "city_name": "Warszawa",
+      "resource_name": "Oranges",
+      "amount": 53
+    },
+    {
+      "city_name": "Beograd",
+      "resource_name": "Machinery",
+      "amount": 28
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Beer",
+      "amount": 5
+    },
+    {
+      "city_name": "Bern",
+      "resource_name": "Ham",
+      "amount": 28
+    },
+    {
+      "city_name": "Budapest",
+      "resource_name": "Wheat",
+      "amount": 28
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Tourists",
+      "amount": 15
+    },
+    {
+      "city_name": "Hamburg",
+      "resource_name": "Tobacco",
+      "amount": 35
+    },
+    {
+      "city_name": "Bremen",
+      "resource_name": "Cars",
+      "amount": 10
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "China",
+      "amount": 9
+    },
+    {
+      "city_name": "Frankfurt",
+      "resource_name": "Hops",
+      "amount": 21
+    },
+    {
+      "city_name": "Praha",
+      "resource_name": "Fish",
+      "amount": 36
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Cars",
+      "amount": 7
+    },
+    {
+      "city_name": "Stockholm",
+      "resource_name": "Cattle",
+      "amount": 44
+    },
+    {
+      "city_name": "Arhus",
+      "resource_name": "Machinery",
+      "amount": 10
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Marble",
+      "amount": 16
+    },
+    {
+      "city_name": "Antwerpen",
+      "resource_name": "Labor",
+      "amount": 26
+    },
+    {
+      "city_name": "Lodz",
+      "resource_name": "Coal",
+      "amount": 6
+    }
+  ],
+  [
+    {
+      "city_name": "Wien",
+      "resource_name": "Oil",
+      "amount": 11
+    },
+    {
+      "city_name": "Stuttgart",
+      "resource_name": "Iron",
+      "amount": 22
+    },
+    {
+      "city_name": "Warszawa",
+      "resource_name": "Cars",
+      "amount": 20
+    }
+  ],
+  [
+    {
+      "city_name": "Lisboa",
+      "resource_name": "Ham",
+      "amount": 63
+    },
+    {
+      "city_name": "Bruxelles",
+      "resource_name": "Wheat",
+      "amount": 13
+    },
+    {
+      "city_name": "Kobenhavn",
+      "resource_name": "Marble",
+      "amount": 39
+    }
+  ],
+  [
+    {
+      "city_name": "Porto",
+      "resource_name": "Flowers",
+      "amount": 39
+    },
+    {
+      "city_name": "Birmingham",
+      "resource_name": "Fish",
+      "amount": 17
+    },
+    {
+      "city_name": "Hamburg",
+      "resource_name": "Steel",
+      "amount": 7
+    }
+  ],
+  [
+    {
+      "city_name": "Barcelona",
+      "resource_name": "Potatoes",
+      "amount": 40
+    },
+    {
+      "city_name": "Firenze",
+      "resource_name": "Wheat",
+      "amount": 17
+    },
+    {
+      "city_name": "Stockholm",
+      "resource_name": "Chocolate",
+      "amount": 38
+    }
+  ],
+  [
+    {
+      "city_name": "Valencia",
+      "resource_name": "Potatoes",
+      "amount": 46
+    },
+    {
+      "city_name": "Manchester",
+      "resource_name": "Oil",
+      "amount": 5
+    },
+    {
+      "city_name": "Goteborg",
+      "resource_name": "Wine",
+      "amount": 27
+    }
+  ],
+  [
+    {
+      "city_name": "Sevilla",
+      "resource_name": "Wood",
+      "amount": 58
+    },
+    {
+      "city_name": "Belfast",
+      "resource_name": "Flowers",
+      "amount": 25
+    },
+    {
+      "city_name": "Antwerpen",
+      "resource_name": "Sheep",
+      "amount": 24
+    }
+  ],
+  [
+    {
+      "city_name": "Zurich",
+      "resource_name": "Fish",
+      "amount": 38
+    },
+    {
+      "city_name": "Venizia",
+      "resource_name": "Flowers",
+      "amount": 23
+    },
+    {
+      "city_name": "Bruxelles",
+      "resource_name": "Wine",
+      "amount": 10
+    }
+  ],
+  [
+    {
+      "city_name": "Valencia",
+      "resource_name": "Tourists",
+      "amount": 35
+    },
+    {
+      "city_name": "Lisboa",
+      "resource_name": "Sheep",
+      "amount": 17
+    },
+    {
+      "city_name": "Oslo",
+      "resource_name": "Potatoes",
+      "amount": 28
+    }
+  ],
+  [
+    {
+      "city_name": "Venizia",
+      "resource_name": "Cattle",
+      "amount": 12
+    },
+    {
+      "city_name": "Sarajevo",
+      "resource_name": "Beer",
+      "amount": 18
+    },
+    {
+      "city_name": "Birmingham",
+      "resource_name": "Copper",
+      "amount": 29
+    }
+  ],
+  [
+    {
+      "city_name": "Munchen",
+      "resource_name": "Oranges",
+      "amount": 36
+    },
+    {
+      "city_name": "Barcelona",
+      "resource_name": "Wine",
+      "amount": 11
+    },
+    {
+      "city_name": "Cardiff",
+      "resource_name": "Labor",
+      "amount": 38
+    }
+  ],
+  [
+    {
+      "city_name": "Bilbao",
+      "resource_name": "Wood",
+      "amount": 44
+    },
+    {
+      "city_name": "Oslo",
+      "resource_name": "Imports",
+      "amount": 24
+    },
+    {
+      "city_name": "Manchester",
+      "resource_name": "Fish",
+      "amount": 13
+    }
+  ],
+  [
+    {
+      "city_name": "Roma",
+      "resource_name": "Cork",
+      "amount": 48
+    },
+    {
+      "city_name": "Zagreb",
+      "resource_name": "China",
+      "amount": 16
+    },
+    {
+      "city_name": "Torino",
+      "resource_name": "Hops",
+      "amount": 29
+    }
+  ],
+  [
+    {
+      "city_name": "Kobenhavn",
+      "resource_name": "Ham",
+      "amount": 26
+    },
+    {
+      "city_name": "Kaliningrad",
+      "resource_name": "China",
+      "amount": 17
+    },
+    {
+      "city_name": "Newcastle",
+      "resource_name": "Bauxite",
+      "amount": 35
+    }
+  ],
+  [
+    {
+      "city_name": "Toulouse",
+      "resource_name": "Cork",
+      "amount": 26
+    },
+    {
+      "city_name": "Torino",
+      "resource_name": "Fish",
+      "amount": 36
+    },
+    {
+      "city_name": "Lisboa",
+      "resource_name": "Tourists",
+      "amount": 44
+    }
+  ],
+  [
+    {
+      "city_name": "Beograd",
+      "resource_name": "Cork",
+      "amount": 62
+    },
+    {
+      "city_name": "Krakow",
+      "resource_name": "Cars",
+      "amount": 15
+    },
+    {
+      "city_name": "Barcelona",
+      "resource_name": "Tourists",
+      "amount": 29
+    }
+  ],
+  [
+    {
+      "city_name": "Sarajevo",
+      "resource_name": "Wine",
+      "amount": 12
+    },
+    {
+      "city_name": "Munchen",
+      "resource_name": "Cheese",
+      "amount": 9
+    },
+    {
+      "city_name": "Aberdeen",
+      "resource_name": "Ham",
+      "amount": 47
+    }
+  ],
+  [
+    {
+      "city_name": "Wroclaw",
+      "resource_name": "Imports",
+      "amount": 12
+    },
+    {
+      "city_name": "Roma",
+      "resource_name": "Cars",
+      "amount": 13
+    },
+    {
+      "city_name": "Warszawa",
+      "resource_name": "Cheese",
+      "amount": 22
+    }
+  ],
+  [
+    {
+      "city_name": "Praha",
+      "resource_name": "Labor",
+      "amount": 11
+    },
+    {
+      "city_name": "Bordeaux",
+      "resource_name": "Chocolate",
+      "amount": 17
+    },
+    {
+      "city_name": "Hamburg",
+      "resource_name": "Wood",
+      "amount": 25
+    }
+  ],
+  [
+    {
+      "city_name": "Nantes",
+      "resource_name": "Oranges",
+      "amount": 22
+    },
+    {
+      "city_name": "Napoli",
+      "resource_name": "Ham",
+      "amount": 37
+    },
+    {
+      "city_name": "Belfast",
+      "resource_name": "Steel",
+      "amount": 15
+    }
+  ],
+  [
+    {
+      "city_name": "Lodz",
+      "resource_name": "Machinery",
+      "amount": 17
+    },
+    {
+      "city_name": "Szczesin",
+      "resource_name": "Tobacco",
+      "amount": 36
+    },
+    {
+      "city_name": "Glasgow",
+      "resource_name": "Iron",
+      "amount": 13
+    }
+  ],
+  [
+    {
+      "city_name": "Warszawa",
+      "resource_name": "Coal",
+      "amount": 7
+    },
+    {
+      "city_name": "Beograd",
+      "resource_name": "Wine",
+      "amount": 12
+    },
+    {
+      "city_name": "Dublin",
+      "resource_name": "Hops",
+      "amount": 12
     }
   ]
 ]

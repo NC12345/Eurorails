@@ -57,6 +57,24 @@ One entry on a route card: `{city_name, resource_name, amount}`. `amount` is an 
 
 When updating resource/city data, edit `resources_to_cities.json` first, then update `cities_to_resources.json` to match.
 
+## Pathfinding
+
+Graph traversal algorithms in `pathfinding.py`. No external libraries — raw `dict[str, HexNode]` + stdlib `heapq`/`collections.deque`.
+
+### build path
+
+A planned sequence of nodes from a player's existing network to a target, minimising remaining ECU build cost. Owned edges cost 0; opponent-owned edges are impassable; unowned edges cost terrain + water surcharge (`cost_of_edge()`). Computed by `cheapest_build_path()` (Dijkstra).
+
+### pathfinding queries
+
+Three public functions:
+
+- `cheapest_build_path(map_data, player_owned_edges, blocked_edges, from_node, to_node)` — Dijkstra on build costs. Returns `(path, total_cost)` or `None`.
+- `reachable_nodes(map_data, owned_edges, start_node, movement_points)` — BFS returning all node IDs reachable within the movement budget on owned track + major city interiors.
+- `shortest_move_path(map_data, owned_edges, start_node, target_node, movement_points)` — BFS with path reconstruction. Returns ordered node list (inclusive) or `None`.
+
+All three accept `include_ferries: bool = False` (ferry support not yet implemented).
+
 ## Rules engine
 
 The rules engine is implemented across three modules: `game_state.py`, `movement.py`, and `track_builder.py`.
