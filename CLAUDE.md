@@ -28,8 +28,8 @@ A Python toolkit for digitizing and visualizing the **Eurorails** board game map
 # Activate the virtual environment
 source .venv/bin/activate
 
-# Install dependencies (numpy, matplotlib — opencv-python for archive tools)
-pip install numpy matplotlib
+# Install dependencies
+pip install -r requirements.txt
 ```
 
 Python 3.14 is used (`.venv` targets `/Library/Frameworks/Python.framework/Versions/3.14`).
