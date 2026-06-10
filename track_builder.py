@@ -9,6 +9,7 @@ from game_state import (
     VALID_UPGRADE_PATHS,
     BuildEdge,
     BuildResult,
+    GamePhase,
     GameState,
     PlayerState,
     UpgradeTrain,
@@ -35,6 +36,16 @@ def execute_build(
     if player is None:
         return BuildResult(ok=False, error=f"unknown player: {player_id}", total_cost=0, edges_built=[])
 
+    has_edge    = any(isinstance(a, BuildEdge)    for a in builds)
+    has_upgrade = any(isinstance(a, UpgradeTrain) for a in builds)
+
+    if game_state.phase in (GamePhase.INITIAL_BUILD_1, GamePhase.INITIAL_BUILD_2):
+        if has_upgrade:
+            return BuildResult(ok=False, error="cannot upgrade train during initial build phase", total_cost=0, edges_built=[])
+    else:
+        if has_edge and has_upgrade:
+            return BuildResult(ok=False, error="cannot build track and upgrade train in the same turn", total_cost=0, edges_built=[])
+
     staged_edges: set[frozenset[str]] = set()
     milepost_touches = 0
     total_cost = 0
@@ -42,7 +53,7 @@ def execute_build(
 
     for action in builds:
         if isinstance(action, BuildEdge):
-            error, edge_cost, milepost_touches = _validate_build_edge(
+            error, edge_cost, milepost_touches = validate_build_edge(
                 game_state.map_data,
                 player,
                 game_state.players,
@@ -112,10 +123,65 @@ def cost_of_edge(map_data: dict, from_node: str, to_node: str) -> int:
 
 
 # ---------------------------------------------------------------------------
-# Build edge validator
+# Build edge validators
 # ---------------------------------------------------------------------------
 
-def _validate_build_edge(
+def check_node_valid(map_data: dict, node: str) -> str | None:
+    if node not in map_data:
+        return f"unknown node: {node}"
+    if map_data[node]["type"] == "space_sea":
+        return f"{node} is a sea node"
+    return None
+
+
+def check_adjacency(map_data: dict, a: str, b: str) -> str | None:
+    if b not in map_data[a].get("neighbors", {}):
+        return f"{b} is not adjacent to {a}"
+    return None
+
+
+def check_right_of_way(
+    map_data: dict,
+    all_players: list[PlayerState],
+    edge: frozenset[str],
+    staged_edges: set[frozenset[str]],
+) -> str | None:
+    node_a, node_b = tuple(edge)
+    if (
+        map_data[node_a]["type"] == MAJOR_CITY_TYPE
+        and map_data[node_b]["type"] == MAJOR_CITY_TYPE
+        and map_data[node_a].get("city_name") == map_data[node_b].get("city_name")
+    ):
+        return "cannot build inside major city (red area)"
+    if edge in staged_edges:
+        return "edge already built this turn"
+    for p in all_players:
+        if edge in p.owned_edges:
+            return f"right-of-way conflict: {p.player_id} already owns this edge"
+    return None
+
+
+def check_milepost_limit(
+    map_data: dict,
+    from_node: str,
+    to_node: str,
+    touches: int,
+) -> tuple[str | None, int]:
+    is_border = (
+        map_data[from_node]["type"] == MAJOR_CITY_TYPE
+        or map_data[to_node]["type"] == MAJOR_CITY_TYPE
+    ) and not (
+        map_data[from_node]["type"] == MAJOR_CITY_TYPE
+        and map_data[to_node]["type"] == MAJOR_CITY_TYPE
+    )
+    if is_border:
+        if touches >= 2:
+            return "exceeded 2 major-city milepost sections per turn", touches
+        return None, touches + 1
+    return None, touches
+
+
+def validate_build_edge(
     map_data: dict,
     player: PlayerState,
     all_players: list[PlayerState],
@@ -124,80 +190,39 @@ def _validate_build_edge(
     milepost_touches: int,
 ) -> tuple[str | None, int, int]:
     """Returns (error_or_None, edge_cost, updated_milepost_touches)."""
-
     from_node, to_node = action.from_node, action.to_node
-
-    # Both nodes exist
-    if from_node not in map_data:
-        return f"unknown node: {from_node}", 0, milepost_touches
-    if to_node not in map_data:
-        return f"unknown node: {to_node}", 0, milepost_touches
-
-    # Not space_sea
-    if map_data[from_node]["type"] == "space_sea":
-        return f"{from_node} is a sea node", 0, milepost_touches
-    if map_data[to_node]["type"] == "space_sea":
-        return f"{to_node} is a sea node", 0, milepost_touches
-
-    # Adjacent
-    if to_node not in map_data[from_node].get("neighbors", {}):
-        return f"{to_node} is not adjacent to {from_node}", 0, milepost_touches
-
-    # No building inside major city red area
-    if (
-        map_data[from_node]["type"] == MAJOR_CITY_TYPE
-        and map_data[to_node]["type"] == MAJOR_CITY_TYPE
-        and map_data[from_node].get("city_name") == map_data[to_node].get("city_name")
-    ):
-        return "cannot build inside major city (red area)", 0, milepost_touches
-
-    # Right-of-way
     edge = frozenset({from_node, to_node})
-    if edge in staged_edges:
-        return "edge already built this turn", 0, milepost_touches
-    for p in all_players:
-        if edge in p.owned_edges:
-            return f"right-of-way conflict: {p.player_id} already owns this edge", 0, milepost_touches
 
-    # Connectivity: from_node must be a major city (universally accessible) or in existing network
+    if err := check_node_valid(map_data, from_node):
+        return err, 0, milepost_touches
+    if err := check_node_valid(map_data, to_node):
+        return err, 0, milepost_touches
+    if err := check_adjacency(map_data, from_node, to_node):
+        return err, 0, milepost_touches
+    if err := check_right_of_way(map_data, all_players, edge, staged_edges):
+        return err, 0, milepost_touches
+
+    # Connectivity: from_node must be a major city or in existing network
     all_owned = player.owned_edges | staged_edges
     reachable_nodes = {n for e in all_owned for n in e}
-    from_is_major_city = map_data[from_node]["type"] == MAJOR_CITY_TYPE
-    if not from_is_major_city and from_node not in reachable_nodes:
+    if map_data[from_node]["type"] != MAJOR_CITY_TYPE and from_node not in reachable_nodes:
         return f"{from_node} must be a major city or connected to your existing track", 0, milepost_touches
 
-    # Major-city milepost limit (max 2 outer-border sections per turn)
-    is_major_city_border = (
-        map_data[from_node]["type"] == MAJOR_CITY_TYPE
-        or map_data[to_node]["type"] == MAJOR_CITY_TYPE
-    ) and not (
-        # exclude interior edges (both large_city, same city — already blocked above)
-        map_data[from_node]["type"] == MAJOR_CITY_TYPE
-        and map_data[to_node]["type"] == MAJOR_CITY_TYPE
-    )
-    if is_major_city_border:
-        if milepost_touches >= 2:
-            return "exceeded 2 major-city milepost sections per turn", 0, milepost_touches
-        milepost_touches += 1
+    err, milepost_touches = check_milepost_limit(map_data, from_node, to_node, milepost_touches)
+    if err:
+        return err, 0, milepost_touches
 
-    # Ferry port rules
+    # Ferry port capacity
     if map_data[to_node]["type"] in FERRY_TYPES:
-        ferry_players = _count_ferry_players(to_node, player.player_id, all_players, staged_edges)
-        if ferry_players >= 2:
+        if _count_ferry_players(to_node, player.player_id, all_players, staged_edges) >= 2:
             return "ferry line at player capacity (max 2)", 0, milepost_touches
 
-    # Medium / small city access limits
-    city_error = _check_city_access(map_data, player, all_players, to_node, staged_edges)
-    if city_error:
-        return city_error, 0, milepost_touches
+    if err := check_city_access(map_data, player, all_players, to_node, staged_edges):
+        return err, 0, milepost_touches
+    if err := check_blocking(map_data, all_players, staged_edges, from_node, to_node, player.player_id):
+        return err, 0, milepost_touches
 
-    # Blocking rule (tier-1 local saturation check)
-    blocking_error = _check_blocking_local(map_data, player, all_players, to_node, staged_edges)
-    if blocking_error:
-        return blocking_error, 0, milepost_touches
-
-    edge_cost = cost_of_edge(map_data, from_node, to_node)
-    return None, edge_cost, milepost_touches
+    return None, cost_of_edge(map_data, from_node, to_node), milepost_touches
 
 
 # ---------------------------------------------------------------------------
@@ -223,7 +248,7 @@ def _validate_upgrade_train(
 # City access limits
 # ---------------------------------------------------------------------------
 
-def _check_city_access(
+def check_city_access(
     map_data: dict,
     player: PlayerState,
     all_players: list[PlayerState],
@@ -268,16 +293,17 @@ def _check_city_access(
 # Blocking rule — tier-1 local saturation check
 # ---------------------------------------------------------------------------
 
-def _check_blocking_local(
+def check_blocking(
     map_data: dict,
-    player: PlayerState,
     all_players: list[PlayerState],
-    to_node: str,
     staged_edges: set[frozenset[str]],
+    from_node: str,
+    to_node: str,
+    building_player_id: str,
 ) -> str | None:
     """
     Tier-1: reject if this edge is the last unowned entry point into a
-    protected node and at least one player has no connection to it yet.
+    protected node and at least one other player has no connection to it yet.
 
     TODO: implement full blocking check (BFS over hex graph) for tier-2.
     """
@@ -290,24 +316,17 @@ def _check_blocking_local(
         all_owned |= p.owned_edges
     all_owned |= staged_edges
 
-    # Edges adjacent to to_node in the hex graph
     neighbor_ids = list(map_data[to_node].get("neighbors", {}).keys())
     candidate_edges = [frozenset({to_node, nb}) for nb in neighbor_ids]
-
     unowned_entries = [e for e in candidate_edges if e not in all_owned]
 
-    # If this proposed edge is the ONLY remaining unowned entry, and some
-    # player has zero connections to this node, reject.
-    proposed_edge = frozenset({to_node, *[n for e in staged_edges for n in e if to_node not in e]})
-    # Simpler: count unowned entries excluding the current edge being proposed
-    new_edge = frozenset({map_data[to_node]["id"] if "id" in map_data[to_node] else to_node, to_node})
-    remaining_after = [e for e in unowned_entries if to_node in e]
+    proposed_edge = frozenset({from_node, to_node})
+    remaining_after = [e for e in unowned_entries if e != proposed_edge]
 
     if len(remaining_after) <= 1:
-        # This edge is the last or only unowned entry into to_node
         players_without_connection = [
             p for p in all_players
-            if p.player_id != player.player_id
+            if p.player_id != building_player_id
             and not any(to_node in e for e in p.owned_edges)
         ]
         if players_without_connection:

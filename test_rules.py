@@ -400,6 +400,33 @@ def test_medium_city_player_limit():
 
 run("4th player connecting to medium city fails", test_medium_city_player_limit)
 
+def test_cannot_build_and_upgrade_same_turn():
+    p = make_player("p1", "r19_c29", ecu=50)
+    gs = make_game([p])
+    result = execute_build(gs, "p1", [BuildEdge("r19_c29", "r19_c28"), UpgradeTrain(LocoType.FAST_FREIGHT)])
+    assert not result.ok
+    assert "same turn" in result.error.lower(), result.error
+
+run("build + upgrade in same turn is rejected", test_cannot_build_and_upgrade_same_turn)
+
+def test_upgrade_blocked_in_initial_build_1():
+    p = make_player("p1", "r19_c29", ecu=50)
+    gs = make_game([p], phase=GamePhase.INITIAL_BUILD_1)
+    result = execute_build(gs, "p1", [UpgradeTrain(LocoType.FAST_FREIGHT)])
+    assert not result.ok
+    assert "initial build" in result.error.lower(), result.error
+
+run("upgrade blocked during INITIAL_BUILD_1", test_upgrade_blocked_in_initial_build_1)
+
+def test_upgrade_blocked_in_initial_build_2():
+    p = make_player("p1", "r19_c29", ecu=50)
+    gs = make_game([p], phase=GamePhase.INITIAL_BUILD_2)
+    result = execute_build(gs, "p1", [UpgradeTrain(LocoType.FAST_FREIGHT)])
+    assert not result.ok
+    assert "initial build" in result.error.lower(), result.error
+
+run("upgrade blocked during INITIAL_BUILD_2", test_upgrade_blocked_in_initial_build_2)
+
 
 # ---------------------------------------------------------------------------
 # Movement tests

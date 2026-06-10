@@ -87,7 +87,7 @@ First half of a normal turn. Player submits a sequence of actions: `MoveTo`, `Pi
 
 ### build phase
 
-Second half of a normal turn. Player submits `BuildEdge` and/or `UpgradeTrain` actions. Processed by `execute_build()` in `track_builder.py`. Track built this turn is NOT available for movement in the same turn.
+Second half of a normal turn. Player submits either `BuildEdge` actions (to lay track) **or** a single `UpgradeTrain` action — not both. During `INITIAL_BUILD_1` and `INITIAL_BUILD_2`, only `BuildEdge` actions are legal. Processed by `execute_build()` in `track_builder.py`. Track built this turn is NOT available for movement in the same turn.
 
 ### major city interior
 
