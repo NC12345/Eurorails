@@ -57,6 +57,62 @@ One entry on a route card: `{city_name, resource_name, amount}`. `amount` is an 
 
 When updating resource/city data, edit `resources_to_cities.json` first, then update `cities_to_resources.json` to match.
 
+## Rules engine
+
+The rules engine is implemented across three modules: `game_state.py`, `movement.py`, and `track_builder.py`.
+
+### GamePhase
+
+Enum controlling which actions are legal. Values: `INITIAL_BUILD_1` (snake round 1, clockwise, build only), `INITIAL_BUILD_2` (snake round 2, counter-clockwise, build only), `NORMAL_PLAY`.
+
+### LocoType
+
+Enum for train types: `FREIGHT` (speed 9, capacity 2), `FAST_FREIGHT` (speed 12, capacity 2), `HEAVY_FREIGHT` (speed 9, capacity 3), `SUPERFREIGHT` (speed 12, capacity 3).
+
+### TrainState
+
+Runtime per-train fields: `current_node` (node ID), `previous_node` (node ID or None — used for reversing rule), `remaining_movement` (int, decrements each `MoveTo`), `cargo` (list of resource name strings, bounded by loco capacity), `loco_type` (LocoType), `committed_to_ferry` (bool — if True at end of operate phase, next turn teleports train to ferry destination and halves movement allowance for that turn).
+
+### PlayerState
+
+Runtime per-player fields: `player_id`, `ecu` (M ECU balance), `train` (TrainState), `owned_edges` (set of `frozenset({node_a, node_b})` — see owned edge), demand `hand` (list of 3 RouteCards during NORMAL_PLAY), `track_fees_owed` (dict of player_id → M ECU accumulated this turn, settled at end of `execute_operate`).
+
+### owned edge
+
+A `frozenset({node_a, node_b})` stored in `PlayerState.owned_edges`. Direction-independent. Represents one built track section between two adjacent nodes.
+
+### operate phase
+
+First half of a normal turn. Player submits a sequence of actions: `MoveTo`, `PickUp`, `DropOff`, `Deliver`, `CommitFerry`. Processed by `execute_operate()` in `movement.py`. Track usage fees accumulate and are settled at the end of this call.
+
+### build phase
+
+Second half of a normal turn. Player submits `BuildEdge` and/or `UpgradeTrain` actions. Processed by `execute_build()` in `track_builder.py`. Track built this turn is NOT available for movement in the same turn.
+
+### major city interior
+
+Edges between two `large_city` nodes sharing the same `city_name`. Train traversal is free (no track ownership required, no movement cost beyond the 1-milepost count). No track may be built on these edges. All players share this universal access.
+
+### reversing rule
+
+A train may not execute `MoveTo(previous_node)` when `current_node` is not a city type. Represents the constraint that trains cannot reverse on open track; they may only reverse direction while at a city.
+
+### committed_to_ferry
+
+Boolean flag on `TrainState`. When `CommitFerry` is executed: flag set to True, movement stopped for that turn. No ECU fee at crossing time — the `ferry_link.cost_ecu` is paid once at build time when building track to the ferry terminal. At the start of the next operate phase, the train teleports to `ferry_link.to` and `remaining_movement` is set to `floor(max_speed / 2)`.
+
+### track usage fee
+
+4M ECU paid per turn to an opponent for using their track, regardless of how many of their edges were traversed in that turn. Accumulated in `track_fees_owed` during `execute_operate`, settled at the end of the call.
+
+### milepost touch
+
+A `BuildEdge` where one endpoint is a `large_city` (outer-border edge into or out of a major city cluster). Maximum 2 such edges per build phase per player.
+
+### blocking rule
+
+A `BuildEdge` is rejected if it would prevent another player from establishing any path to a guaranteed-access node (major city, second slot of a medium/small city, English Channel ferry terminal). Tier-1 local saturation check is implemented. Full BFS reachability check is stubbed (`# TODO: implement full blocking check`).
+
 ## Tool taxonomy
 
 ### Interactive editors (project root)
