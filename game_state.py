@@ -6,6 +6,17 @@ from dataclasses import dataclass, field
 from enum import Enum, auto
 from typing import Union
 
+from hex_node import (  # noqa: F401 — re-exported for callers that import these from game_state
+    CITY_TYPES,
+    FERRY_TYPES,
+    MAJOR_CITY_TYPE,
+    TERRAIN_BUILD_COST,
+    WATER_SURCHARGE,
+    EdgeObstacle,
+    FerryLink,
+    HexNode,
+)
+
 
 # ---------------------------------------------------------------------------
 # Enums
@@ -35,21 +46,6 @@ LOCO_STATS: dict[LocoType, tuple[int, int]] = {
     LocoType.SUPERFREIGHT:  (12, 3),
 }
 
-TERRAIN_BUILD_COST: dict[str, int] = {
-    "clear":       1,
-    "mountain":    2,
-    "alpine":      5,
-    "small_city":  3,
-    "medium_city": 3,
-    "large_city":  5,
-}
-
-# lake also covers ocean_inlet per CLAUDE.md
-WATER_SURCHARGE: dict[str, int] = {
-    "river": 2,
-    "lake":  3,
-}
-
 UPGRADE_COST: dict[LocoType, int] = {
     LocoType.FAST_FREIGHT:  20,
     LocoType.HEAVY_FREIGHT: 20,
@@ -62,13 +58,6 @@ VALID_UPGRADE_PATHS: dict[LocoType, set[LocoType]] = {
     LocoType.HEAVY_FREIGHT: {LocoType.SUPERFREIGHT},
     LocoType.SUPERFREIGHT:  set(),
 }
-
-CITY_TYPES: frozenset[str] = frozenset({
-    "small_city", "medium_city", "large_city", "ferry_small_city"
-})
-FERRY_TYPES: frozenset[str] = frozenset({"ferry", "ferry_small_city"})
-MAJOR_CITY_TYPE = "large_city"
-
 
 # ---------------------------------------------------------------------------
 # Route / demand card dataclasses
@@ -118,7 +107,7 @@ class PlayerState:
 
 @dataclass
 class GameState:
-    map_data: dict[str, dict]          # master_map.json loaded once
+    map_data: dict[str, HexNode]       # master_map.json loaded once
     city_index: dict[str, list[str]]   # city_name -> [node_ids]
     resource_index: dict[str, list[str]]  # city_name -> [resource_names]
     resource_supply: dict[str, int]      # resource_name -> available count globally
@@ -192,18 +181,18 @@ class BuildResult:
 # Map / deck helpers
 # ---------------------------------------------------------------------------
 
-def load_map(path: str = "master_map.json") -> dict[str, dict]:
+def load_map(path: str = "master_map.json") -> dict[str, HexNode]:
     with open(path, encoding="utf-8") as f:
-        return json.load(f)
+        raw = json.load(f)
+    return {k: HexNode.from_dict(k, v) for k, v in raw.items()}
 
 
-def build_city_index(map_data: dict[str, dict]) -> dict[str, list[str]]:
+def build_city_index(map_data: dict[str, HexNode]) -> dict[str, list[str]]:
     """city_name -> [node_id, ...] for all city-type nodes."""
     index: dict[str, list[str]] = {}
     for node_id, node in map_data.items():
-        name = node.get("city_name")
-        if name:
-            index.setdefault(name, []).append(node_id)
+        if node.city_name:
+            index.setdefault(node.city_name, []).append(node_id)
     return index
 
 

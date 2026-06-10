@@ -1,15 +1,13 @@
 from __future__ import annotations
 
 from game_state import (
-    CITY_TYPES,
-    FERRY_TYPES,
     LOCO_STATS,
-    MAJOR_CITY_TYPE,
     CommitFerry,
     Deliver,
     DropOff,
     GamePhase,
     GameState,
+    HexNode,
     MoveTo,
     OperateAction,
     OperateResult,
@@ -88,11 +86,11 @@ def execute_operate(
 # Ferry arrival (called at start of turn if committed_to_ferry=True)
 # ---------------------------------------------------------------------------
 
-def _apply_ferry_arrival(map_data: dict, train: TrainState) -> None:
+def _apply_ferry_arrival(map_data: dict[str, HexNode], train: TrainState) -> None:
     """Teleport to ferry destination and apply half speed for this turn."""
-    ferry_link = map_data[train.current_node].get("ferry_link")
-    if ferry_link:
-        train.current_node = ferry_link["to"]
+    node = map_data[train.current_node]
+    if node.ferry_link:
+        train.current_node = node.ferry_link.to
     base_speed = LOCO_STATS[train.loco_type][0]
     train.remaining_movement = base_speed // 2
     train.committed_to_ferry = False
@@ -104,7 +102,7 @@ def _apply_ferry_arrival(map_data: dict, train: TrainState) -> None:
 # ---------------------------------------------------------------------------
 
 def _execute_move_to(
-    map_data: dict,
+    map_data: dict[str, HexNode],
     player: PlayerState,
     all_players: list[PlayerState],
     action: MoveTo,
@@ -115,13 +113,15 @@ def _execute_move_to(
     if action.node_id not in map_data:
         return f"unknown node: {action.node_id}"
 
+    dest = map_data[action.node_id]
+    current = map_data[train.current_node]
+
     # Not sea
-    if map_data[action.node_id]["type"] == "space_sea":
+    if dest.is_sea():
         return "cannot move to sea node"
 
     # Adjacent
-    neighbors = map_data[train.current_node].get("neighbors", {})
-    if action.node_id not in neighbors:
+    if not current.has_neighbor(action.node_id):
         return f"{action.node_id} is not adjacent to {train.current_node}"
 
     # Movement points
@@ -131,7 +131,7 @@ def _execute_move_to(
     fee_opponent: str | None = None
     # Track access
     edge = frozenset({train.current_node, action.node_id})
-    if _is_major_city_interior(map_data, train.current_node, action.node_id):
+    if current.is_major_city_interior_with(dest):
         pass  # universal free access inside major city
     elif edge in player.owned_edges:
         pass  # own track — free
@@ -148,7 +148,7 @@ def _execute_move_to(
 
     # Reversing rule: blocked on non-city nodes
     if (
-        map_data[train.current_node]["type"] not in CITY_TYPES
+        not current.is_city()
         and train.previous_node is not None
         and action.node_id == train.previous_node
     ):
@@ -164,16 +164,16 @@ def _execute_move_to(
 
 
 def _execute_commit_ferry(
-    map_data: dict,
+    map_data: dict[str, HexNode],
     player: PlayerState,
     action: CommitFerry,
 ) -> str | None:
     train = player.train
-    node = map_data.get(train.current_node, {})
+    node = map_data.get(train.current_node)
 
-    if node.get("type") not in FERRY_TYPES:
+    if node is None or not node.is_ferry():
         return "not at a ferry node"
-    if not node.get("ferry_link"):
+    if not node.ferry_link:
         return "ferry node has no link"
 
     # No ECU deduction — ferry passage cost is paid at build time
@@ -183,19 +183,19 @@ def _execute_commit_ferry(
 
 
 def _execute_pickup(
-    map_data: dict,
+    map_data: dict[str, HexNode],
     player: PlayerState,
     city_index: dict[str, list[str]],
     resource_supply: dict[str, int],
     action: PickUp,
 ) -> str | None:
     train = player.train
-    node = map_data.get(train.current_node, {})
+    node = map_data.get(train.current_node)
 
-    if node.get("type") not in CITY_TYPES:
+    if node is None or not node.is_city():
         return "not at a city node"
 
-    city_name = node.get("city_name")
+    city_name = node.city_name
     if not city_name:
         return "city node has no city_name"
 
@@ -228,18 +228,18 @@ def _execute_dropoff(
 
 
 def _execute_deliver(
-    map_data: dict,
+    map_data: dict[str, HexNode],
     player: PlayerState,
     game_state: GameState,
     action: Deliver,
 ) -> tuple[str | None, str]:
     train = player.train
-    node = map_data.get(train.current_node, {})
+    node = map_data.get(train.current_node)
 
-    if node.get("type") not in CITY_TYPES:
+    if node is None or not node.is_city():
         return "not at a city node", ""
 
-    city_name = node.get("city_name")
+    city_name = node.city_name
     if not city_name:
         return "city node has no city_name", ""
 
@@ -322,13 +322,3 @@ def _find_opponent_owner(
     return None
 
 
-def _is_major_city_interior(map_data: dict, node_a: str, node_b: str) -> bool:
-    """True if both nodes are large_city nodes sharing the same city_name."""
-    na = map_data.get(node_a, {})
-    nb = map_data.get(node_b, {})
-    return (
-        na.get("type") == "large_city"
-        and nb.get("type") == "large_city"
-        and na.get("city_name") is not None
-        and na.get("city_name") == nb.get("city_name")
-    )

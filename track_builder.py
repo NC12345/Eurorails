@@ -1,16 +1,15 @@
 from __future__ import annotations
 
 from game_state import (
-    CITY_TYPES,
-    FERRY_TYPES,
-    MAJOR_CITY_TYPE,
     TERRAIN_BUILD_COST,
+    WATER_SURCHARGE,
     UPGRADE_COST,
     VALID_UPGRADE_PATHS,
     BuildEdge,
     BuildResult,
     GamePhase,
     GameState,
+    HexNode,
     PlayerState,
     UpgradeTrain,
     BuildAction,
@@ -97,26 +96,25 @@ def execute_build(
 # Cost function
 # ---------------------------------------------------------------------------
 
-def cost_of_edge(map_data: dict, from_node: str, to_node: str) -> int:
+def cost_of_edge(map_data: dict[str, HexNode], from_node: str, to_node: str) -> int:
     """
     Terrain base cost + water surcharge (non-stacking: lake takes priority).
 
     For ferry ports, returns the flat ferry_link.cost_ecu instead.
     """
-    to_type = map_data[to_node]["type"]
+    to = map_data[to_node]
 
-    if to_type in FERRY_TYPES:
-        ferry_link = map_data[to_node].get("ferry_link")
-        if ferry_link:
-            return ferry_link["cost_ecu"]
+    if to.is_ferry():
+        if to.ferry_link:
+            return to.ferry_link.cost_ecu
         return 0  # ferry port with no link — shouldn't occur
 
-    base = TERRAIN_BUILD_COST.get(to_type, 1)
-    obs = map_data[from_node]["neighbors"].get(to_node, {})
-    if obs.get("lake"):
-        surcharge = 3  # lake / ocean_inlet
-    elif obs.get("river"):
-        surcharge = 2
+    base = TERRAIN_BUILD_COST.get(to.terrain_type, 1)
+    obs = map_data[from_node].neighbor_edge(to_node)
+    if obs and obs.lake:
+        surcharge = WATER_SURCHARGE["lake"]
+    elif obs and obs.river:
+        surcharge = WATER_SURCHARGE["river"]
     else:
         surcharge = 0
     return base + surcharge
@@ -126,32 +124,28 @@ def cost_of_edge(map_data: dict, from_node: str, to_node: str) -> int:
 # Build edge validators
 # ---------------------------------------------------------------------------
 
-def check_node_valid(map_data: dict, node: str) -> str | None:
+def check_node_valid(map_data: dict[str, HexNode], node: str) -> str | None:
     if node not in map_data:
         return f"unknown node: {node}"
-    if map_data[node]["type"] == "space_sea":
+    if map_data[node].is_sea():
         return f"{node} is a sea node"
     return None
 
 
-def check_adjacency(map_data: dict, a: str, b: str) -> str | None:
-    if b not in map_data[a].get("neighbors", {}):
+def check_adjacency(map_data: dict[str, HexNode], a: str, b: str) -> str | None:
+    if not map_data[a].has_neighbor(b):
         return f"{b} is not adjacent to {a}"
     return None
 
 
 def check_right_of_way(
-    map_data: dict,
+    map_data: dict[str, HexNode],
     all_players: list[PlayerState],
     edge: frozenset[str],
     staged_edges: set[frozenset[str]],
 ) -> str | None:
     node_a, node_b = tuple(edge)
-    if (
-        map_data[node_a]["type"] == MAJOR_CITY_TYPE
-        and map_data[node_b]["type"] == MAJOR_CITY_TYPE
-        and map_data[node_a].get("city_name") == map_data[node_b].get("city_name")
-    ):
+    if map_data[node_a].is_major_city_interior_with(map_data[node_b]):
         return "cannot build inside major city (red area)"
     if edge in staged_edges:
         return "edge already built this turn"
@@ -162,17 +156,15 @@ def check_right_of_way(
 
 
 def check_milepost_limit(
-    map_data: dict,
+    map_data: dict[str, HexNode],
     from_node: str,
     to_node: str,
     touches: int,
 ) -> tuple[str | None, int]:
     is_border = (
-        map_data[from_node]["type"] == MAJOR_CITY_TYPE
-        or map_data[to_node]["type"] == MAJOR_CITY_TYPE
+        map_data[from_node].is_major_city() or map_data[to_node].is_major_city()
     ) and not (
-        map_data[from_node]["type"] == MAJOR_CITY_TYPE
-        and map_data[to_node]["type"] == MAJOR_CITY_TYPE
+        map_data[from_node].is_major_city() and map_data[to_node].is_major_city()
     )
     if is_border:
         if touches >= 2:
@@ -182,7 +174,7 @@ def check_milepost_limit(
 
 
 def validate_build_edge(
-    map_data: dict,
+    map_data: dict[str, HexNode],
     player: PlayerState,
     all_players: list[PlayerState],
     action: BuildEdge,
@@ -202,10 +194,10 @@ def validate_build_edge(
     if err := check_right_of_way(map_data, all_players, edge, staged_edges):
         return err, 0, milepost_touches
 
-    # Connectivity: from_node must be a major city or in existing network
+    # Connectivity: from_node must be a major city or in existing network (ferry pair included)
     all_owned = player.owned_edges | staged_edges
-    reachable_nodes = {n for e in all_owned for n in e}
-    if map_data[from_node]["type"] != MAJOR_CITY_TYPE and from_node not in reachable_nodes:
+    reachable_nodes = _ferry_expanded_reachable(map_data, all_owned)
+    if not map_data[from_node].is_major_city() and from_node not in reachable_nodes:
         return f"{from_node} must be a major city or connected to your existing track", 0, milepost_touches
 
     err, milepost_touches = check_milepost_limit(map_data, from_node, to_node, milepost_touches)
@@ -213,7 +205,7 @@ def validate_build_edge(
         return err, 0, milepost_touches
 
     # Ferry port capacity
-    if map_data[to_node]["type"] in FERRY_TYPES:
+    if map_data[to_node].is_ferry():
         if _count_ferry_players(to_node, player.player_id, all_players, staged_edges) >= 2:
             return "ferry line at player capacity (max 2)", 0, milepost_touches
 
@@ -222,7 +214,12 @@ def validate_build_edge(
     if err := check_blocking(map_data, all_players, staged_edges, from_node, to_node, player.player_id):
         return err, 0, milepost_touches
 
-    return None, cost_of_edge(map_data, from_node, to_node), milepost_touches
+    edge_cost = cost_of_edge(map_data, from_node, to_node)
+    if map_data[to_node].is_ferry() and map_data[to_node].ferry_link:
+        partner = map_data[to_node].ferry_link.to
+        if any(to_node in e or partner in e for e in all_owned):
+            edge_cost = 0
+    return None, edge_cost, milepost_touches
 
 
 # ---------------------------------------------------------------------------
@@ -249,13 +246,13 @@ def _validate_upgrade_train(
 # ---------------------------------------------------------------------------
 
 def check_city_access(
-    map_data: dict,
+    map_data: dict[str, HexNode],
     player: PlayerState,
     all_players: list[PlayerState],
     to_node: str,
     staged_edges: set[frozenset[str]],
 ) -> str | None:
-    node_type = map_data[to_node]["type"]
+    node_type = map_data[to_node].terrain_type
     if node_type not in ("medium_city", "small_city"):
         return None
 
@@ -294,7 +291,7 @@ def check_city_access(
 # ---------------------------------------------------------------------------
 
 def check_blocking(
-    map_data: dict,
+    map_data: dict[str, HexNode],
     all_players: list[PlayerState],
     staged_edges: set[frozenset[str]],
     from_node: str,
@@ -307,8 +304,8 @@ def check_blocking(
 
     TODO: implement full blocking check (BFS over hex graph) for tier-2.
     """
-    node_type = map_data[to_node]["type"]
-    if node_type not in CITY_TYPES and node_type not in FERRY_TYPES:
+    to = map_data[to_node]
+    if not to.is_city() and not to.is_ferry():
         return None
 
     all_owned: set[frozenset[str]] = set()
@@ -316,7 +313,7 @@ def check_blocking(
         all_owned |= p.owned_edges
     all_owned |= staged_edges
 
-    neighbor_ids = list(map_data[to_node].get("neighbors", {}).keys())
+    neighbor_ids = list(to.neighbors.keys())
     candidate_edges = [frozenset({to_node, nb}) for nb in neighbor_ids]
     unowned_entries = [e for e in candidate_edges if e not in all_owned]
 
@@ -330,7 +327,7 @@ def check_blocking(
             and not any(to_node in e for e in p.owned_edges)
         ]
         if players_without_connection:
-            return f"placement would block other players from connecting to {map_data[to_node].get('city_name', to_node)}"
+            return f"placement would block other players from connecting to {to.city_name or to_node}"
 
     return None
 
@@ -353,3 +350,16 @@ def _count_ferry_players(
         if any(ferry_node in e for e in p.owned_edges):
             connected.add(p.player_id)
     return len(connected)
+
+
+def _ferry_expanded_reachable(
+    map_data: dict[str, HexNode],
+    owned_edges: set[frozenset[str]],
+) -> set[str]:
+    """Reachable nodes from owned_edges, plus ferry-pair destinations for any owned ferry endpoint."""
+    nodes = {n for e in owned_edges for n in e}
+    for node in list(nodes):
+        n = map_data.get(node)
+        if n and n.is_ferry() and n.ferry_link:
+            nodes.add(n.ferry_link.to)
+    return nodes

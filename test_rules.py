@@ -109,12 +109,12 @@ def test_cost_large_city():
     # Test the outer-border edge where to_node=large_city by going from a clear into London
     # Find a clear neighbor of a London node that has no obstacle
     london_nodes = [k for k, v in MAP_DATA.items()
-                    if v.get("type") == "large_city" and v.get("city_name") == "London"]
+                    if v.terrain_type == "large_city" and v.city_name == "London"]
     found = False
     for ln in london_nodes:
-        for nb_id, obs in MAP_DATA[ln]["neighbors"].items():
-            if MAP_DATA[nb_id]["type"] not in ("large_city", "space_sea"):
-                surcharge = 3 if obs.get("lake") else 2 if obs.get("river") else 0
+        for nb_id, obs in MAP_DATA[ln].neighbors.items():
+            if MAP_DATA[nb_id].terrain_type not in ("large_city", "space_sea"):
+                surcharge = 3 if obs.lake else 2 if obs.river else 0
                 expected = 5 + surcharge  # to_node = large_city, base = 5
                 c = cost_of_edge(MAP_DATA, nb_id, ln)
                 assert c == expected, f"expected {expected}, got {c} for {nb_id}->{ln}"
@@ -131,9 +131,9 @@ def test_cost_clear_no_obstacle():
     # Find a clear->clear edge with no obstacles
     found = False
     for node_id, node in MAP_DATA.items():
-        if node["type"] == "clear":
-            for nb_id, obs in node["neighbors"].items():
-                if MAP_DATA[nb_id]["type"] == "clear" and not obs.get("river") and not obs.get("lake"):
+        if node.terrain_type == "clear":
+            for nb_id, obs in node.neighbors.items():
+                if MAP_DATA[nb_id].terrain_type == "clear" and not obs.river and not obs.lake:
                     c = cost_of_edge(MAP_DATA, node_id, nb_id)
                     assert c == 1, f"expected 1, got {c}"
                     found = True
@@ -204,8 +204,8 @@ def test_build_budget_exceeded():
     # Find more adjacent clear edges from r19_c28
     n28 = MAP_DATA["r19_c28"]
     chain = ["r19_c29", "r19_c28"]
-    for nb_id, obs in n28["neighbors"].items():
-        if MAP_DATA[nb_id]["type"] in ("clear", "mountain", "alpine") and nb_id not in chain:
+    for nb_id, obs in n28.neighbors.items():
+        if MAP_DATA[nb_id].terrain_type in ("clear", "mountain", "alpine") and nb_id not in chain:
             builds.append(BuildEdge("r19_c28", nb_id))
             chain.append(nb_id)
             if len(builds) >= 5:
@@ -232,8 +232,8 @@ def test_build_budget_exceeded():
     accumulated = 3
     while frontier and accumulated <= 20:
         cur = frontier.pop(0)
-        for nb_id, obs in MAP_DATA[cur]["neighbors"].items():
-            if nb_id not in visited and MAP_DATA[nb_id]["type"] not in ("space_sea", "large_city"):
+        for nb_id, obs in MAP_DATA[cur].neighbors.items():
+            if nb_id not in visited and MAP_DATA[nb_id].terrain_type not in ("space_sea", "large_city"):
                 c = cost_of_edge(MAP_DATA, cur, nb_id)
                 all_builds.append(BuildEdge(cur, nb_id))
                 visited.add(nb_id)
@@ -269,13 +269,13 @@ def test_build_new_branch_from_any_major_city():
     other_major = next(
         (node_id, node)
         for node_id, node in MAP_DATA.items()
-        if node.get("type") == "large_city" and node.get("city_name") not in london_names
+        if node.terrain_type == "large_city" and node.city_name not in london_names
     )
     other_major_id, other_major_node = other_major
     # Find a non-large-city neighbor of that major city
     outer_nb = next(
-        nb_id for nb_id in other_major_node["neighbors"]
-        if MAP_DATA[nb_id]["type"] not in ("large_city", "space_sea")
+        nb_id for nb_id in other_major_node.neighbors
+        if MAP_DATA[nb_id].terrain_type not in ("large_city", "space_sea")
     )
     # Player has track only near London
     p = make_player("p1", "r19_c29", ecu=100, owned_edges={edge("r19_c29", "r19_c28")})
@@ -302,7 +302,7 @@ def test_build_milepost_limit():
                     owned_edges={edge("r19_c29", "r19_c28"), edge("r19_c30", "r19_c31")})
     gs = make_game([p])
     # Find another outer London border edge — r20_c28 is London, r20_c27 is adjacent non-London
-    if "r20_c27" in MAP_DATA["r20_c28"]["neighbors"]:
+    if MAP_DATA["r20_c28"].has_neighbor("r20_c27"):
         result = execute_build(gs, "p1", [
             BuildEdge("r19_c28", "r19_c27"),  # non-major-city, fine
             BuildEdge("r20_c28", "r20_c27"),  # major-city border — would be 3rd touch
@@ -328,8 +328,8 @@ def test_build_milepost_limit():
     # r20_c28 is London; r20_c27 is outside. r19_c28 is outside.
     # Now try to build a 3rd major-city border edge in one phase
     # r18_c29 is in London; r18_c28 is outside and adjacent to r19_c28 (which we own)
-    if ("r18_c28" in MAP_DATA.get("r19_c28", {}).get("neighbors", {}) and
-            MAP_DATA["r18_c29"]["type"] == "large_city"):
+    if ("r19_c28" in MAP_DATA and MAP_DATA["r19_c28"].has_neighbor("r18_c28") and
+            "r18_c29" in MAP_DATA and MAP_DATA["r18_c29"].is_major_city()):
         result3 = execute_build(gs3, "p3", [BuildEdge("r19_c28", "r18_c29")])
         # This is a major-city border edge (to_node=large_city)
         # But we already have 2 in owned_edges; this would be 3rd this phase
@@ -378,7 +378,7 @@ run("invalid upgrade path fails", test_upgrade_invalid_path)
 def test_medium_city_player_limit():
     # Glasgow r5_c28: neighbors ['r5_c29', 'r6_c28', 'r6_c27', 'r4_c28', 'r4_c27']
     glasgow = "r5_c28"
-    neighbors = list(MAP_DATA[glasgow]["neighbors"].keys())
+    neighbors = list(MAP_DATA[glasgow].neighbors.keys())
     nb0, nb1, nb2, nb3, nb4 = neighbors[0], neighbors[1], neighbors[2], neighbors[3], neighbors[4]
 
     # 3 players already connected via 3 distinct edges
@@ -388,7 +388,7 @@ def test_medium_city_player_limit():
 
     # p4 has track reaching nb3 (a Glasgow neighbor) but not yet into Glasgow
     # Give p4 track from nb3 to its own non-Glasgow neighbor so they're "connected"
-    nb3_neighbors = [n for n in MAP_DATA[nb3]["neighbors"] if n != glasgow]
+    nb3_neighbors = [n for n in MAP_DATA[nb3].neighbors if n != glasgow]
     assert nb3_neighbors, f"{nb3} has no non-Glasgow neighbor"
     outer = nb3_neighbors[0]
     p4 = make_player("p4", nb3, owned_edges={edge(nb3, outer)})
@@ -446,8 +446,8 @@ def test_move_along_own_track():
     # Build r19_c29 -> r19_c28 -> find next clear node
     owned = {edge("r19_c29", "r19_c28")}
     # extend one more step
-    nb28_candidates = [n for n in MAP_DATA["r19_c28"]["neighbors"]
-                       if n != "r19_c29" and MAP_DATA[n]["type"] not in ("space_sea",)]
+    nb28_candidates = [n for n in MAP_DATA["r19_c28"].neighbors
+                       if n != "r19_c29" and not MAP_DATA[n].is_sea()]
     assert nb28_candidates, "r19_c28 has no valid further neighbor"
     node3 = nb28_candidates[0]
     owned.add(edge("r19_c28", node3))
@@ -543,7 +543,7 @@ run("track fee charged once per opponent per turn", test_track_fee_once_per_oppo
 
 def test_commit_ferry():
     belfast = "r7_c25"  # ferry_small_city, ferry_link.to = r7_c26
-    owned = {edge("r7_c25", "r7_c24")} if "r7_c24" in MAP_DATA["r7_c25"]["neighbors"] else set()
+    owned = {edge("r7_c25", "r7_c24")} if MAP_DATA["r7_c25"].has_neighbor("r7_c24") else set()
     # Just put train at Belfast directly
     p = make_player("p1", belfast, ecu=100, owned_edges=owned)
     gs = make_game([p])
@@ -557,7 +557,7 @@ run("CommitFerry sets flag and stops movement (no ECU cost)", test_commit_ferry)
 
 def test_ferry_teleport_next_turn():
     belfast = "r7_c25"
-    ferry_dest = MAP_DATA[belfast]["ferry_link"]["to"]  # r7_c26
+    ferry_dest = MAP_DATA[belfast].ferry_link.to  # r7_c26
     p = make_player("p1", belfast, ecu=100, ferry=True)
     gs = make_game([p])
     # Start operate phase — should teleport to ferry_dest and apply half speed
@@ -716,6 +716,107 @@ def test_no_movement_remaining():
     assert "movement" in result2.error.lower(), result2.error
 
 run("exceeding max movement points fails", test_no_movement_remaining)
+
+# ---------------------------------------------------------------------------
+# Ferry build tests
+# ---------------------------------------------------------------------------
+print("\n--- ferry build ---")
+
+def _dublin_setup():
+    """Return (dublin_id, pair_id, ireland_nb, pair_nb) for ferry build tests."""
+    dublin = "r10_c22"
+    pair = MAP_DATA[dublin].ferry_link.to
+    ireland_nb = next(
+        nb for nb in MAP_DATA[dublin].neighbors
+        if not MAP_DATA[nb].is_sea() and not MAP_DATA[nb].is_ferry()
+    )
+    pair_nb = next(
+        nb for nb in MAP_DATA[pair].neighbors
+        if not MAP_DATA[nb].is_sea() and not MAP_DATA[nb].is_ferry()
+    )
+    return dublin, pair, ireland_nb, pair_nb
+
+
+def test_ferry_connectivity_to_pair():
+    # Build to Dublin (ECU 8); pair node should be reachable for onward build same turn.
+    dublin, pair, ireland_nb, pair_nb = _dublin_setup()
+    anchor = next(nb for nb in MAP_DATA[ireland_nb].neighbors
+                  if nb != dublin and not MAP_DATA[nb].is_sea())
+    p = make_player("p1", ireland_nb, ecu=100, owned_edges={edge(ireland_nb, anchor)})
+    gs = make_game([p])
+    result = execute_build(gs, "p1", [
+        BuildEdge(ireland_nb, dublin),
+        BuildEdge(pair, pair_nb),
+    ])
+    assert result.ok, f"ferry build + onward from pair should succeed: {result.error}"
+    expected = 8 + cost_of_edge(MAP_DATA, pair, pair_nb)
+    assert result.total_cost == expected, f"expected {expected}, got {result.total_cost}"
+
+run("build to Dublin makes GB pair reachable for same-turn onward build", test_ferry_connectivity_to_pair)
+
+
+def test_ferry_no_double_charge():
+    # Player already owns Dublin; building to GB pair should cost 0.
+    dublin, pair, ireland_nb, pair_nb = _dublin_setup()
+    anchor = next(nb for nb in MAP_DATA[ireland_nb].neighbors
+                  if nb != dublin and not MAP_DATA[nb].is_sea())
+    p = make_player("p1", ireland_nb, ecu=100,
+                    owned_edges={edge(ireland_nb, anchor), edge(ireland_nb, dublin)})
+    gs = make_game([p])
+    # pair is reachable via ferry expansion; building to it should be free
+    result = execute_build(gs, "p1", [BuildEdge(pair, pair_nb)])
+    assert result.ok, f"onward build from pair (ferry already paid) should succeed: {result.error}"
+    expected = cost_of_edge(MAP_DATA, pair, pair_nb)
+    assert result.total_cost == expected, \
+        f"expected terrain cost {expected} (ferry not charged again), got {result.total_cost}"
+
+run("ferry not charged again when pair already owned", test_ferry_no_double_charge)
+
+
+def test_ferry_two_players_independent():
+    # Two players both build to Dublin; each pays ECU 8 independently.
+    dublin = "r10_c22"
+    ireland_nbs = [
+        nb for nb in MAP_DATA[dublin].neighbors
+        if not MAP_DATA[nb].is_sea() and not MAP_DATA[nb].is_ferry()
+    ]
+    assert len(ireland_nbs) >= 2, "Dublin needs 2+ non-sea, non-ferry neighbors for this test"
+    nb_a, nb_b = ireland_nbs[0], ireland_nbs[1]
+    anchor_a = next(nb for nb in MAP_DATA[nb_a].neighbors if nb != dublin and not MAP_DATA[nb].is_sea())
+    anchor_b = next(nb for nb in MAP_DATA[nb_b].neighbors if nb != dublin and not MAP_DATA[nb].is_sea())
+    p1 = make_player("p1", nb_a, ecu=100, owned_edges={edge(nb_a, anchor_a)})
+    p2 = make_player("p2", nb_b, ecu=100, owned_edges={edge(nb_b, anchor_b)})
+    gs = make_game([p1, p2])
+    r1 = execute_build(gs, "p1", [BuildEdge(nb_a, dublin)])
+    assert r1.ok, f"P1 build to Dublin failed: {r1.error}"
+    assert r1.total_cost == 8 and p1.ecu == 92
+    r2 = execute_build(gs, "p2", [BuildEdge(nb_b, dublin)])
+    assert r2.ok, f"P2 build to Dublin failed: {r2.error}"
+    assert r2.total_cost == 8 and p2.ecu == 92
+
+run("two players each pay ferry fee independently", test_ferry_two_players_independent)
+
+
+def test_ferry_gb_side_first_ireland_free():
+    # Build GB→pair (pays ECU 8) then Ireland→Dublin in same turn (costs 0).
+    dublin, pair, ireland_nb, pair_nb = _dublin_setup()
+    gb_anchor = next(nb for nb in MAP_DATA[pair_nb].neighbors
+                     if nb != pair and not MAP_DATA[nb].is_sea())
+    ireland_anchor = next(nb for nb in MAP_DATA[ireland_nb].neighbors
+                          if nb != dublin and not MAP_DATA[nb].is_sea())
+    p = make_player("p1", pair_nb, ecu=100,
+                    owned_edges={edge(pair_nb, gb_anchor), edge(ireland_nb, ireland_anchor)})
+    gs = make_game([p])
+    result = execute_build(gs, "p1", [
+        BuildEdge(pair_nb, pair),
+        BuildEdge(ireland_nb, dublin),
+    ])
+    assert result.ok, f"GB side first then Ireland side should succeed: {result.error}"
+    assert result.total_cost == 8, \
+        f"expected total 8 (ferry paid once), got {result.total_cost}"
+
+run("build GB side first; Ireland side free in same turn", test_ferry_gb_side_first_ireland_free)
+
 
 # ---------------------------------------------------------------------------
 # Summary
