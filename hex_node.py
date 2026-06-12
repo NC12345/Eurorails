@@ -98,6 +98,19 @@ class HexNode:
     def neighbor_edge(self, node_id: str) -> EdgeObstacle | None:
         return self.neighbors.get(node_id)
 
+    def build_cost_to(self, to_node: HexNode) -> int:
+        if to_node.is_ferry():
+            return to_node.ferry_link.cost_ecu if to_node.ferry_link else 0
+        base = TERRAIN_BUILD_COST.get(to_node.terrain_type, 1)
+        obs = self.neighbor_edge(to_node.id)
+        if obs and obs.lake:
+            surcharge = WATER_SURCHARGE["lake"]
+        elif obs and obs.river:
+            surcharge = WATER_SURCHARGE["river"]
+        else:
+            surcharge = 0
+        return base + surcharge
+
     # -- Construction --------------------------------------------------------
 
     @classmethod

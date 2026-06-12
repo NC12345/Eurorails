@@ -93,34 +93,6 @@ def execute_build(
 
 
 # ---------------------------------------------------------------------------
-# Cost function
-# ---------------------------------------------------------------------------
-
-def cost_of_edge(map_data: dict[str, HexNode], from_node: str, to_node: str) -> int:
-    """
-    Terrain base cost + water surcharge (non-stacking: lake takes priority).
-
-    For ferry ports, returns the flat ferry_link.cost_ecu instead.
-    """
-    to = map_data[to_node]
-
-    if to.is_ferry():
-        if to.ferry_link:
-            return to.ferry_link.cost_ecu
-        return 0  # ferry port with no link — shouldn't occur
-
-    base = TERRAIN_BUILD_COST.get(to.terrain_type, 1)
-    obs = map_data[from_node].neighbor_edge(to_node)
-    if obs and obs.lake:
-        surcharge = WATER_SURCHARGE["lake"]
-    elif obs and obs.river:
-        surcharge = WATER_SURCHARGE["river"]
-    else:
-        surcharge = 0
-    return base + surcharge
-
-
-# ---------------------------------------------------------------------------
 # Build edge validators
 # ---------------------------------------------------------------------------
 
@@ -214,7 +186,7 @@ def validate_build_edge(
     if err := check_blocking(map_data, all_players, staged_edges, from_node, to_node, player.player_id):
         return err, 0, milepost_touches
 
-    edge_cost = cost_of_edge(map_data, from_node, to_node)
+    edge_cost = map_data[from_node].build_cost_to(map_data[to_node])
     if map_data[to_node].is_ferry() and map_data[to_node].ferry_link:
         partner = map_data[to_node].ferry_link.to
         if any(to_node in e or partner in e for e in all_owned):

@@ -4,7 +4,6 @@ import heapq
 from collections import deque
 
 from hex_node import HexNode
-from track_builder import cost_of_edge
 
 
 def cheapest_build_path(
@@ -60,7 +59,7 @@ def cheapest_build_path(
             if edge in player_owned_edges or current.is_major_city_interior_with(neighbor):
                 edge_cost = 0
             else:
-                edge_cost = cost_of_edge(map_data, node, neighbor_id)
+                edge_cost = current.build_cost_to(neighbor)
             new_cost = cost + edge_cost
             if new_cost < dist.get(neighbor_id, float("inf")):
                 dist[neighbor_id] = new_cost

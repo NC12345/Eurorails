@@ -20,7 +20,7 @@ from game_state import (
     load_route_deck,
 )
 from movement import execute_operate, MoveTo, PickUp, DropOff, Deliver, CommitFerry
-from track_builder import execute_build, cost_of_edge, BuildEdge, UpgradeTrain
+from track_builder import execute_build, BuildEdge, UpgradeTrain
 
 # ---------------------------------------------------------------------------
 # Test helpers
@@ -92,14 +92,14 @@ def test_cost_clear():
     # r19_c28 is clear, adjacent to r19_c29 (London large_city)
     # Edge obstacle from r19_c29 -> r19_c28: river=True (Thames)
     # But we test cost_of_edge(from=r19_c29, to=r19_c28): to_type=clear(1) + river(2) = 3
-    c = cost_of_edge(MAP_DATA, "r19_c29", "r19_c28")
+    c = MAP_DATA["r19_c29"].build_cost_to(MAP_DATA["r19_c28"])
     assert c == 3, f"expected 3 (clear+river), got {c}"
 
 run("clear node with river surcharge = 3", test_cost_clear)
 
 def test_cost_mountain_lake():
     # r2_c27 -> r3_c28: mountain->mountain with lake edge = 2+3=5
-    c = cost_of_edge(MAP_DATA, "r2_c27", "r3_c28")
+    c = MAP_DATA["r2_c27"].build_cost_to(MAP_DATA["r3_c28"])
     assert c == 5, f"expected 5 (mountain+lake), got {c}"
 
 run("mountain node with lake surcharge = 5", test_cost_mountain_lake)
@@ -116,7 +116,7 @@ def test_cost_large_city():
             if MAP_DATA[nb_id].terrain_type not in ("large_city", "space_sea"):
                 surcharge = 3 if obs.lake else 2 if obs.river else 0
                 expected = 5 + surcharge  # to_node = large_city, base = 5
-                c = cost_of_edge(MAP_DATA, nb_id, ln)
+                c = MAP_DATA[nb_id].build_cost_to(MAP_DATA[ln])
                 assert c == expected, f"expected {expected}, got {c} for {nb_id}->{ln}"
                 found = True
                 break
@@ -134,7 +134,7 @@ def test_cost_clear_no_obstacle():
         if node.terrain_type == "clear":
             for nb_id, obs in node.neighbors.items():
                 if MAP_DATA[nb_id].terrain_type == "clear" and not obs.river and not obs.lake:
-                    c = cost_of_edge(MAP_DATA, node_id, nb_id)
+                    c = MAP_DATA[node_id].build_cost_to(MAP_DATA[nb_id])
                     assert c == 1, f"expected 1, got {c}"
                     found = True
                     break
@@ -213,7 +213,7 @@ def test_build_budget_exceeded():
     # If total cost <= 20M this won't trigger; force it by using alpine nodes
     # Find an alpine path or just submit more builds
     # Ensure total > 20M by checking costs
-    total = sum(cost_of_edge(MAP_DATA, b.from_node, b.to_node) for b in builds)
+    total = sum(MAP_DATA[b.from_node].build_cost_to(MAP_DATA[b.to_node]) for b in builds)
     if total <= 20:
         # Pad with high-cost edges
         pass  # skip this specific budget path, test alpine separately
@@ -234,7 +234,7 @@ def test_build_budget_exceeded():
         cur = frontier.pop(0)
         for nb_id, obs in MAP_DATA[cur].neighbors.items():
             if nb_id not in visited and MAP_DATA[nb_id].terrain_type not in ("space_sea", "large_city"):
-                c = cost_of_edge(MAP_DATA, cur, nb_id)
+                c = MAP_DATA[cur].build_cost_to(MAP_DATA[nb_id])
                 all_builds.append(BuildEdge(cur, nb_id))
                 visited.add(nb_id)
                 frontier.append(nb_id)
@@ -749,7 +749,7 @@ def test_ferry_connectivity_to_pair():
         BuildEdge(pair, pair_nb),
     ])
     assert result.ok, f"ferry build + onward from pair should succeed: {result.error}"
-    expected = 8 + cost_of_edge(MAP_DATA, pair, pair_nb)
+    expected = 8 + MAP_DATA[pair].build_cost_to(MAP_DATA[pair_nb])
     assert result.total_cost == expected, f"expected {expected}, got {result.total_cost}"
 
 run("build to Dublin makes GB pair reachable for same-turn onward build", test_ferry_connectivity_to_pair)
@@ -766,7 +766,7 @@ def test_ferry_no_double_charge():
     # pair is reachable via ferry expansion; building to it should be free
     result = execute_build(gs, "p1", [BuildEdge(pair, pair_nb)])
     assert result.ok, f"onward build from pair (ferry already paid) should succeed: {result.error}"
-    expected = cost_of_edge(MAP_DATA, pair, pair_nb)
+    expected = MAP_DATA[pair].build_cost_to(MAP_DATA[pair_nb])
     assert result.total_cost == expected, \
         f"expected terrain cost {expected} (ferry not charged again), got {result.total_cost}"
 

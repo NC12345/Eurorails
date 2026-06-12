@@ -63,7 +63,7 @@ Graph traversal algorithms in `pathfinding.py`. No external libraries — raw `d
 
 ### build path
 
-A planned sequence of nodes from a player's existing network to a target, minimising remaining ECU build cost. Owned edges cost 0; opponent-owned edges are impassable; unowned edges cost terrain + water surcharge (`cost_of_edge()`). Computed by `cheapest_build_path()` (Dijkstra).
+A planned sequence of nodes from a player's existing network to a target, minimising remaining ECU build cost. Owned edges cost 0; opponent-owned edges are impassable; unowned edges cost terrain + water surcharge (`build_cost_to()`). Computed by `cheapest_build_path()` (Dijkstra).
 
 ### pathfinding queries
 
