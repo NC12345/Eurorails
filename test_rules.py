@@ -18,6 +18,7 @@ from game_state import (
     load_resource_supply,
     load_resource_index,
     load_route_deck,
+    start_turn,
 )
 from movement import execute_operate, execute_discard_hand, MoveTo, PickUp, DropOff, Deliver, CommitFerry
 from track_builder import execute_build, BuildEdge, UpgradeTrain
@@ -493,6 +494,7 @@ print("\n--- movement ---")
 def test_initial_build_blocks_operate():
     p = make_player("p1", "r19_c29", owned_edges={edge("r19_c29", "r19_c28")})
     gs = make_game([p], phase=GamePhase.INITIAL_BUILD_1)
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [MoveTo("r19_c28")])
     assert not result.ok
     assert "initial build" in result.error.lower(), result.error
@@ -510,6 +512,7 @@ def test_move_along_own_track():
     owned.add(edge("r19_c28", node3))
     p = make_player("p1", "r19_c29", owned_edges=owned)
     gs = make_game([p])
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [MoveTo("r19_c28"), MoveTo(node3)])
     assert result.ok, f"move along own track failed: {result.error}"
     assert p.train.current_node == node3
@@ -521,6 +524,7 @@ def test_reversal_on_clear():
     owned = {edge("r19_c29", "r19_c28")}
     p = make_player("p1", "r19_c29", owned_edges=owned)
     gs = make_game([p])
+    start_turn(gs, p)
     # Move to r19_c28 (clear node), then try to go back
     result = execute_operate(gs, "p1", [MoveTo("r19_c28"), MoveTo("r19_c29")])
     assert not result.ok
@@ -535,6 +539,7 @@ def test_reversal_at_city_allowed():
     p = make_player("p1", "r19_c28", owned_edges=owned)
     p.train.previous_node = None  # just arrived from nowhere
     gs = make_game([p])
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [MoveTo("r19_c29"), MoveTo("r19_c28")])
     assert result.ok, f"reverse at city should be allowed: {result.error}"
 
@@ -545,6 +550,7 @@ def test_major_city_interior_free_traversal():
     # No owned edges needed for the interior
     p = make_player("p1", "r19_c29", owned_edges=set())
     gs = make_game([p])
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [MoveTo("r19_c30")])
     assert result.ok, f"major city interior traversal should be free: {result.error}"
 
@@ -553,6 +559,7 @@ run("major city interior traversal needs no track", test_major_city_interior_fre
 def test_no_track_error():
     p = make_player("p1", "r19_c29", owned_edges=set())
     gs = make_game([p])
+    start_turn(gs, p)
     # r19_c28 is adjacent but not London interior (clear node)
     result = execute_operate(gs, "p1", [MoveTo("r19_c28")])
     assert not result.ok
@@ -565,6 +572,7 @@ def test_track_fee_accumulation():
     p2 = make_player("p2", "r19_c29", ecu=10,
                      owned_edges={edge("r19_c29", "r19_c28")})
     gs = make_game([p1, p2])
+    start_turn(gs, p1)
     result = execute_operate(gs, "p1", [MoveTo("r19_c28")])
     assert result.ok, f"move on opponent track should succeed: {result.error}"
     assert result.fees_charged.get("p2") == 4, f"expected fee of 4 to p2, got {result.fees_charged}"
@@ -578,6 +586,7 @@ def test_track_fee_insufficient_funds():
     p2 = make_player("p2", "r19_c29", ecu=10,
                      owned_edges={edge("r19_c29", "r19_c28")})
     gs = make_game([p1, p2])
+    start_turn(gs, p1)
     result = execute_operate(gs, "p1", [MoveTo("r19_c28")])
     assert not result.ok
     assert "insufficient" in result.error.lower(), result.error
@@ -590,6 +599,7 @@ def test_track_fee_once_per_opponent_per_turn():
     p2 = make_player("p2", "r19_c29", ecu=10,
                      owned_edges={edge("r19_c29", "r19_c28"), edge("r19_c28", "r19_c27")})
     gs = make_game([p1, p2])
+    start_turn(gs, p1)
     result = execute_operate(gs, "p1", [MoveTo("r19_c28"), MoveTo("r19_c27")])
     assert result.ok, f"two moves on opponent track should succeed: {result.error}"
     assert result.fees_charged.get("p2") == 4, f"expected fee of 4 (once per turn), got {result.fees_charged}"
@@ -604,6 +614,7 @@ def test_commit_ferry():
     # Just put train at Belfast directly
     p = make_player("p1", belfast, ecu=100, owned_edges=owned)
     gs = make_game([p])
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [CommitFerry()])
     assert result.ok, f"CommitFerry should succeed: {result.error}"
     assert p.train.committed_to_ferry is True
@@ -617,20 +628,21 @@ def test_ferry_teleport_next_turn():
     ferry_dest = MAP_DATA[belfast].ferry_link.to  # r7_c26
     p = make_player("p1", belfast, ecu=100, ferry=True)
     gs = make_game([p])
-    # Start operate phase — should teleport to ferry_dest and apply half speed
-    result = execute_operate(gs, "p1", [])  # no further actions, just teleport
-    assert result.ok, f"ferry teleport failed: {result.error}"
+    start_turn(gs, p)  # teleport happens here
     assert p.train.current_node == ferry_dest, f"expected {ferry_dest}, got {p.train.current_node}"
-    expected_movement = 9 // 2  # FREIGHT max_speed=9, floor=4
+    expected_movement = -(- 9 // 2)  # FREIGHT max_speed=9, ceiling=5
     assert p.train.remaining_movement == expected_movement, \
         f"expected {expected_movement}, got {p.train.remaining_movement}"
     assert p.train.committed_to_ferry is False
+    result = execute_operate(gs, "p1", [])
+    assert result.ok, f"empty operate after ferry teleport failed: {result.error}"
 
 run("ferry teleport: next turn starts at destination with half speed", test_ferry_teleport_next_turn)
 
 def test_commit_ferry_not_at_ferry_node():
     p = make_player("p1", "r19_c29")
     gs = make_game([p])
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [CommitFerry()])
     assert not result.ok
     assert "ferry" in result.error.lower(), result.error
@@ -642,6 +654,7 @@ def test_pickup_cargo_full():
     glasgow = "r5_c28"
     p = make_player("p1", glasgow, cargo=["Sheep", "Fish"])  # FREIGHT capacity 2 — full
     gs = make_game([p])
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [PickUp("Sheep")])
     assert not result.ok
     assert "cargo full" in result.error.lower(), result.error
@@ -652,6 +665,7 @@ def test_pickup_free():
     glasgow = "r5_c28"
     p = make_player("p1", glasgow, ecu=50)
     gs = make_game([p])
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [PickUp("Sheep")])
     assert result.ok, f"pickup should succeed: {result.error}"
     assert "Sheep" in p.train.cargo
@@ -663,6 +677,7 @@ def test_pickup_wrong_resource():
     glasgow = "r5_c28"  # produces Sheep
     p = make_player("p1", glasgow)
     gs = make_game([p])
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [PickUp("Coal")])
     assert not result.ok
     assert "not available" in result.error.lower(), result.error
@@ -673,6 +688,7 @@ def test_dropoff():
     p = make_player("p1", "r19_c29", cargo=["Sheep"])
     supply = {"Sheep": 2}
     gs = make_game([p], resource_supply=supply)
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [DropOff("Sheep")])
     assert result.ok, f"dropoff failed: {result.error}"
     assert "Sheep" not in p.train.cargo
@@ -685,6 +701,7 @@ def test_pickup_supply_exhausted():
     glasgow = "r5_c28"  # produces Sheep
     p = make_player("p1", glasgow)
     gs = make_game([p], resource_supply={"Sheep": 0})
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [PickUp("Sheep")])
     assert not result.ok
     assert "supply exhausted" in result.error.lower(), result.error
@@ -697,6 +714,7 @@ def test_pickup_decrements_supply():
     p = make_player("p1", glasgow)
     initial_supply = {"Sheep": 3}
     gs = make_game([p], resource_supply=initial_supply)
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [PickUp("Sheep")])
     assert result.ok, f"pickup failed: {result.error}"
     assert gs.resource_supply["Sheep"] == 2
@@ -715,6 +733,7 @@ def test_deliver():
     deck = [RouteCard(routes=[Route("X", "Y", 5), Route("A", "B", 6), Route("C", "D", 7)])]
     p = make_player("p1", glasgow, cargo=["Sheep"], hand=[card], ecu=100)
     gs = make_game([p], deck=deck)
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [Deliver("Sheep")])
     assert result.ok, f"deliver should succeed: {result.error}"
     assert "Sheep" not in p.train.cargo
@@ -734,6 +753,7 @@ def test_deliver_no_matching_card():
     ])
     p = make_player("p1", glasgow, cargo=["Sheep"], hand=[card])
     gs = make_game([p])
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [Deliver("Sheep")])
     assert not result.ok
     assert "demand card" in result.error.lower(), result.error
@@ -749,6 +769,7 @@ def test_deliver_wrong_city():
     ])
     p = make_player("p1", london_node, cargo=["Sheep"], hand=[card])
     gs = make_game([p])
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [Deliver("Sheep")])
     assert not result.ok
     assert "demand card" in result.error.lower(), result.error
@@ -758,6 +779,7 @@ run("Deliver at wrong city fails", test_deliver_wrong_city)
 def test_no_movement_remaining():
     p = make_player("p1", "r19_c29", owned_edges={edge("r19_c29", "r19_c28")})
     gs = make_game([p])
+    start_turn(gs, p)
     # FREIGHT has max 9 moves; build a path longer than 9 and try to go beyond
     # Simple: use up all 9 moves by moving back and forth through a city
     # Move to London interior nodes repeatedly (free traversal, same cost)
@@ -766,7 +788,9 @@ def test_no_movement_remaining():
     result = execute_operate(gs, "p1", actions)
     assert result.ok, f"9 moves should succeed: {result.error}"
     # Now one more move should fail
-    gs2 = make_game([make_player("p2", "r19_c29", owned_edges={edge("r19_c29", "r19_c28")})])
+    p2 = make_player("p2", "r19_c29", owned_edges={edge("r19_c29", "r19_c28")})
+    gs2 = make_game([p2])
+    start_turn(gs2, p2)
     actions2 = [MoveTo("r19_c30"), MoveTo("r19_c29")] * 4 + [MoveTo("r19_c30"), MoveTo("r19_c29")]  # 10
     result2 = execute_operate(gs2, "p2", actions2)
     assert not result2.ok
@@ -957,6 +981,7 @@ def test_operate_sets_actions_flag():
                if not MAP_DATA[nb].is_sea())
     p = make_player("p1", london, owned_edges={frozenset({london, adj})})
     gs = make_game([p])
+    start_turn(gs, p)
     result = execute_operate(gs, "p1", [MoveTo(adj)])
     assert result.ok, f"move failed: {result.error}"
     assert p.actions_taken_this_turn is True

@@ -23,24 +23,18 @@ import pygame
 
 from game_state import (
     BuildEdge,
-    GamePhase,
-    GameState,
-    LocoType,
-    LOCO_STATS,
-    UPGRADE_COST,
-    VALID_UPGRADE_PATHS,
-    PlayerState,
-    RouteCard,
-    TrainState,
+    Deliver,
+    DropOff,
+    MoveTo,
+    PickUp,
     UpgradeTrain,
-    build_city_index,
-    draw_route_card,
-    load_map,
-    load_resource_index,
-    load_resource_supply,
-    load_route_deck,
+    VALID_UPGRADE_PATHS,
+    end_turn,
+    make_game,
+    start_turn,
 )
-from track_builder import execute_build
+from movement import execute_operate
+from track_builder import execute_build, validate_build_edge
 from pathfinding import reachable_nodes, shortest_move_path
 
 
@@ -372,55 +366,22 @@ class UIState:
 
 # ── Game actions ──────────────────────────────────────────────────────────────
 
-def do_move(game, player, path, ui):
-    steps = len(path) - 1
-    if steps <= 0:
-        return
-    if steps > player.train.remaining_movement:
-        ui.msg(f"Need {steps} moves, only {player.train.remaining_movement} left.", ok=False)
-        return
-    for i in range(1, len(path)):
-        src_id, dst_id = path[i - 1], path[i]
-        src = game.map_data[src_id]
-        dst = game.map_data[dst_id]
-        if not src.has_neighbor(dst_id):
-            ui.msg(f"Not adjacent: {src_id} → {dst_id}", ok=False)
-            return
-        edge = frozenset({src_id, dst_id})
-        is_interior = (
-            src.is_major_city() and dst.is_major_city()
-            and src.city_name == dst.city_name
-        )
-        if not is_interior and edge not in player.owned_edges:
-            ui.msg(f"No track on {src_id}—{dst_id}.", ok=False)
-            return
-        if dst_id == player.train.previous_node and not src.is_city():
-            ui.msg("Can't reverse here — not at a city.", ok=False)
-            return
-        player.train.previous_node = player.train.current_node
-        player.train.current_node = dst_id
-        player.train.remaining_movement -= 1
-    dest = game.map_data[path[-1]]
-    name = dest.city_name or path[-1]
-    ui.msg(f"Moved to {name}. ({player.train.remaining_movement} moves left)", ok=True)
-
-
 def do_pickup(game, player, ui):
     node = game.map_data[player.train.current_node]
     city = node.city_name
     if not city:
         ui.msg("Not at a city.", ok=False)
         return
-    if len(player.train.cargo) >= player.train.cargo_capacity():
-        ui.msg("Cargo full.", ok=False)
+    resource = next(
+        (res for res in game.resource_index.get(city, [])
+         if game.resource_supply.get(res, 0) > 0),
+        None,
+    )
+    if resource is None:
+        ui.msg(f"No resources available at {city}.", ok=False)
         return
-    for res in game.resource_index.get(city, []):
-        if game.resource_supply.get(res, 0) > 0:
-            player.train.cargo.append(res)
-            game.resource_supply[res] -= 1
-            ui.msg(f"Picked up {res} at {city}.", ok=True)
-            return
-    ui.msg(f"No resources available at {city}.", ok=False)
+    result = execute_operate(game, player.player_id, [PickUp(resource)])
+    ui.msg(f"Picked up {resource} at {city}." if result.ok else result.error, ok=result.ok)
 
 
 def do_deliver(game, player, ui):
@@ -429,28 +390,29 @@ def do_deliver(game, player, ui):
     if not city:
         ui.msg("Not at a city.", ok=False)
         return
-    for card in player.hand:
-        for route in card.routes:
-            if route.city_name == city and route.resource_name in player.train.cargo:
-                player.train.cargo.remove(route.resource_name)
-                player.ecu += route.amount
-                player.hand.remove(card)
-                game.route_discard.append(card)
-                new = draw_route_card(game.route_deck, game.route_discard)
-                if new:
-                    player.hand.append(new)
-                ui.msg(f"Delivered {route.resource_name} to {city}! +{route.amount}M ECU", ok=True)
-                return
-    ui.msg("No matching demand card for this city/cargo.", ok=False)
+    resource = next(
+        (res for res in player.train.cargo
+         if any(r.city_name == city and r.resource_name == res
+                for card in player.hand for r in card.routes)),
+        None,
+    )
+    if resource is None:
+        ui.msg("No matching demand card for this city/cargo.", ok=False)
+        return
+    result = execute_operate(game, player.player_id, [Deliver(resource)])
+    if result.ok:
+        ui.msg(result.payout_log[0] if result.payout_log else f"Delivered {resource} to {city}.", ok=True)
+    else:
+        ui.msg(result.error, ok=False)
 
 
 def do_dropoff(game, player, ui):
     if not player.train.cargo:
         ui.msg("Nothing to drop off.", ok=False)
         return
-    res = player.train.cargo.pop(0)
-    game.resource_supply[res] = game.resource_supply.get(res, 0) + 1
-    ui.msg(f"Dropped off {res}.", ok=True)
+    resource = player.train.cargo[0]
+    result = execute_operate(game, player.player_id, [DropOff(resource)])
+    ui.msg(f"Dropped off {resource}." if result.ok else result.error, ok=result.ok)
 
 
 def do_upgrade(game, player, ui):
@@ -473,17 +435,21 @@ def do_upgrade(game, player, ui):
 
 
 def buildable_neighbors(game, player, src_id) -> set[str]:
-    src = game.map_data[src_id]
     result = set()
+    src = game.map_data.get(src_id)
+    if src is None:
+        return result
     for nb_id in src.neighbors:
-        nb = game.map_data.get(nb_id)
-        if nb is None or nb.is_sea():
+        if game.map_data.get(nb_id) is None:
             continue
-        if frozenset({src_id, nb_id}) in player.owned_edges:
-            continue
-        if src.is_major_city() and nb.is_major_city() and src.city_name == nb.city_name:
-            continue
-        result.add(nb_id)
+        action = BuildEdge(src_id, nb_id)
+        error, _, _ = validate_build_edge(
+            game.map_data, player, [player], action,
+            staged_edges=set(),
+            major_city_touches=player.major_city_touches_this_turn,
+        )
+        if error is None:
+            result.add(nb_id)
     return result
 
 
@@ -492,58 +458,6 @@ def refresh_reachable(game, player):
         game.map_data, player.owned_edges,
         player.train.current_node, player.train.remaining_movement,
     )
-
-
-# ── Game initialization ───────────────────────────────────────────────────────
-
-def make_game(start_city: str = "Paris") -> tuple[GameState, PlayerState]:
-    map_data = load_map()
-    city_index = build_city_index(map_data)
-    resource_index = load_resource_index()
-    resource_supply = load_resource_supply()
-    route_deck = load_route_deck()
-    route_discard: list[RouteCard] = []
-
-    nodes = city_index.get(start_city)
-    if not nodes:
-        raise ValueError(f"City not found: {start_city!r}")
-    start_node = nodes[0]
-
-    hand = []
-    for _ in range(3):
-        card = draw_route_card(route_deck, route_discard)
-        if card:
-            hand.append(card)
-
-    train = TrainState(
-        current_node=start_node,
-        previous_node=None,
-        remaining_movement=LOCO_STATS[LocoType.FREIGHT][0],
-        cargo=[],
-        loco_type=LocoType.FREIGHT,
-        committed_to_ferry=False,
-    )
-    player = PlayerState(
-        player_id="p1",
-        ecu=50,
-        train=train,
-        owned_edges=set(),
-        hand=hand,
-        track_fees_owed={},
-    )
-    game = GameState(
-        map_data=map_data,
-        city_index=city_index,
-        resource_index=resource_index,
-        resource_supply=resource_supply,
-        players=[player],
-        current_player_index=0,
-        phase=GamePhase.NORMAL_PLAY,
-        route_deck=route_deck,
-        route_discard=route_discard,
-        turn_number=1,
-    )
-    return game, player
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -607,12 +521,8 @@ def main():
                     ui.msg("Build mode.")
 
                 elif k == pygame.K_RETURN:
-                    game.turn_number += 1
-                    player.train.remaining_movement = player.train.max_speed()
-                    player.train.previous_node = None
-                    player.track_fees_owed.clear()
-                    player.major_city_touches_this_turn = {}
-                    player.actions_taken_this_turn = False
+                    end_turn(game, player)
+                    start_turn(game, player)
                     ui.mode = "OPERATE"
                     ui.clear()
                     ui.reachable = refresh_reachable(game, player)
@@ -665,7 +575,13 @@ def main():
                     elif clicked == ui.selected_node:
                         path = list(ui.highlighted_path)
                         ui.clear()
-                        do_move(game, player, path, ui)
+                        result = execute_operate(game, player.player_id, [MoveTo(n) for n in path[1:]])
+                        if result.ok:
+                            dest = game.map_data[path[-1]]
+                            name = dest.city_name or path[-1]
+                            ui.msg(f"Moved to {name}. ({player.train.remaining_movement} moves left)", ok=True)
+                        else:
+                            ui.msg(result.error, ok=False)
                         ui.reachable = refresh_reachable(game, player)
 
                     else:

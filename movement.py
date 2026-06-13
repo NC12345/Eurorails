@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from game_state import (
-    LOCO_STATS,
     CommitFerry,
     Deliver,
     DiscardHand,
@@ -14,7 +13,6 @@ from game_state import (
     OperateResult,
     PickUp,
     PlayerState,
-    TrainState,
     draw_route_card,
 )
 
@@ -48,14 +46,6 @@ def execute_operate(
         return OperateResult(ok=False, error=f"unknown player: {player_id}", payout_log=[], fees_charged={})
 
     train = player.train
-    player.track_fees_owed = {}
-
-    # Ferry arrival setup — teleport and apply half speed
-    if train.committed_to_ferry:
-        _apply_ferry_arrival(game_state.map_data, train)
-    else:
-        train.remaining_movement = train.max_speed()
-
     payout_log: list[str] = []
 
     for action in actions:
@@ -116,21 +106,6 @@ def execute_discard_hand(
 
     player.actions_taken_this_turn = True
     return None
-
-
-# ---------------------------------------------------------------------------
-# Ferry arrival (called at start of turn if committed_to_ferry=True)
-# ---------------------------------------------------------------------------
-
-def _apply_ferry_arrival(map_data: dict[str, HexNode], train: TrainState) -> None:
-    """Teleport to ferry destination and apply half speed for this turn."""
-    node = map_data[train.current_node]
-    if node.ferry_link:
-        train.current_node = node.ferry_link.to
-    base_speed = LOCO_STATS[train.loco_type][0]
-    train.remaining_movement = -(- base_speed // 2) # ceiling division for half speed
-    train.committed_to_ferry = False
-    # previous_node intentionally NOT updated: teleport is not an edge traversal
 
 
 # ---------------------------------------------------------------------------

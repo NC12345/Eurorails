@@ -239,3 +239,90 @@ def draw_route_card(
         discard.clear()
         random.shuffle(deck)
     return deck.pop()
+
+
+# ---------------------------------------------------------------------------
+# Turn lifecycle
+# ---------------------------------------------------------------------------
+
+def _apply_ferry_arrival(map_data: dict[str, HexNode], train: TrainState) -> None:
+    """Teleport to ferry destination and apply half speed for this turn."""
+    node = map_data[train.current_node]
+    if node.ferry_link:
+        train.current_node = node.ferry_link.to
+    base_speed = LOCO_STATS[train.loco_type][0]
+    train.remaining_movement = -(- base_speed // 2)  # ceiling division
+    train.committed_to_ferry = False
+    # previous_node intentionally NOT updated: teleport is not an edge traversal
+
+
+def start_turn(game: GameState, player: PlayerState) -> None:
+    """Reset per-turn movement state at the beginning of a player's turn."""
+    player.track_fees_owed = {}
+    if player.train.committed_to_ferry:
+        _apply_ferry_arrival(game.map_data, player.train)
+    else:
+        player.train.remaining_movement = player.train.max_speed()
+
+
+def end_turn(game: GameState, player: PlayerState) -> None:
+    """Advance turn counter and clear per-turn bookkeeping."""
+    game.turn_number += 1
+    player.train.previous_node = None
+    player.track_fees_owed.clear()
+    player.major_city_touches_this_turn = {}
+    player.actions_taken_this_turn = False
+
+
+# ---------------------------------------------------------------------------
+# Game factory
+# ---------------------------------------------------------------------------
+
+def make_game(start_city: str = "Paris") -> tuple[GameState, PlayerState]:
+    map_data = load_map()
+    city_index = build_city_index(map_data)
+    resource_index = load_resource_index()
+    resource_supply = load_resource_supply()
+    route_deck = load_route_deck()
+    route_discard: list[RouteCard] = []
+
+    nodes = city_index.get(start_city)
+    if not nodes:
+        raise ValueError(f"City not found: {start_city!r}")
+    start_node = nodes[0]
+
+    hand = []
+    for _ in range(3):
+        card = draw_route_card(route_deck, route_discard)
+        if card:
+            hand.append(card)
+
+    train = TrainState(
+        current_node=start_node,
+        previous_node=None,
+        remaining_movement=LOCO_STATS[LocoType.FREIGHT][0],
+        cargo=[],
+        loco_type=LocoType.FREIGHT,
+        committed_to_ferry=False,
+    )
+    player = PlayerState(
+        player_id="p1",
+        ecu=50,
+        train=train,
+        owned_edges=set(),
+        hand=hand,
+        track_fees_owed={},
+    )
+    game = GameState(
+        map_data=map_data,
+        city_index=city_index,
+        resource_index=resource_index,
+        resource_supply=resource_supply,
+        players=[player],
+        current_player_index=0,
+        phase=GamePhase.NORMAL_PLAY,
+        route_deck=route_deck,
+        route_discard=route_discard,
+        turn_number=1,
+    )
+    return game, player
