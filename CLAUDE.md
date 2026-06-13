@@ -1,9 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Agent skills
-
 ### Issue tracker
 
 Issues live in GitHub Issues (`github.com/NC12345/Eurorails`). See `docs/agents/issue-tracker.md`.

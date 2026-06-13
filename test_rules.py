@@ -295,7 +295,7 @@ def test_build_inside_major_city():
 
 run("build inside major city red area fails", test_build_inside_major_city)
 
-def test_build_milepost_limit():
+def test_build_major_city_touch_limit():
     # Player already has 2 major-city border edges from r19_c29 and r19_c30
     # Try to add a 3rd — should fail
     p = make_player("p1", "r19_c29", ecu=100,
@@ -307,11 +307,11 @@ def test_build_milepost_limit():
             BuildEdge("r19_c28", "r19_c27"),  # non-major-city, fine
             BuildEdge("r20_c28", "r20_c27"),  # major-city border — would be 3rd touch
         ])
-        # r19_c28 must be in network for this to test milepost; it is
-        if not result.ok and "milepost" in result.error.lower():
+        # r19_c28 must be in network for this to test major city touch; it is
+        if not result.ok and "major-city" in result.error.lower():
             pass  # correct
         elif result.ok:
-            # Count actual milepost touches in built edges to verify
+            # Count actual major city touches in built edges to verify
             pass
 
     # Simpler: build 3 major-city border edges in one phase
@@ -333,7 +333,7 @@ def test_build_milepost_limit():
         result3 = execute_build(gs3, "p3", [BuildEdge("r19_c28", "r18_c29")])
         # This is a major-city border edge (to_node=large_city)
         # But we already have 2 in owned_edges; this would be 3rd this phase
-        # NOTE: milepost_touches only counts edges built THIS phase, not owned_edges
+        # NOTE: major_city_touches only counts edges built THIS phase, not owned_edges
         # So building 1 edge this phase shouldn't fail — only fails if 3 in same phase
         pass
 
@@ -341,7 +341,7 @@ def test_build_milepost_limit():
     p4 = make_player("p4", "r19_c29", ecu=100)
     gs4 = make_game([p4])
     # Try to build 3 outer-border edges in one phase from scratch
-    # First edge: r19_c29->r19_c28 (milepost touch 1, from London)
+    # First edge: r19_c29->r19_c28 (major city touch 1, from London)
     # Second: need r19_c28 in network to branch, then touch London again
     # That requires r19_c28->some_London_node, but London interior is blocked
     # So actually we can only touch London outer border from London nodes or from outside
@@ -353,7 +353,64 @@ def test_build_milepost_limit():
     result4 = execute_build(gs4, "p4", [BuildEdge("r19_c29", "r19_c28")])
     assert result4.ok, f"single major-city border build should succeed: {result4.error}"
 
-run("major-city milepost limit (single build ok, 3 in phase fails)", test_build_milepost_limit)
+run("major-city touch limit (single build ok, 3 in phase fails)", test_build_major_city_touch_limit)
+
+def test_build_major_city_touch_limit_across_calls():
+    # Simulates prototype per-click flow; cap must accumulate across separate execute_build calls.
+    p = make_player("p1", "r19_c29", ecu=100)
+    gs = make_game([p])
+
+    r1 = execute_build(gs, "p1", [BuildEdge("r19_c29", "r19_c28")])
+    assert r1.ok, f"1st major city touch should succeed: {r1.error}"
+    london = MAP_DATA["r19_c29"].city_name
+    assert p.major_city_touches_this_turn == {london: 1}
+
+    r2 = execute_build(gs, "p1", [BuildEdge("r19_c30", "r19_c31")])
+    assert r2.ok, f"2nd major city touch should succeed: {r2.error}"
+    assert p.major_city_touches_this_turn == {london: 2}
+
+    # 3rd touch to same city blocked — use fallback via pre-set counter
+    p2 = make_player("p2", "r19_c29", ecu=100)
+    p2.major_city_touches_this_turn = {london: 2}
+    gs2 = make_game([p2])
+    r3 = execute_build(gs2, "p2", [BuildEdge("r19_c29", "r19_c28")])
+    assert not r3.ok, "3rd major city touch to same city should fail"
+    assert "major-city" in (r3.error or "").lower(), r3.error
+
+run("major-city touch cap persists across separate execute_build calls (per-click prototype flow)", test_build_major_city_touch_limit_across_calls)
+
+
+def test_build_major_city_touch_limit_per_city():
+    # Cap is per city: 2 London touches + 2 Paris touches in one turn is legal.
+    london_nodes = CITY_INDEX.get("London", [])
+    paris_nodes  = CITY_INDEX.get("Paris", [])
+    if not london_nodes or not paris_nodes:
+        return  # map doesn't have expected cities; skip
+
+    london_start = london_nodes[0]
+    paris_start  = paris_nodes[0]
+
+    # Start from London, build 2 border edges, then player is also connected to Paris
+    # via building through the map — skip actual connectivity and use pre-set counter instead.
+    # Directly set 2 London touches and verify a Paris touch still succeeds.
+    p = make_player("p1", paris_start, ecu=100)
+    p.major_city_touches_this_turn = {"London": 2}
+    gs = make_game([p])
+
+    # Find a Paris border edge (paris_start -> adjacent non-Paris node)
+    paris_node = MAP_DATA[paris_start]
+    paris_neighbor = next(
+        (nb for nb in paris_node.neighbors if not MAP_DATA[nb].is_major_city() and not MAP_DATA[nb].is_sea()),
+        None,
+    )
+    if paris_neighbor is None:
+        return  # can't find a suitable edge; skip
+
+    r = execute_build(gs, "p1", [BuildEdge(paris_start, paris_neighbor)])
+    assert r.ok, f"touch to Paris should succeed even after 2 London touches: {r.error}"
+    assert p.major_city_touches_this_turn.get("Paris", 0) == 1
+
+run("major-city touch cap is per city (London cap does not block Paris touches)", test_build_major_city_touch_limit_per_city)
 
 def test_upgrade_train():
     p = make_player("p1", "r19_c29", ecu=50)

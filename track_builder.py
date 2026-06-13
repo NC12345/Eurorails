@@ -46,19 +46,19 @@ def execute_build(
             return BuildResult(ok=False, error="cannot build track and upgrade train in the same turn", total_cost=0, edges_built=[])
 
     staged_edges: set[frozenset[str]] = set()
-    milepost_touches = 0
+    major_city_touches = dict(player.major_city_touches_this_turn)
     total_cost = 0
     pending_upgrade: UpgradeTrain | None = None
 
     for action in builds:
         if isinstance(action, BuildEdge):
-            error, edge_cost, milepost_touches = validate_build_edge(
+            error, edge_cost, major_city_touches = validate_build_edge(
                 game_state.map_data,
                 player,
                 game_state.players,
                 action,
                 staged_edges,
-                milepost_touches,
+                major_city_touches,
             )
             if error:
                 return BuildResult(ok=False, error=error, total_cost=0, edges_built=[])
@@ -86,6 +86,7 @@ def execute_build(
     # Apply atomically
     player.owned_edges |= staged_edges
     player.ecu -= total_cost
+    player.major_city_touches_this_turn = major_city_touches
     if pending_upgrade:
         player.train.loco_type = pending_upgrade.loco_type
 
@@ -127,22 +128,23 @@ def check_right_of_way(
     return None
 
 
-def check_milepost_limit(
+def check_major_city_touch_limit(
     map_data: dict[str, HexNode],
     from_node: str,
     to_node: str,
-    touches: int,
-) -> tuple[str | None, int]:
-    is_border = (
-        map_data[from_node].is_major_city() or map_data[to_node].is_major_city()
-    ) and not (
+    touches: dict[str, int],
+) -> tuple[str | None, dict[str, int]]:
+    major_node = from_node if map_data[from_node].is_major_city() else to_node
+    is_border = map_data[major_node].is_major_city() and not (
         map_data[from_node].is_major_city() and map_data[to_node].is_major_city()
     )
-    if is_border:
-        if touches >= 2:
-            return "exceeded 2 major-city milepost sections per turn", touches
-        return None, touches + 1
-    return None, touches
+    if not is_border:
+        return None, touches
+    city = map_data[major_node].city_name
+    count = touches.get(city, 0)
+    if count >= 2:
+        return f"exceeded 2 major-city touches for {city} this turn", touches
+    return None, {**touches, city: count + 1}
 
 
 def validate_build_edge(
@@ -151,47 +153,47 @@ def validate_build_edge(
     all_players: list[PlayerState],
     action: BuildEdge,
     staged_edges: set[frozenset[str]],
-    milepost_touches: int,
-) -> tuple[str | None, int, int]:
-    """Returns (error_or_None, edge_cost, updated_milepost_touches)."""
+    major_city_touches: dict[str, int],
+) -> tuple[str | None, int, dict[str, int]]:
+    """Returns (error_or_None, edge_cost, updated_major_city_touches)."""
     from_node, to_node = action.from_node, action.to_node
     edge = frozenset({from_node, to_node})
 
     if err := check_node_valid(map_data, from_node):
-        return err, 0, milepost_touches
+        return err, 0, major_city_touches
     if err := check_node_valid(map_data, to_node):
-        return err, 0, milepost_touches
+        return err, 0, major_city_touches
     if err := check_adjacency(map_data, from_node, to_node):
-        return err, 0, milepost_touches
+        return err, 0, major_city_touches
     if err := check_right_of_way(map_data, all_players, edge, staged_edges):
-        return err, 0, milepost_touches
+        return err, 0, major_city_touches
 
     # Connectivity: from_node must be a major city or in existing network (ferry pair included)
     all_owned = player.owned_edges | staged_edges
     reachable_nodes = _ferry_expanded_reachable(map_data, all_owned)
     if not map_data[from_node].is_major_city() and from_node not in reachable_nodes:
-        return f"{from_node} must be a major city or connected to your existing track", 0, milepost_touches
+        return f"{from_node} must be a major city or connected to your existing track", 0, major_city_touches
 
-    err, milepost_touches = check_milepost_limit(map_data, from_node, to_node, milepost_touches)
+    err, major_city_touches = check_major_city_touch_limit(map_data, from_node, to_node, major_city_touches)
     if err:
-        return err, 0, milepost_touches
+        return err, 0, major_city_touches
 
     # Ferry port capacity
     if map_data[to_node].is_ferry():
         if _count_ferry_players(to_node, player.player_id, all_players, staged_edges) >= 2:
-            return "ferry line at player capacity (max 2)", 0, milepost_touches
+            return "ferry line at player capacity (max 2)", 0, major_city_touches
 
     if err := check_city_access(map_data, player, all_players, to_node, staged_edges):
-        return err, 0, milepost_touches
+        return err, 0, major_city_touches
     if err := check_blocking(map_data, all_players, staged_edges, from_node, to_node, player.player_id):
-        return err, 0, milepost_touches
+        return err, 0, major_city_touches
 
     edge_cost = map_data[from_node].build_cost_to(map_data[to_node])
     if map_data[to_node].is_ferry() and map_data[to_node].ferry_link:
         partner = map_data[to_node].ferry_link.to
         if any(to_node in e or partner in e for e in all_owned):
             edge_cost = 0
-    return None, edge_cost, milepost_touches
+    return None, edge_cost, major_city_touches
 
 
 # ---------------------------------------------------------------------------

@@ -611,6 +611,7 @@ def main():
                     player.train.remaining_movement = player.train.max_speed()
                     player.train.previous_node = None
                     player.track_fees_owed.clear()
+                    player.major_city_touches_this_turn = {}
                     ui.mode = "OPERATE"
                     ui.clear()
                     ui.reachable = refresh_reachable(game, player)

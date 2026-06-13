@@ -123,7 +123,7 @@ Boolean flag on `TrainState`. When `CommitFerry` is executed: flag set to True, 
 
 4M ECU paid per turn to an opponent for using their track, regardless of how many of their edges were traversed in that turn. Accumulated in `track_fees_owed` during `execute_operate`, settled at the end of the call.
 
-### milepost touch
+### major city touch
 
 A `BuildEdge` where one endpoint is a `large_city` (outer-border edge into or out of a major city cluster). Maximum 2 such edges per build phase per player.
 

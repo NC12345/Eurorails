@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Architecture review — Eurorails</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose" });
+  </script>
+  <style>
+    .seam { stroke-dasharray: 4 4; }
+    .leak { stroke: #dc2626; }
+    .deep { background: linear-gradient(135deg, #0f172a, #1e293b); }
+    .module-box { border: 2px solid #334155; border-radius: 6px; padding: 6px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; background: white; }
+    .module-box.deep-module { border: 3px solid #0f172a; background: #1e293b; color: white; }
+    .module-box.shallow { border: 2px dashed #94a3b8; background: #f8fafc; color: #64748b; }
+    .module-box.leak { border: 2px solid #dc2626; background: #fff1f2; color: #9f1239; }
+    .arrow-right { width: 32px; height: 2px; background: #64748b; position: relative; align-self: center; flex-shrink: 0; }
+    .arrow-right::after { content: ''; position: absolute; right: -6px; top: -4px; border: 5px solid transparent; border-left: 7px solid #64748b; }
+    .arrow-leak { background: #dc2626; }
+    .arrow-leak::after { border-left-color: #dc2626; }
+  </style>
+</head>
+<body class="bg-stone-50 text-slate-900 font-sans">
+<main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
+
+  <!-- HEADER -->
+  <header class="border-b border-slate-200 pb-6">
+    <h1 class="text-3xl font-serif font-bold text-slate-900 mb-1">Architecture Review — Eurorails</h1>
+    <p class="text-sm text-slate-500">2026-06-12 · 4 candidates</p>
+    <div class="mt-4 flex gap-6 text-xs text-slate-500 font-mono">
+      <span class="flex items-center gap-2"><span class="inline-block w-8 h-px border border-slate-400"></span> module</span>
+      <span class="flex items-center gap-2"><span class="inline-block w-8 h-px border-dashed border-slate-400"></span> seam</span>
+      <span class="flex items-center gap-2"><span class="inline-block w-8 h-px border border-red-500"></span> leakage</span>
+      <span class="flex items-center gap-2"><span class="inline-block w-8 h-3 bg-slate-800 rounded-sm"></span> deep module</span>
+    </div>
+  </header>
+
+  <!-- CANDIDATES -->
+  <section id="candidates" class="space-y-14">
+
+    <!-- CANDIDATE 1: Ferry Rules Module -->
+    <article id="c1" class="bg-white rounded-xl border border-slate-200 p-8 space-y-6">
+      <div class="flex items-start justify-between gap-4">
+        <h2 class="text-xl font-serif font-semibold">1. Concentrate ferry rules into a single module</h2>
+        <div class="flex gap-2 flex-shrink-0">
+          <span class="px-2 py-0.5 rounded text-xs font-medium bg-emerald-100 text-emerald-800">Strong</span>
+          <span class="px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-700 font-mono">in-process</span>
+        </div>
+      </div>
+
+      <div class="font-mono text-sm text-slate-600">
+        hex_node.py · movement.py · track_builder.py · pathfinding.py
+      </div>
+
+      <!-- Before / After -->
+      <div class="grid grid-cols-2 gap-6">
+        <!-- Before -->
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-3">Before</p>
+          <div class="rounded-lg border border-slate-200 bg-white p-4">
+            <pre class="mermaid text-xs">
+flowchart TD
+  HN["hex_node.py\nis_ferry()\nbuild_cost_to()\nFerryLink"]
+  MV["movement.py\n_apply_ferry_arrival()"]
+  TB["track_builder.py\n_ferry_expanded_reachable()\n_count_ferry_players()\nno-double-charge check"]
+  PF["pathfinding.py\ninclude_ferries=False\n(3 TODOs)"]
+
+  HN -->|ferry type| MV
+  HN -->|FerryLink| TB
+  HN -->|ferry cost| PF
+  MV -->|teleport logic| TB
+  TB -->|expand reachability| HN
+
+  classDef leak stroke:#dc2626,stroke-width:2px,color:#9f1239;
+  class PF leak
+            </pre>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">Ferry knowledge in 4 modules. Adding ferry support to pathfinding requires cross-referencing all four.</p>
+        </div>
+        <!-- After -->
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-3">After</p>
+          <div class="rounded-lg border border-slate-200 bg-white p-4">
+            <pre class="mermaid text-xs">
+flowchart TD
+  FR["FerryRules\nis_ferry_node()\ntraversal_cost()\nexpand_reachable()\ncan_build_to()\napply_arrival()"]
+
+  MV["movement.py"]
+  TB["track_builder.py"]
+  PF["pathfinding.py"]
+  HN["hex_node.py"]
+
+  MV -->|apply_arrival| FR
+  TB -->|can_build_to\nexpand_reachable| FR
+  PF -->|traversal_cost\nexpand_reachable| FR
+  FR -->|reads| HN
+
+  classDef deep fill:#1e293b,stroke:#0f172a,color:#e2e8f0,stroke-width:2px;
+  class FR deep
+            </pre>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">One seam for ferry rules. All three callers cross the same interface. Ferry support in pathfinding unlocked without touching movement or track_builder.</p>
+        </div>
+      </div>
+
+      <div class="space-y-2 text-sm text-slate-700">
+        <p><strong>Problem.</strong> Ferry crossing rules — detection, cost, reachability expansion, teleport, capacity limits — are fragmented across 4 modules. The <code>include_ferries=False</code> TODO in <code>pathfinding.py</code> cannot be resolved without reading 5+ functions across 3 other files.</p>
+        <p><strong>Solution.</strong> Extract a <code>FerryRules</code> module whose interface is the complete set of ferry-related queries; every caller goes through it.</p>
+      </div>
+
+      <ul class="text-sm space-y-1 text-slate-700 list-none">
+        <li>→ <strong>locality:</strong> ferry bug fixes land in one module</li>
+        <li>→ <strong>leverage:</strong> pathfinding ferry support becomes a 3-line change (call <code>expand_reachable</code> instead of inlining)</li>
+        <li>→ <strong>interface shrinks:</strong> callers no longer import from hex_node for ferry details</li>
+        <li>→ <strong>deletion test passes:</strong> deleting ferry calls from movement + track_builder + pathfinding exposes the same logic in all three — it was earning its keep</li>
+      </ul>
+    </article>
+
+    <!-- CANDIDATE 2: BuildValidationContext -->
+    <article id="c2" class="bg-white rounded-xl border border-slate-200 p-8 space-y-6">
+      <div class="flex items-start justify-between gap-4">
+        <h2 class="text-xl font-serif font-semibold">2. Deepen the build validator chain</h2>
+        <div class="flex gap-2 flex-shrink-0">
+          <span class="px-2 py-0.5 rounded text-xs font-medium bg-emerald-100 text-emerald-800">Strong</span>
+          <span class="px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-700 font-mono">in-process</span>
+        </div>
+      </div>
+
+      <div class="font-mono text-sm text-slate-600">
+        track_builder.py
+      </div>
+
+      <!-- Before / After cross-section -->
+      <div class="grid grid-cols-2 gap-6">
+        <!-- Before -->
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-3">Before — 8 shallow layers</p>
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-1">
+            <div class="h-8 border-l-4 border-slate-400 bg-slate-100 rounded-sm px-3 flex items-center text-xs font-mono text-slate-600">check_node_valid ×2</div>
+            <div class="h-8 border-l-4 border-slate-400 bg-slate-100 rounded-sm px-3 flex items-center text-xs font-mono text-slate-600">check_adjacency</div>
+            <div class="h-8 border-l-4 border-slate-400 bg-slate-100 rounded-sm px-3 flex items-center text-xs font-mono text-slate-600">check_right_of_way</div>
+            <div class="h-8 border-l-4 border-amber-400 bg-amber-50 rounded-sm px-3 flex items-center text-xs font-mono text-slate-600">connectivity check ← computes reachable</div>
+            <div class="h-8 border-l-4 border-slate-400 bg-slate-100 rounded-sm px-3 flex items-center text-xs font-mono text-slate-600">check_milepost_limit</div>
+            <div class="h-8 border-l-4 border-amber-400 bg-amber-50 rounded-sm px-3 flex items-center text-xs font-mono text-slate-600">ferry capacity ← computes player set</div>
+            <div class="h-8 border-l-4 border-slate-400 bg-slate-100 rounded-sm px-3 flex items-center text-xs font-mono text-slate-600">check_city_access</div>
+            <div class="h-8 border-l-4 border-red-400 bg-red-50 rounded-sm px-3 flex items-center text-xs font-mono text-red-700">check_blocking ← tier-1 only (TODO)</div>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">Each layer assumes the previous succeeded. Reachable set computed twice (connectivity + blocking). To test blocking, set up 7 other checks first.</p>
+        </div>
+        <!-- After -->
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-3">After — one deep module</p>
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-2">
+            <div class="h-10 border-l-4 border-slate-300 bg-white rounded-sm px-3 flex items-center text-xs font-mono text-slate-400">BuildValidationContext.build(game_state, player_id)</div>
+            <div class="border-3 border-slate-800 rounded-lg p-3 space-y-1" style="border: 2px solid #1e293b; background: #1e293b;">
+              <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">BuildValidator (deep module)</p>
+              <div class="h-6 bg-slate-700 rounded-sm px-3 flex items-center text-xs font-mono text-slate-300">reachable_set — computed once, shared</div>
+              <div class="h-6 bg-slate-700 rounded-sm px-3 flex items-center text-xs font-mono text-slate-300">player_track_map — computed once</div>
+              <div class="h-6 bg-slate-600 rounded-sm px-3 flex items-center text-xs font-mono text-slate-200">validate(edge) → ValidationResult</div>
+            </div>
+            <div class="h-8 border-l-4 border-slate-300 bg-white rounded-sm px-3 flex items-center text-xs font-mono text-slate-500">execute_build uses result list atomically</div>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">Shared state pre-computed once. Each validator is a pure function accepting the context. Blocking rule test needs only a context with the right owned_edges — no 7-check setup.</p>
+        </div>
+      </div>
+
+      <div class="space-y-2 text-sm text-slate-700">
+        <p><strong>Problem.</strong> <code>validate_build_edge()</code> chains 8 checks that are sequentially coupled — reachability is re-computed by both the connectivity check and the blocking check, and testing any one validator requires satisfying all the ones before it.</p>
+        <p><strong>Solution.</strong> Extract a <code>BuildValidator</code> module that pre-computes shared state (reachable set, player track map) once per <code>execute_build</code> call, then exposes a <code>validate(edge)</code> that each check can call as a pure function.</p>
+      </div>
+
+      <ul class="text-sm space-y-1 text-slate-700 list-none">
+        <li>→ <strong>locality:</strong> reachability computation lives once; the tier-2 blocking TODO becomes a one-function edit</li>
+        <li>→ <strong>leverage:</strong> each validator testable in isolation — pass a context with just the fields it needs</li>
+        <li>→ <strong>interface shrinks:</strong> <code>execute_build</code> calls one <code>validate</code>; callers never touch the 8 sub-checks</li>
+        <li>→ <strong>performance:</strong> reachable set O(V+E) computed once per build call, not twice</li>
+      </ul>
+    </article>
+
+    <!-- CANDIDATE 3: GameState immutability / rollback seam -->
+    <article id="c3" class="bg-white rounded-xl border border-slate-200 p-8 space-y-6">
+      <div class="flex items-start justify-between gap-4">
+        <h2 class="text-xl font-serif font-semibold">3. Introduce a commit/rollback seam on GameState</h2>
+        <div class="flex gap-2 flex-shrink-0">
+          <span class="px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800">Worth exploring</span>
+          <span class="px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-700 font-mono">in-process</span>
+        </div>
+      </div>
+
+      <div class="font-mono text-sm text-slate-600">
+        game_state.py · movement.py · track_builder.py
+      </div>
+
+      <!-- Before / After mass diagram -->
+      <div class="grid grid-cols-2 gap-6">
+        <!-- Before -->
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-3">Before — mutation with partial failure</p>
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <div class="space-y-3">
+              <!-- Caller -->
+              <div class="flex items-center gap-2">
+                <div class="module-box text-xs">caller</div>
+                <div class="arrow-right"></div>
+                <div class="module-box text-xs">execute_operate()</div>
+              </div>
+              <div class="ml-20 space-y-1">
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></div>
+                  <span class="text-xs text-slate-500">action 1 — mutates train.current_node ✓</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></div>
+                  <span class="text-xs text-slate-500">action 2 — mutates player.ecu ✓</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-red-500 flex-shrink-0"></div>
+                  <span class="text-xs text-slate-600 font-medium">action 3 — validation fails ✗</span>
+                </div>
+                <div class="flex items-center gap-2 ml-4">
+                  <div class="w-2 h-2 rounded-full bg-red-300 flex-shrink-0"></div>
+                  <span class="text-xs text-red-600">state partially mutated — no rollback</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">Tests work around this by creating a fresh <code>GameState</code> per test. The prototype calls <code>execute_operate</code> speculatively without a safety net.</p>
+        </div>
+        <!-- After -->
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-3">After — snapshot or staging seam</p>
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <pre class="mermaid text-xs">
+sequenceDiagram
+  participant C as caller
+  participant GS as GameState
+  participant EO as execute_operate
+
+  C->>GS: snapshot()
+  C->>EO: execute(actions, gs_copy)
+  EO-->>C: OperateResult(ok, new_state)
+  C->>GS: commit(new_state)
+
+  note over C,EO: failure: discard new_state, gs unchanged
+            </pre>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">Callers get atomicity. Tests never need fresh state setup — pass any snapshot. Prototype can speculatively evaluate moves.</p>
+        </div>
+      </div>
+
+      <div class="space-y-2 text-sm text-slate-700">
+        <p><strong>Problem.</strong> <code>execute_operate()</code> and <code>execute_build()</code> mutate <code>GameState</code> in-place; a validation failure mid-sequence leaves state partially corrupted. The prototype and any future UI must defensively re-create state before any speculative evaluation.</p>
+        <p><strong>Solution.</strong> Add a <code>snapshot()</code> method to <code>GameState</code> and make <code>execute_operate</code>/<code>execute_build</code> accept an optional copy, returning a new state on success. The seam sits between "validate + compute" and "commit."</p>
+      </div>
+
+      <ul class="text-sm space-y-1 text-slate-700 list-none">
+        <li>→ <strong>locality:</strong> rollback logic lives in one <code>snapshot</code> method, not scattered across callers</li>
+        <li>→ <strong>leverage:</strong> speculative pathfinding ("what if I build here?") becomes a one-liner — snapshot, evaluate, discard</li>
+        <li>→ <strong>interface shrinks:</strong> callers no longer need to track pre-state manually</li>
+      </ul>
+
+      <div class="bg-amber-50 border border-amber-200 rounded-md px-4 py-3 text-sm text-amber-800">
+        <strong>Note:</strong> dataclass <code>copy.deepcopy()</code> on nested dicts/sets has a cost. Measure before committing — full snapshot may only be worth it once the prototype needs speculative evaluation.
+      </div>
+    </article>
+
+    <!-- CANDIDATE 4: include_ferries seam — complete or cut -->
+    <article id="c4" class="bg-white rounded-xl border border-slate-200 p-8 space-y-6">
+      <div class="flex items-start justify-between gap-4">
+        <h2 class="text-xl font-serif font-semibold">4. Complete or cut the <code>include_ferries</code> seam in pathfinding</h2>
+        <div class="flex gap-2 flex-shrink-0">
+          <span class="px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800">Worth exploring</span>
+          <span class="px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-700 font-mono">in-process</span>
+        </div>
+      </div>
+
+      <div class="font-mono text-sm text-slate-600">
+        pathfinding.py
+      </div>
+
+      <!-- Before / After -->
+      <div class="grid grid-cols-2 gap-6">
+        <!-- Before -->
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-3">Before — hypothetical seam, one adapter</p>
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-3">
+            <div class="module-box shallow text-center text-xs">cheapest_build_path<br/><span class="text-slate-400">include_ferries=False</span><br/><span class="text-red-500 text-xs">// TODO: ferry support</span></div>
+            <div class="module-box shallow text-center text-xs">reachable_nodes<br/><span class="text-slate-400">include_ferries=False</span><br/><span class="text-red-500 text-xs">// TODO: ferry support</span></div>
+            <div class="module-box shallow text-center text-xs">shortest_move_path<br/><span class="text-slate-400">include_ferries=False</span><br/><span class="text-red-500 text-xs">// TODO: ferry support</span></div>
+            <p class="text-xs text-slate-500 mt-1">Parameter exists, but only one behavior (no ferries). A seam with one adapter is hypothetical.</p>
+          </div>
+        </div>
+        <!-- After option A -->
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-3">After — two real adapters (or cut)</p>
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-2">
+            <p class="text-xs font-semibold text-slate-600 mb-2">Option A: implement (real seam)</p>
+            <div class="flex gap-2">
+              <div class="module-box text-center text-xs flex-1">traversal without ferries<br/><span class="text-slate-400">production today</span></div>
+              <div class="deep module-box text-center text-xs flex-1" style="background:#1e293b;color:white;border-color:#0f172a;">traversal with ferries<br/><span class="text-slate-400">enabled by FerryRules</span></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-3 font-semibold">Option B: cut (remove dead flag)</p>
+            <div class="module-box text-xs text-center">pathfinding.py — no include_ferries param<br/><span class="text-slate-400">ferry added as separate traversal fn when ready</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2 text-sm text-slate-700">
+        <p><strong>Problem.</strong> <code>include_ferries=False</code> appears in all three pathfinding functions with TODO comments. One adapter means a hypothetical seam — the parameter adds interface complexity with zero current leverage.</p>
+        <p><strong>Solution.</strong> Either implement ferry traversal (enabled by Candidate 1's <code>FerryRules</code> module) to make the seam real, or delete the parameter and add ferry support as a separate function when needed.</p>
+      </div>
+
+      <ul class="text-sm space-y-1 text-slate-700 list-none">
+        <li>→ <strong>interface shrinks:</strong> callers no longer pass a flag that does nothing</li>
+        <li>→ <strong>leverage (if implemented):</strong> prototype's pathfinding visualization correctly handles Dublin/Belfast ferry crossings</li>
+        <li>→ <strong>locality (if cut):</strong> no phantom code to explain to future readers</li>
+      </ul>
+
+      <div class="bg-slate-50 border border-slate-200 rounded-md px-4 py-3 text-sm text-slate-700">
+        <strong>Note:</strong> Candidate 1 (FerryRules) is a prerequisite for Option A — implementing ferry traversal without it would re-fragment ferry logic.
+      </div>
+    </article>
+
+  </section>
+
+  <!-- TOP RECOMMENDATION -->
+  <section id="top-recommendation" class="bg-slate-900 text-white rounded-xl p-8">
+    <h2 class="text-xs uppercase tracking-widest text-slate-400 mb-3">Top recommendation</h2>
+    <h3 class="text-2xl font-serif font-semibold mb-3">
+      <a href="#c1" class="underline decoration-emerald-400 underline-offset-4">Candidate 1 — Ferry Rules module</a>
+    </h3>
+    <p class="text-slate-300 text-sm max-w-2xl">
+      Ferry is the only concept that actively blocks forward progress right now — <code>include_ferries=False</code> is a three-file stub and the pathfinding module cannot be completed without it. Concentrating all ferry rules behind one module (Candidate 1) also unlocks Candidate 4 for free and makes Candidate 2's <code>BuildValidator</code> easier to write, since <code>_ferry_expanded_reachable</code> moves out of <code>track_builder.py</code>. It has the highest leverage-per-change ratio of the four.
+    </p>
+  </section>
+
+</main>
+</body>
+</html>
