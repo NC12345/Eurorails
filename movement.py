@@ -4,6 +4,7 @@ from game_state import (
     LOCO_STATS,
     CommitFerry,
     Deliver,
+    DiscardHand,
     DropOff,
     GamePhase,
     GameState,
@@ -79,7 +80,42 @@ def execute_operate(
     # Settle track usage fees
     fees_charged = _settle_fees(player, game_state.players)
 
+    if actions:
+        player.actions_taken_this_turn = True
+
     return OperateResult(ok=True, error=None, payout_log=payout_log, fees_charged=fees_charged)
+
+
+def execute_discard_hand(
+    game_state: GameState,
+    player_id: str,
+) -> str | None:
+    """Discard full demand hand and draw 3 new cards; ends the player's turn.
+
+    Returns an error string on failure, None on success.
+    """
+    if game_state.phase != GamePhase.NORMAL_PLAY:
+        return "hand discard only allowed during normal play"
+
+    player = _find_player(game_state, player_id)
+    if player is None:
+        return f"unknown player: {player_id}"
+
+    if player.actions_taken_this_turn:
+        return "cannot discard hand after taking an action this turn"
+
+    if player.train.cargo:
+        return "cannot discard hand while cargo is loaded"
+
+    game_state.route_discard.extend(player.hand)
+    player.hand.clear()
+    for _ in range(3):
+        card = draw_route_card(game_state.route_deck, game_state.route_discard)
+        if card:
+            player.hand.append(card)
+
+    player.actions_taken_this_turn = True
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -92,7 +128,7 @@ def _apply_ferry_arrival(map_data: dict[str, HexNode], train: TrainState) -> Non
     if node.ferry_link:
         train.current_node = node.ferry_link.to
     base_speed = LOCO_STATS[train.loco_type][0]
-    train.remaining_movement = base_speed // 2
+    train.remaining_movement = -(- base_speed // 2) # ceiling division for half speed
     train.committed_to_ferry = False
     # previous_node intentionally NOT updated: teleport is not an edge traversal
 

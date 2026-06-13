@@ -19,7 +19,7 @@ from game_state import (
     load_resource_index,
     load_route_deck,
 )
-from movement import execute_operate, MoveTo, PickUp, DropOff, Deliver, CommitFerry
+from movement import execute_operate, execute_discard_hand, MoveTo, PickUp, DropOff, Deliver, CommitFerry
 from track_builder import execute_build, BuildEdge, UpgradeTrain
 
 # ---------------------------------------------------------------------------
@@ -873,6 +873,109 @@ def test_ferry_gb_side_first_ireland_free():
         f"expected total 8 (ferry paid once), got {result.total_cost}"
 
 run("build GB side first; Ireland side free in same turn", test_ferry_gb_side_first_ireland_free)
+
+
+# ---------------------------------------------------------------------------
+# execute_discard_hand tests
+# ---------------------------------------------------------------------------
+print("\n--- execute_discard_hand ---")
+
+
+def _make_hand(n=3):
+    return [RouteCard(routes=[Route("Paris", "Cattle", 10), Route("Lyon", "Copper", 12), Route("Berlin", "Coal", 14)]) for _ in range(n)]
+
+
+def test_discard_hand_success():
+    old_cards = _make_hand(3)
+    new_cards = _make_hand(3)
+    p = make_player("p1", "r19_c29", hand=list(old_cards))
+    gs = make_game([p], deck=list(new_cards))
+    err = execute_discard_hand(gs, "p1")
+    assert err is None, f"expected success, got: {err}"
+    assert len(p.hand) == 3
+    assert all(c in gs.route_discard for c in old_cards), "old cards not in discard"
+    assert p.actions_taken_this_turn is True
+
+run("discard hand success — draws 3 new, old in discard, flag set", test_discard_hand_success)
+
+
+def test_discard_hand_blocked_after_action():
+    p = make_player("p1", "r19_c29", hand=_make_hand())
+    p.actions_taken_this_turn = True
+    gs = make_game([p])
+    err = execute_discard_hand(gs, "p1")
+    assert err is not None, "should fail when action already taken"
+
+run("discard hand blocked if action already taken", test_discard_hand_blocked_after_action)
+
+
+def test_discard_hand_blocked_with_cargo():
+    p = make_player("p1", "r19_c29", hand=_make_hand(), cargo=["Cattle"])
+    gs = make_game([p])
+    err = execute_discard_hand(gs, "p1")
+    assert err is not None, "should fail when cargo loaded"
+
+run("discard hand blocked if cargo loaded", test_discard_hand_blocked_with_cargo)
+
+
+def test_discard_hand_blocked_in_initial_build():
+    p = make_player("p1", "r19_c29", hand=_make_hand())
+    gs = make_game([p], phase=GamePhase.INITIAL_BUILD_1)
+    err = execute_discard_hand(gs, "p1")
+    assert err is not None, "should fail during initial build phase"
+
+run("discard hand blocked during initial build phase", test_discard_hand_blocked_in_initial_build)
+
+
+def test_discard_hand_unknown_player():
+    p = make_player("p1", "r19_c29", hand=_make_hand())
+    gs = make_game([p])
+    err = execute_discard_hand(gs, "p_unknown")
+    assert err is not None, "should fail for unknown player"
+
+run("discard hand fails for unknown player", test_discard_hand_unknown_player)
+
+
+def test_discard_hand_deck_refill():
+    # Deck is empty; discard has cards — should reshuffle and draw.
+    old_cards = _make_hand(3)
+    pool = _make_hand(5)
+    p = make_player("p1", "r19_c29", hand=list(old_cards))
+    gs = make_game([p], deck=[])
+    gs.route_discard = list(pool)
+    err = execute_discard_hand(gs, "p1")
+    assert err is None, f"expected success with reshuffle, got: {err}"
+    assert len(p.hand) == 3
+
+run("discard hand draws via reshuffle when deck empty", test_discard_hand_deck_refill)
+
+
+def test_operate_sets_actions_flag():
+    # A successful execute_operate with actions sets actions_taken_this_turn.
+    london = "r19_c29"
+    adj = next(nb for nb in MAP_DATA[london].neighbors
+               if not MAP_DATA[nb].is_sea())
+    p = make_player("p1", london, owned_edges={frozenset({london, adj})})
+    gs = make_game([p])
+    result = execute_operate(gs, "p1", [MoveTo(adj)])
+    assert result.ok, f"move failed: {result.error}"
+    assert p.actions_taken_this_turn is True
+
+run("execute_operate sets actions_taken_this_turn on success", test_operate_sets_actions_flag)
+
+
+def test_build_sets_actions_flag():
+    # A successful execute_build sets actions_taken_this_turn.
+    london = "r19_c29"
+    adj = next(nb for nb in MAP_DATA[london].neighbors
+               if not MAP_DATA[nb].is_sea() and not MAP_DATA[nb].is_major_city())
+    p = make_player("p1", london, ecu=100)
+    gs = make_game([p])
+    result = execute_build(gs, "p1", [BuildEdge(london, adj)])
+    assert result.ok, f"build failed: {result.error}"
+    assert p.actions_taken_this_turn is True
+
+run("execute_build sets actions_taken_this_turn on success", test_build_sets_actions_flag)
 
 
 # ---------------------------------------------------------------------------

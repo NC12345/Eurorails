@@ -90,6 +90,9 @@ def execute_build(
     if pending_upgrade:
         player.train.loco_type = pending_upgrade.loco_type
 
+    if builds:
+        player.actions_taken_this_turn = True
+
     return BuildResult(ok=True, error=None, total_cost=total_cost, edges_built=list(staged_edges))
 
 

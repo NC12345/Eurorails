@@ -131,6 +131,10 @@ A `BuildEdge` where one endpoint is a `large_city` (outer-border edge into or ou
 
 A `BuildEdge` is rejected if it would prevent another player from establishing any path to a guaranteed-access node (major city, second slot of a medium/small city, English Channel ferry terminal). Tier-1 local saturation check is implemented. Full BFS reachability check is stubbed (`# TODO: implement full blocking check`).
 
+### hand discard
+
+A player action available only at the very start of their turn (before any operate or build actions, and only if no cargo is loaded). The player discards their entire demand hand to the route discard pile and draws 3 new cards. This replaces the entire turn — no operate phase, no build phase follows. Implemented as `execute_discard_hand()` in `movement.py`. Guarded by `actions_taken_this_turn` on `PlayerState`.
+
 ## Tool taxonomy
 
 ### Interactive editors (project root)

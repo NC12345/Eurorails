@@ -104,6 +104,7 @@ class PlayerState:
     hand: list[RouteCard]             # demand hand, 3 cards during NORMAL_PLAY
     track_fees_owed: dict[str, int]   # player_id -> M ECU owed this turn; settled at end of operate
     major_city_touches_this_turn: dict[str, int] = field(default_factory=dict)  # city_name -> touches built this turn; reset at turn end
+    actions_taken_this_turn: bool = False  # guards hand discard; reset at turn start
 
 
 @dataclass
@@ -143,6 +144,10 @@ class Deliver:
 @dataclass(frozen=True)
 class CommitFerry:
     pass            # commit to crossing; stops movement this turn
+
+@dataclass(frozen=True)
+class DiscardHand:
+    pass            # discard full hand and draw 3 new cards; ends turn
 
 @dataclass(frozen=True)
 class BuildEdge:

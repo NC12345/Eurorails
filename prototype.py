@@ -612,6 +612,7 @@ def main():
                     player.train.previous_node = None
                     player.track_fees_owed.clear()
                     player.major_city_touches_this_turn = {}
+                    player.actions_taken_this_turn = False
                     ui.mode = "OPERATE"
                     ui.clear()
                     ui.reachable = refresh_reachable(game, player)
